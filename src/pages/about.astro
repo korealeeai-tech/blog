@@ -1,0 +1,21 @@
+---
+import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="소개"
+	description="개인 AI 워크플로우 기록"
+	pubDate={new Date('June 23 2026')}
+	heroImage={AboutHeroImage}
+>
+	<p>
+		이 블로그는 AI 설정, 글쓰기 워크플로우, 도구 사용 과정에서 얻은 시행착오를
+		한국어로 정리하는 개인 기록입니다.
+	</p>
+
+	<p>
+		이 저장소는 공개 저장소이므로 회사, 제품, 고객, 개인정보, 소스 코드, 운영 정보,
+		비공개 업무 내용은 게시하지 않습니다.
+	</p>
+</Layout>
