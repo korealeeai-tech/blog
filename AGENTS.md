@@ -20,6 +20,16 @@ Do not include, summarize, anonymize, hint at, or derive content from:
 
 Public safety applies to the whole repository, including tracked source files, generated pages, metadata, assets, filenames, git history, workflow logs, and deployment artifacts.
 
+When writing posts, include directly captured relevant screenshots or images when they materially help the reader. Screenshots are optional, not mandatory. Prefer clean public examples, public documentation, or newly created local demo material. Do not capture private work systems, private documents, private repositories, dashboards, issue trackers, emails, chat tools, account pages, internal URLs, browser tabs, usernames, device names, tokens, keys, logs, or any other identifiable context.
+
+Before adding any screenshot or image:
+
+- Inspect it at original size before committing.
+- Crop, blur, redact, or retake it so no private or identifiable content is visible.
+- Remove or avoid metadata that could expose private device, account, path, location, timestamp, or tool details.
+- Use safe filenames, alt text, captions, and surrounding prose that do not reveal private context.
+- If a private detail cannot be safely removed or if safety is uncertain, omit the image.
+
 Before creating or editing any post, run a content review for company, organization, personal information, and product leakage. If a draft depends on work context, rewrite it into a general personal learning note with no identifiable company, organization, person, product, customer, repository, path, issue, data, or operational detail. When unsure, exclude it.
 
 Before every commit or push:

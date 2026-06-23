@@ -2,6 +2,7 @@
 title: "AI 블로그 자동화를 Git 기반으로 시작한 이유"
 description: "브라우저 로그인 기반 자동화 대신 Git 기반 블로그로 첫 글을 시작하게 된 이유를 정리합니다."
 pubDate: 2026-06-23
+heroImage: "../../assets/blog/github-pages-deploy-success.png"
 ---
 
 이 블로그의 첫 글은 블로그 환경을 어떻게 만들었는지에 대한 이야기로 시작하려고 한다.
