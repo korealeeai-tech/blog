@@ -76,6 +76,21 @@ p {
 .prose p {
 	margin-bottom: 2em;
 }
+.prose figure {
+	margin: 2.5em 0;
+}
+.prose figure img {
+	display: block;
+	width: 100%;
+	box-shadow: var(--box-shadow);
+}
+.prose figcaption {
+	margin-top: 0.75em;
+	color: rgb(var(--gray));
+	font-size: 0.85em;
+	line-height: 1.5;
+	text-align: center;
+}
 textarea {
 	width: 100%;
 	font-size: 16px;

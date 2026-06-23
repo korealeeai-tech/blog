@@ -8,7 +8,7 @@ This repository is public. Do not include company organization details, user/cus
 
 Posts are written in Korean by default. Technical identifiers may remain in English when needed.
 
-Posts may include directly captured relevant screenshots when they help explain the topic. Any screenshot or image must be inspected first and must be cropped, blurred, redacted, retaken, or omitted if it contains private or identifiable content. Filenames, alt text, captions, and metadata must also be safe for a fully public repository.
+Every published post must include one safe representative image. Posts should also include inline screenshots or images when they help explain the flow. Any screenshot or image must be inspected first and must be cropped, blurred, redacted, retaken, or omitted if it contains private or identifiable content. Filenames, alt text, captions, and metadata must also be safe for a fully public repository.
 
 Before every commit or push, review the staged diff, scan source and generated output, and confirm the content is safe for a fully public repository. If anything could identify a company, organization, person, product, customer, repository, internal system, or private work context, do not publish it.
 
