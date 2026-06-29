@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800">
+  <rect width="1600" height="800" fill="#f7f9fc"/>
+  <rect x="80" y="70" width="1440" height="660" rx="36" fill="#ffffff" stroke="#d7deea" stroke-width="3"/>
+  <text x="130" y="145" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#172033">SecondBrain as an intent library</text>
+  <text x="132" y="198" font-family="Arial, sans-serif" font-size="25" fill="#526173">Not a diary. Not surveillance. A reusable layer of judgment criteria for AI work.</text>
+  <defs>
+    <marker id="arrow2" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
+      <path d="M2,2 L16,9 L2,16 Z" fill="#526173"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <circle cx="800" cy="405" r="132" fill="#172033"/>
+    <text x="800" y="382" text-anchor="middle" font-size="32" font-weight="700" fill="#ffffff">Intent</text>
+    <text x="800" y="424" text-anchor="middle" font-size="32" font-weight="700" fill="#ffffff">Library</text>
+    <rect x="170" y="285" width="260" height="95" rx="20" fill="#f1f6ff" stroke="#4b79d8" stroke-width="3"/>
+    <text x="300" y="345" text-anchor="middle" font-size="28" font-weight="700" fill="#173563">Preferences</text>
+    <rect x="170" y="455" width="260" height="95" rx="20" fill="#f3fbf4" stroke="#57a86d" stroke-width="3"/>
+    <text x="300" y="515" text-anchor="middle" font-size="28" font-weight="700" fill="#23582e">Validation</text>
+    <rect x="585" y="575" width="430" height="95" rx="20" fill="#fff8e8" stroke="#dca43a" stroke-width="3"/>
+    <text x="800" y="635" text-anchor="middle" font-size="28" font-weight="700" fill="#5a3b00">Risk boundaries</text>
+    <rect x="1170" y="285" width="260" height="95" rx="20" fill="#f9f2ff" stroke="#8a6bbf" stroke-width="3"/>
+    <text x="1300" y="345" text-anchor="middle" font-size="28" font-weight="700" fill="#4e3478">Context</text>
+    <rect x="1170" y="455" width="260" height="95" rx="20" fill="#eaf8f7" stroke="#4aa3a2" stroke-width="3"/>
+    <text x="1300" y="515" text-anchor="middle" font-size="28" font-weight="700" fill="#215f5f">Strategy</text>
+    <path d="M435 333 H655" stroke="#526173" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M435 502 H655" stroke="#526173" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M800 573 V548" stroke="#526173" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M1165 333 H945" stroke="#526173" stroke-width="4" marker-end="url(#arrow2)"/>
+    <path d="M1165 502 H945" stroke="#526173" stroke-width="4" marker-end="url(#arrow2)"/>
+  </g>
+</svg>
