@@ -41,8 +41,8 @@ const postUrl = (id: string) => `${base}/blog/${id}/`;
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
+				box-sizing: border-box;
+				width: min(920px, calc(100% - 2em));
 				margin: auto;
 				padding: 1em;
 				color: rgb(var(--gray-dark));

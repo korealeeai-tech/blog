@@ -1,32 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
   <rect width="1400" height="760" fill="#f7f9fc"/>
-  <text x="80" y="95" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#172033">How the library participates in a request</text>
+  <text x="80" y="95" font-family="Noto Sans CJK KR, sans-serif" font-size="48" font-weight="700" fill="#172033">요청 처리에 라이브러리가 참여하는 방식</text>
   <defs>
     <marker id="flow" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
       <path d="M2,2 L16,9 L2,16 Z" fill="#526173"/>
     </marker>
   </defs>
-  <g font-family="Arial, sans-serif">
+  <g font-family="Noto Sans CJK KR, sans-serif">
     <rect x="90" y="300" width="205" height="100" rx="20" fill="#f1f6ff" stroke="#4b79d8" stroke-width="3"/>
-    <text x="192" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#173563">Request</text>
-    <text x="192" y="378" text-anchor="middle" font-size="18" fill="#49617f">current task</text>
+    <text x="192" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#173563">요청</text>
+    <text x="192" y="378" text-anchor="middle" font-size="18" fill="#49617f">현재 작업</text>
     <rect x="350" y="300" width="230" height="100" rx="20" fill="#f3fbf4" stroke="#57a86d" stroke-width="3"/>
-    <text x="465" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#23582e">Retrieve</text>
-    <text x="465" y="378" text-anchor="middle" font-size="18" fill="#467451">relevant criteria</text>
+    <text x="465" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#23582e">회수</text>
+    <text x="465" y="378" text-anchor="middle" font-size="18" fill="#467451">관련 기준</text>
     <rect x="635" y="300" width="230" height="100" rx="20" fill="#fff8e8" stroke="#dca43a" stroke-width="3"/>
-    <text x="750" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#5a3b00">Check</text>
-    <text x="750" y="378" text-anchor="middle" font-size="18" fill="#705427">source evidence</text>
+    <text x="750" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#5a3b00">확인</text>
+    <text x="750" y="378" text-anchor="middle" font-size="18" fill="#705427">근거 점검</text>
     <rect x="920" y="300" width="230" height="100" rx="20" fill="#f9f2ff" stroke="#8a6bbf" stroke-width="3"/>
-    <text x="1035" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#4e3478">Choose</text>
-    <text x="1035" y="378" text-anchor="middle" font-size="18" fill="#5e4c7a">work strategy</text>
+    <text x="1035" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#4e3478">선택</text>
+    <text x="1035" y="378" text-anchor="middle" font-size="18" fill="#5e4c7a">작업 전략</text>
     <rect x="1205" y="300" width="130" height="100" rx="20" fill="#eaf8f7" stroke="#4aa3a2" stroke-width="3"/>
-    <text x="1270" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#215f5f">Reply</text>
-    <text x="1270" y="378" text-anchor="middle" font-size="18" fill="#386d6d">with gaps</text>
+    <text x="1270" y="344" text-anchor="middle" font-size="24" font-weight="700" fill="#215f5f">응답</text>
+    <text x="1270" y="378" text-anchor="middle" font-size="18" fill="#386d6d">한계 포함</text>
     <path d="M300 350 H335" stroke="#526173" stroke-width="4" marker-end="url(#flow)"/>
     <path d="M585 350 H620" stroke="#526173" stroke-width="4" marker-end="url(#flow)"/>
     <path d="M870 350 H905" stroke="#526173" stroke-width="4" marker-end="url(#flow)"/>
     <path d="M1155 350 H1190" stroke="#526173" stroke-width="4" marker-end="url(#flow)"/>
     <rect x="325" y="510" width="750" height="80" rx="20" fill="#ffffff" stroke="#d7deea" stroke-width="3"/>
-    <text x="700" y="560" text-anchor="middle" font-size="25" fill="#172033">Memory is a starting point, not the final answer.</text>
+    <text x="700" y="560" text-anchor="middle" font-size="25" fill="#172033">기억은 답이 아니라 확인의 출발점이다.</text>
   </g>
 </svg>
