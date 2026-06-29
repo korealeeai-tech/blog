@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#f7f9fc"/>
+  <text x="80" y="95" font-family="Noto Sans CJK KR, sans-serif" font-size="48" font-weight="700" fill="#172033">그래프는 답이 아니라 탐색 지도다</text>
+  <defs>
+    <marker id="arrow" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
+      <path d="M2,2 L16,9 L2,16 Z" fill="#526173"/>
+    </marker>
+  </defs>
+  <g font-family="Noto Sans CJK KR, sans-serif">
+    <rect x="105" y="285" width="250" height="110" rx="22" fill="#f1f6ff" stroke="#4b79d8" stroke-width="3"/>
+    <text x="230" y="330" text-anchor="middle" font-size="26" font-weight="700" fill="#173563">그래프 신호</text>
+    <text x="230" y="366" text-anchor="middle" font-size="20" fill="#49617f">관련 기준 후보</text>
+
+    <rect x="430" y="285" width="250" height="110" rx="22" fill="#fff8e8" stroke="#dca43a" stroke-width="3"/>
+    <text x="555" y="330" text-anchor="middle" font-size="26" font-weight="700" fill="#5a3b00">근거 확인</text>
+    <text x="555" y="366" text-anchor="middle" font-size="20" fill="#705427">원문과 현재 요청</text>
+
+    <rect x="755" y="285" width="250" height="110" rx="22" fill="#f3fbf4" stroke="#57a86d" stroke-width="3"/>
+    <text x="880" y="330" text-anchor="middle" font-size="26" font-weight="700" fill="#23582e">판단 기준</text>
+    <text x="880" y="366" text-anchor="middle" font-size="20" fill="#467451">이번 작업에 적용</text>
+
+    <rect x="1080" y="285" width="250" height="110" rx="22" fill="#eaf8f7" stroke="#4aa3a2" stroke-width="3"/>
+    <text x="1205" y="330" text-anchor="middle" font-size="26" font-weight="700" fill="#215f5f">응답 전략</text>
+    <text x="1205" y="366" text-anchor="middle" font-size="20" fill="#386d6d">한계와 검증 포함</text>
+
+    <path d="M360 340 H415" stroke="#526173" stroke-width="5" marker-end="url(#arrow)" fill="none"/>
+    <path d="M685 340 H740" stroke="#526173" stroke-width="5" marker-end="url(#arrow)" fill="none"/>
+    <path d="M1010 340 H1065" stroke="#526173" stroke-width="5" marker-end="url(#arrow)" fill="none"/>
+
+    <rect x="270" y="520" width="860" height="88" rx="22" fill="#ffffff" stroke="#d7deea" stroke-width="3"/>
+    <text x="700" y="575" text-anchor="middle" font-size="28" fill="#172033">연결은 힌트이고, 결론은 근거 확인 뒤에만 낸다.</text>
+  </g>
+</svg>
