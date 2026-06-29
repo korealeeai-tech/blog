@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { BLOG_CATEGORIES } from '../../categories';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = await getCollection('blog');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const categoryUrl = (slug: string) => `${base}/categories/${slug}/`;
+const postCount = (slug: string) => posts.filter((post) => post.data.category === slug).length;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`카테고리 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 840px;
+			}
+			.category-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1rem;
+				list-style: none;
+				margin: 2rem 0 0;
+				padding: 0;
+			}
+			.category-card {
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 8px;
+				background: white;
+			}
+			.category-card a {
+				display: block;
+				height: 100%;
+				padding: 1rem;
+				color: rgb(var(--gray-dark));
+				text-decoration: none;
+			}
+			.category-card a:hover h2 {
+				color: rgb(var(--accent));
+			}
+			.category-card h2 {
+				margin-bottom: 0.25rem;
+				font-size: 1.25em;
+			}
+			.category-card p {
+				margin: 0.5rem 0 0;
+			}
+			.count {
+				color: rgb(var(--gray));
+				font-size: 0.9em;
+			}
+			@media (max-width: 720px) {
+				.category-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>카테고리</h1>
+			<ul class="category-grid">
+				{
+					BLOG_CATEGORIES.map((category) => (
+						<li class="category-card">
+							<a href={categoryUrl(category.slug)}>
+								<h2>{category.label}</h2>
+								<div class="count">글 {postCount(category.slug)}개</div>
+								<p>{category.description}</p>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

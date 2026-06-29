@@ -5,6 +5,7 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import { BLOG_CATEGORIES, getBlogCategory } from '../../categories';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
@@ -12,6 +13,7 @@ const posts = (await getCollection('blog')).sort(
 );
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const postUrl = (id: string) => `${base}/blog/${id}/`;
+const categoryUrl = (slug: string) => `${base}/categories/${slug}/`;
 ---
 
 <!doctype html>
@@ -22,7 +24,29 @@ const postUrl = (id: string) => `${base}/blog/${id}/`;
 			main {
 				width: 960px;
 			}
-			ul {
+			.category-nav {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				list-style: none;
+				margin: 0 0 2rem;
+				padding: 0;
+			}
+			.category-nav a {
+				display: inline-block;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 999px;
+				padding: 0.25rem 0.75rem;
+				background: white;
+				color: rgb(var(--gray-dark));
+				font-size: 0.85em;
+				text-decoration: none;
+			}
+			.category-nav a:hover {
+				border-color: rgb(var(--accent));
+				color: rgb(var(--accent));
+			}
+			.post-list {
 				display: flex;
 				flex-wrap: wrap;
 				gap: 2rem;
@@ -30,30 +54,36 @@ const postUrl = (id: string) => `${base}/blog/${id}/`;
 				margin: 0;
 				padding: 0;
 			}
-			ul li {
+			.post-list li {
 				width: calc(50% - 1rem);
 			}
-			ul li * {
+			.post-list li * {
 				text-decoration: none;
 				transition: 0.2s ease;
 			}
-			ul li:first-child {
+			.post-list li:first-child {
 				width: 100%;
 				margin-bottom: 1rem;
 				text-align: center;
 			}
-			ul li:first-child img {
+			.post-list li:first-child img {
 				width: 100%;
 			}
-			ul li:first-child .title {
+			.post-list li:first-child .title {
 				font-size: 2.369rem;
 			}
-			ul li img {
+			.post-list li img {
 				margin-bottom: 0.5rem;
 				border-radius: 12px;
 			}
-			ul li a {
+			.post-list li a {
 				display: block;
+			}
+			.category {
+				display: inline-block;
+				margin-bottom: 0.5rem;
+				color: rgb(var(--gray));
+				font-size: 0.85em;
 			}
 			.title {
 				margin: 0;
@@ -64,25 +94,26 @@ const postUrl = (id: string) => `${base}/blog/${id}/`;
 				margin: 0;
 				color: rgb(var(--gray));
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
+			.post-list li a:hover h4,
+			.post-list li a:hover .date,
+			.post-list li a:hover .category {
 				color: rgb(var(--accent));
 			}
-			ul a:hover img {
+			.post-list a:hover img {
 				box-shadow: var(--box-shadow);
 			}
 			@media (max-width: 720px) {
-				ul {
+				.post-list {
 					gap: 0.5em;
 				}
-				ul li {
+				.post-list li {
 					width: 100%;
 					text-align: center;
 				}
-				ul li:first-child {
+				.post-list li:first-child {
 					margin-bottom: 0;
 				}
-				ul li:first-child .title {
+				.post-list li:first-child .title {
 					font-size: 1.563em;
 				}
 			}
@@ -91,18 +122,24 @@ const postUrl = (id: string) => `${base}/blog/${id}/`;
 	<body>
 		<Header />
 		<main>
+			<nav aria-label="블로그 카테고리">
+				<ul class="category-nav">
+					{BLOG_CATEGORIES.map((category) => <li><a href={categoryUrl(category.slug)}>{category.label}</a></li>)}
+				</ul>
+			</nav>
 			<section>
 				{
 					posts.length === 0 ? (
 						<p>아직 공개된 글이 없습니다.</p>
 					) : (
-						<ul>
+						<ul class="post-list">
 							{posts.map((post) => (
 								<li>
 									<a href={postUrl(post.id)}>
 										{post.data.heroImage && (
 											<Image width={720} height={360} src={post.data.heroImage} alt="" />
 										)}
+										<div class="category">{getBlogCategory(post.data.category).label}</div>
 										<h4 class="title">{post.data.title}</h4>
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />

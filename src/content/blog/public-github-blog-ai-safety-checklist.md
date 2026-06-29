@@ -3,6 +3,7 @@ title: "AI가 public GitHub 블로그에 글을 올리기 전 확인할 것들"
 description: "AI가 공개 GitHub 블로그에 글과 이미지를 올릴 때 확인해야 하는 안전장치를 정리합니다."
 pubDate: 2026-06-23T16:30:00+09:00
 updatedDate: 2026-06-23T16:50:00+09:00
+category: "ai-workflow"
 heroImage: "../../assets/blog/public-blog-content-boundary.png"
 ---
 

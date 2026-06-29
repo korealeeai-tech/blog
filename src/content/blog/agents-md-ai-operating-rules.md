@@ -2,6 +2,7 @@
 title: "AI 코딩 에이전트를 믿기 전에 먼저 정해야 하는 운영 규칙"
 description: "AGENTS.md 같은 instruction file로 AI 작업의 경계, 검증 기준, 공개 repo 안전 규칙을 관리하는 방법을 정리합니다."
 pubDate: 2026-06-23T17:05:00+09:00
+category: "ai-workflow"
 heroImage: "../../assets/blog/agents-operating-rules.png"
 ---
 
