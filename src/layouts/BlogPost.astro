@@ -7,14 +7,19 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { type BlogCategorySlug, getBlogCategory } from '../categories';
 
+type AdjacentPost = Pick<CollectionEntry<'blog'>, 'id' | 'data'>;
 type Props = CollectionEntry<'blog'>['data'] & {
 	category?: BlogCategorySlug;
+	newerPost?: AdjacentPost;
+	olderPost?: AdjacentPost;
 };
 
-const { title, description, pubDate, updatedDate, category, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, category, heroImage, newerPost, olderPost } =
+	Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const postCategory = category ? getBlogCategory(category) : undefined;
 const categoryUrl = postCategory ? `${base}/categories/${postCategory.slug}/` : '';
+const postUrl = (id: string) => `${base}/blog/${id}/`;
 ---
 
 <html lang="ko">
@@ -73,6 +78,55 @@ const categoryUrl = postCategory ? `${base}/categories/${postCategory.slug}/` : 
 			.last-updated-on {
 				font-style: italic;
 			}
+			.post-navigation {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1rem;
+				margin-top: 3rem;
+				padding-top: 2rem;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.post-navigation a {
+				display: block;
+				min-height: 7rem;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 8px;
+				padding: 1rem;
+				background: white;
+				color: rgb(var(--gray-dark));
+				text-decoration: none;
+			}
+			.post-navigation a:hover {
+				border-color: rgb(var(--accent));
+				box-shadow: var(--box-shadow);
+			}
+			.post-navigation a:hover .nav-title {
+				color: rgb(var(--accent));
+			}
+			.nav-label {
+				display: block;
+				margin-bottom: 0.5rem;
+				color: rgb(var(--gray));
+				font-size: 0.85em;
+			}
+			.nav-title {
+				display: block;
+				color: rgb(var(--black));
+				font-size: 1rem;
+				font-weight: 700;
+				line-height: 1.4;
+			}
+			.next-link {
+				text-align: right;
+			}
+			@media (max-width: 720px) {
+				.post-navigation {
+					grid-template-columns: 1fr;
+				}
+				.next-link {
+					text-align: left;
+				}
+			}
 		</style>
 	</head>
 
@@ -100,6 +154,28 @@ const categoryUrl = postCategory ? `${base}/categories/${postCategory.slug}/` : 
 						<hr />
 					</div>
 					<slot />
+					{
+						(olderPost || newerPost) && (
+							<nav class="post-navigation" aria-label="이전 글과 다음 글">
+								{olderPost ? (
+									<a class="previous-link" href={postUrl(olderPost.id)}>
+										<span class="nav-label">이전 글</span>
+										<span class="nav-title">{olderPost.data.title}</span>
+									</a>
+								) : (
+									<div></div>
+								)}
+								{newerPost ? (
+									<a class="next-link" href={postUrl(newerPost.id)}>
+										<span class="nav-label">다음 글</span>
+										<span class="nav-title">{newerPost.data.title}</span>
+									</a>
+								) : (
+									<div></div>
+								)}
+							</nav>
+						)
+					}
 				</div>
 			</article>
 		</main>
