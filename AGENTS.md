@@ -6,6 +6,20 @@ Posts are written in Korean by default. English technical identifiers, command n
 
 Treat this repository as a clean, public-only blog. Never assume previous sanitization is enough. Every change must be safe if read by anyone on the public internet.
 
+## Writing Rules
+
+These rules are mandatory for every new post and every revision of an existing post.
+
+Write in a natural human voice. Prefer experience-based explanation, concrete judgment, and smooth transitions over generic AI-like summaries, excessive bullet lists, or unsupported claims.
+
+Use this default structure unless the topic clearly needs another shape: problem or trigger, why it mattered, what was checked or tried, decision criteria, result, limits and cautions. Tutorial posts should use prerequisites, steps followed, checkpoints, failures or cautions, and wrap-up.
+
+Avoid creating confusion with inaccurate statements. For dates, versions, prices, policies, product behavior, release status, and other changeable facts, state the writing date or checked version and cite the source or evidence used. Separate facts, interpretations, assumptions, and personal opinions. If something was not verified, say so or leave it out.
+
+When writing about AI tools, do not overstate capability. Explain what AI helped with and what still required human review, source checking, or validation.
+
+Each substantial post should naturally include at least one of these: what was checked, scope and limits, easy-to-misread points, or remaining cautions.
+
 Do not update this public repository with private material in posts, drafts, commits, commit messages, issues, pull requests, comments, screenshots, images, attachments, filenames, branch names, or generated build artifacts.
 
 Do not include, summarize, anonymize, hint at, or derive content from:
@@ -20,14 +34,20 @@ Do not include, summarize, anonymize, hint at, or derive content from:
 
 Public safety applies to the whole repository, including tracked source files, generated pages, metadata, assets, filenames, git history, workflow logs, and deployment artifacts.
 
-Every published post must include one safe representative image through `heroImage`. When writing posts, also include directly captured relevant screenshots or images in the body when they materially help the reader follow the flow. Prefer clean public examples, public documentation, or newly created local demo material. Do not capture private work systems, private documents, private repositories, dashboards, issue trackers, emails, chat tools, account pages, internal URLs, browser tabs, usernames, device names, tokens, keys, logs, or any other identifiable context.
+Every published post must include one safe representative image through `heroImage`. For architecture or concept explanations, actively use generated images, synthesized diagrams, or hand-made diagrams, but make clear in the caption or nearby text when the image is a concept diagram rather than implementation proof.
+
+When explaining an actual working flow, it is acceptable to include a cropped screenshot of a small code area or a redacted runtime screen if it materially improves understanding. Prefer clean public examples, public documentation, newly created local demo material, or safely redacted actual screens. Do not capture private work systems, private documents, private repositories, dashboards, issue trackers, emails, chat tools, account pages, internal URLs, browser tabs, usernames, device names, tokens, keys, logs, or any other identifiable context.
+
+SecondBrain Graph screenshots may be used when they show the actual concept in operation, but product, company, customer, personal, internal path, task name, raw log, queue, schedule, account, and private node details must be hidden as much as possible.
 
 Before adding any screenshot or image:
 
 - Inspect it at original size before committing.
 - Crop, blur, redact, or retake it so no private or identifiable content is visible.
+- Use mosaic/redaction when blur may still leave text or structure inferable.
 - Remove or avoid metadata that could expose private device, account, path, location, timestamp, or tool details.
 - Use safe filenames, alt text, captions, and surrounding prose that do not reveal private context.
+- Explain what the image shows and, when needed, what it does not prove.
 - If a private detail cannot be safely removed or if safety is uncertain, omit the image.
 - If no safe representative image can be created, do not publish the post yet.
 
@@ -39,6 +59,7 @@ Before every commit or push:
 - Search source files for company names, product names, customer names, personal information, credentials, tokens, private repository names, internal issue IDs, server details, and local paths.
 - Inspect screenshots, images, attachments, and other non-text assets before adding them.
 - Build the site and scan the generated output before publishing.
+- Check that the post follows the writing rules: human voice, clear evidence boundary, no unnecessary incorrect statement, and no unsupported strong claims.
 - Stop immediately if any content could identify a company, organization, person, product, customer, repository, internal system, or private work context.
 
 ## Development

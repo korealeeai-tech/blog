@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Pre-work memory brief concept diagram</title>
+  <desc id="desc">A public-safe concept diagram showing how a short memory brief turns prior preferences into a task contract before work begins.</desc>
+  <rect width="1600" height="900" fill="#fbfbf7"/>
+  <text x="118" y="145" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#172033">Pre-work Memory Brief</text>
+  <text x="120" y="197" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#4b5563">Memory should prepare the work, not replace current evidence.</text>
+
+  <rect x="130" y="300" width="300" height="260" rx="24" fill="#e9f5f2" stroke="#0f766e" stroke-width="4"/>
+  <text x="180" y="370" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#134e4a">Recall</text>
+  <text x="178" y="427" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#134e4a">stable preferences</text>
+  <text x="178" y="468" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#134e4a">risk patterns</text>
+  <text x="178" y="509" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#134e4a">review style</text>
+
+  <rect x="520" y="300" width="300" height="260" rx="24" fill="#eef2ff" stroke="#4f46e5" stroke-width="4"/>
+  <text x="570" y="370" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#312e81">Brief</text>
+  <text x="568" y="427" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#312e81">intent</text>
+  <text x="568" y="468" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#312e81">done criteria</text>
+  <text x="568" y="509" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#312e81">excluded context</text>
+
+  <rect x="910" y="300" width="300" height="260" rx="24" fill="#fff7ed" stroke="#c2410c" stroke-width="4"/>
+  <text x="960" y="370" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#7c2d12">Verify</text>
+  <text x="958" y="427" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#7c2d12">current files</text>
+  <text x="958" y="468" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#7c2d12">official sources</text>
+  <text x="958" y="509" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#7c2d12">fresh output</text>
+
+  <rect x="1300" y="300" width="170" height="260" rx="24" fill="#111827"/>
+  <text x="1342" y="388" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700" fill="#ffffff">Act</text>
+  <text x="1330" y="446" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#e5e7eb">write</text>
+  <text x="1330" y="484" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#e5e7eb">test</text>
+  <text x="1330" y="522" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#e5e7eb">report</text>
+
+  <path d="M444 430 H496" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
+  <path d="M486 410 L520 430 L486 450" fill="none" stroke="#475569" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M834 430 H886" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
+  <path d="M876 410 L910 430 L876 450" fill="none" stroke="#475569" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1224 430 H1276" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1266 410 L1300 430 L1266 450" fill="none" stroke="#475569" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="258" y="670" width="1084" height="74" rx="37" fill="#263238"/>
+  <text x="315" y="717" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#ffffff">A useful brief is short enough to read and concrete enough to check.</text>
+</svg>
