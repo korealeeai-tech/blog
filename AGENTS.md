@@ -34,7 +34,7 @@ Do not include, summarize, anonymize, hint at, or derive content from:
 
 Public safety applies to the whole repository, including tracked source files, generated pages, metadata, assets, filenames, git history, workflow logs, and deployment artifacts.
 
-Every published post must include one safe representative image through `heroImage`. For architecture or concept explanations, actively use generated images, synthesized diagrams, or hand-made diagrams, but make clear in the caption or nearby text when the image is a concept diagram rather than implementation proof.
+Every published post must include one safe representative image through `heroImage`. For architecture or concept explanations, actively use generated images, synthesized diagrams, or hand-made diagrams, but make clear in the caption or nearby text when the image is a concept diagram rather than implementation proof. When creating an explanatory image or diagram for a Korean post, write the text inside the image in Korean where practical, except for technical identifiers, code, commands, product names, or terms that should remain in their original form.
 
 When explaining an actual working flow, it is acceptable to include a cropped screenshot of a small code area or a redacted runtime screen if it materially improves understanding. Prefer clean public examples, public documentation, newly created local demo material, or safely redacted actual screens. Do not capture private work systems, private documents, private repositories, dashboards, issue trackers, emails, chat tools, account pages, internal URLs, browser tabs, usernames, device names, tokens, keys, logs, or any other identifiable context.
 
