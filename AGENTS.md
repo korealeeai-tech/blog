@@ -16,6 +16,8 @@ Use this default structure unless the topic clearly needs another shape: problem
 
 Avoid creating confusion with inaccurate statements. For dates, versions, prices, policies, product behavior, release status, and other changeable facts, state the writing date or checked version and cite the source or evidence used. Separate facts, interpretations, assumptions, and personal opinions. If something was not verified, say so or leave it out.
 
+When a post relies on official documentation to explain a feature, policy, or behavior, do not stop at a link and checked date. Include a short necessary excerpt from the original text, then separate the Korean interpretation, the judgment applied in the post, and any limits of the verification. Do not reproduce long passages from documentation.
+
 When writing about AI tools, do not overstate capability. Explain what AI helped with and what still required human review, source checking, or validation.
 
 Each substantial post should naturally include at least one of these: what was checked, scope and limits, easy-to-misread points, or remaining cautions.

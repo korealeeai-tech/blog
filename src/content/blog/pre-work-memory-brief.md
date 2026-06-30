@@ -117,6 +117,16 @@ Pre-work Memory Brief는 복잡한 자동화가 없어도 쓸 수 있다. 작업
 
 Codex 문서는 memories를 이전 작업의 유용한 문맥을 가져오는 보조 계층으로 설명한다. Claude Code 문서는 `CLAUDE.md`와 auto memory가 세션 시작 시 문맥으로 로드되지만 강제 설정은 아니라고 설명한다.
 
+공식 문서 원문을 짧게 보면 이 차이가 보인다.
+
+> [OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "Memories let Codex carry useful context"
+
+나는 이 문장을 memory가 답을 대신 내는 장치가 아니라, 이전 작업에서 유용했던 문맥을 다음 작업으로 가져오는 보조 장치라는 뜻으로 해석했다.
+
+> [Claude Code memory 문서](https://code.claude.com/docs/en/memory): "Both are loaded at the start of every conversation."
+
+Claude Code의 `CLAUDE.md`와 auto memory도 작업 시작 시 들어오는 문맥으로 보았다. 하지만 같은 문서에서 context와 enforced configuration을 구분하기 때문에, 이 글에서는 memory를 최종 근거가 아니라 작업 전 brief의 재료로만 다룬다.
+
 여기서 말하는 Pre-work Memory Brief는 특정 제품 기능 이름이 아니다. official memory 기능을 그대로 설명하려는 글도 아니다. 내가 말하는 것은 memory에서 가져온 기준을 작업 직전에 짧은 계약으로 정리하는 운영 방식이다.
 
 도구가 기억을 자동으로 만들 수 있더라도, 어떤 기억을 현재 작업에 적용할지는 여전히 검토해야 한다. 오래된 기준은 버리고, 민감한 내용은 제외하고, 현재 요청에 맞는 기준만 남겨야 한다.

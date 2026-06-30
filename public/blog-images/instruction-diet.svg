@@ -1,41 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">AI agent instruction diet concept diagram</title>
-  <desc id="desc">A public-safe concept diagram that separates permanent rules, situational workflows, and enforceable checks.</desc>
+  <title id="title">AI 에이전트 지시문 다이어트 개념도</title>
+  <desc id="desc">상시 규칙, 상황별 절차, 자동 검증을 나눈 공개용 개념도.</desc>
   <rect width="1600" height="900" fill="#f5f7f8"/>
-  <text x="110" y="145" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#102033">Instruction diet for AI agents</text>
-  <text x="112" y="197" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#4b5563">Short rules stay loaded. Long procedures load when needed. Hard limits move into checks.</text>
+  <text x="110" y="145" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#102033">AI 에이전트 지시문 다이어트</text>
+  <text x="112" y="197" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="29" fill="#4b5563">짧은 규칙은 항상 읽고, 긴 절차는 필요할 때 읽고, 강한 제한은 검증으로 옮긴다.</text>
 
   <rect x="130" y="285" width="380" height="355" rx="22" fill="#ffffff" stroke="#0f766e" stroke-width="4"/>
   <circle cx="192" cy="348" r="26" fill="#0f766e"/>
   <text x="177" y="358" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#ffffff">1</text>
-  <text x="235" y="358" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Keep loaded</text>
-  <text x="175" y="430" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">tone</text>
-  <text x="175" y="474" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">safety boundary</text>
-  <text x="175" y="518" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">definition of done</text>
-  <text x="175" y="562" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">stop conditions</text>
+  <text x="235" y="358" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">항상 읽기</text>
+  <text x="175" y="430" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">톤</text>
+  <text x="175" y="474" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">안전 경계</text>
+  <text x="175" y="518" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">완료 기준</text>
+  <text x="175" y="562" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">중단 조건</text>
 
   <rect x="610" y="285" width="380" height="355" rx="22" fill="#ffffff" stroke="#2563eb" stroke-width="4"/>
   <circle cx="672" cy="348" r="26" fill="#2563eb"/>
   <text x="657" y="358" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#ffffff">2</text>
-  <text x="715" y="358" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Load on demand</text>
-  <text x="655" y="430" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">release checklist</text>
-  <text x="655" y="474" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">blog workflow</text>
-  <text x="655" y="518" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">review protocol</text>
-  <text x="655" y="562" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">domain playbook</text>
+  <text x="715" y="358" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">필요할 때 읽기</text>
+  <text x="655" y="430" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">릴리스 체크</text>
+  <text x="655" y="474" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">블로그 절차</text>
+  <text x="655" y="518" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">리뷰 기준</text>
+  <text x="655" y="562" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">도메인 절차</text>
 
   <rect x="1090" y="285" width="380" height="355" rx="22" fill="#ffffff" stroke="#b45309" stroke-width="4"/>
   <circle cx="1152" cy="348" r="26" fill="#b45309"/>
   <text x="1137" y="358" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#ffffff">3</text>
-  <text x="1195" y="358" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Enforce</text>
-  <text x="1135" y="430" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">schema</text>
-  <text x="1135" y="474" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">tests</text>
-  <text x="1135" y="518" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">secret scan</text>
-  <text x="1135" y="562" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#334155">build gate</text>
+  <text x="1195" y="358" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#0f172a">자동 검증</text>
+  <text x="1135" y="430" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">스키마</text>
+  <text x="1135" y="474" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">테스트</text>
+  <text x="1135" y="518" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">민감정보 검색</text>
+  <text x="1135" y="562" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="26" fill="#334155">빌드 게이트</text>
 
   <path d="M522 462 H588" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
   <path d="M578 442 L610 462 L578 482" fill="none" stroke="#475569" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M1002 462 H1068" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
   <path d="M1058 442 L1090 462 L1058 482" fill="none" stroke="#475569" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <text x="210" y="750" font-family="Arial, Helvetica, sans-serif" font-size="31" fill="#111827">A longer prompt is not automatically a better control system.</text>
+  <text x="210" y="750" font-family="Noto Sans CJK KR, Arial, Helvetica, sans-serif" font-size="31" fill="#111827">더 긴 프롬프트가 항상 더 좋은 통제 구조는 아니다.</text>
 </svg>
