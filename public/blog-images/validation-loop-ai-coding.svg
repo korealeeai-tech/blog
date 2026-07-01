@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AI 코딩 검증 루프</title>
+  <desc id="desc">변경, 검증, 실패 원인 반영, 재검증, 완료 증거로 이어지는 반복 루프</desc>
+  <rect width="1200" height="675" fill="#f7f8f3"/>
+  <text x="90" y="104" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="40" font-weight="800" fill="#1f2937">완료 보고보다 검증 루프를 믿는다</text>
+  <text x="90" y="143" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="20" fill="#59615f">AI가 끝났다고 말하는 순간이 아니라, 증거가 모이는 순간을 완료로 본다.</text>
+  <circle cx="600" cy="355" r="185" fill="#ffffff" stroke="#d4d9cf" stroke-width="2"/>
+  <circle cx="600" cy="355" r="78" fill="#243b53"/>
+  <text x="600" y="346" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="23" font-weight="800" fill="#ffffff">완료</text>
+  <text x="600" y="378" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="18" fill="#d8e6f0">증거 기준</text>
+  <g font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-weight="800" font-size="22">
+    <rect x="480" y="156" width="240" height="72" rx="16" fill="#e3f2fd" stroke="#69a6d8"/>
+    <text x="600" y="201" text-anchor="middle" fill="#175a8a">1. 기준 고정</text>
+    <rect x="796" y="260" width="230" height="72" rx="16" fill="#fff2cf" stroke="#d8a736"/>
+    <text x="911" y="305" text-anchor="middle" fill="#855c00">2. 작게 변경</text>
+    <rect x="764" y="470" width="230" height="72" rx="16" fill="#e8f5e9" stroke="#75b47b"/>
+    <text x="879" y="515" text-anchor="middle" fill="#2f6f36">3. 검증 실행</text>
+    <rect x="208" y="470" width="230" height="72" rx="16" fill="#fdecea" stroke="#d48880"/>
+    <text x="323" y="515" text-anchor="middle" fill="#8a3a33">4. 실패 반영</text>
+    <rect x="174" y="260" width="230" height="72" rx="16" fill="#f0ecff" stroke="#9b8ad6"/>
+    <text x="289" y="305" text-anchor="middle" fill="#5d4a9b">5. 재검증</text>
+  </g>
+  <path d="M714 212 C785 225 842 242 884 269" fill="none" stroke="#6b7280" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M939 334 C949 388 930 436 894 469" fill="none" stroke="#6b7280" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M760 516 C646 572 493 571 438 516" fill="none" stroke="#6b7280" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M300 469 C252 428 243 376 278 334" fill="none" stroke="#6b7280" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M336 260 C383 221 434 204 480 195" fill="none" stroke="#6b7280" stroke-width="4" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <text x="600" y="615" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="18" fill="#59615f">실패는 중단 신호가 아니라 다음 반복에서 반영해야 할 정보다.</text>
+</svg>
