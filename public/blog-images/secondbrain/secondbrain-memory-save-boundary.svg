@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AI 작업 기억의 저장 경계</title>
+  <desc id="desc">저장할 것, 조심해서 저장할 것, 저장하지 않을 것을 나누는 개념도</desc>
+  <rect width="1200" height="675" fill="#f6f7f2"/>
+  <rect x="70" y="66" width="1060" height="540" rx="24" fill="#ffffff" stroke="#d9ddd2" stroke-width="2"/>
+  <text x="105" y="121" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="38" font-weight="800" fill="#1f2937">AI 작업 기억은 저장 경계가 먼저다</text>
+  <text x="105" y="160" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="20" fill="#5c6460">많이 저장하는 것보다 다음 작업에서 안전하게 쓸 수 있는 기준만 남기는 것이 중요하다.</text>
+
+  <g transform="translate(105 225)">
+    <rect width="300" height="250" rx="20" fill="#e7f5ee" stroke="#69ad8a" stroke-width="2"/>
+    <text x="150" y="52" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="27" font-weight="800" fill="#246b48">저장할 것</text>
+    <text x="38" y="102" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#2e5542">반복되는 선호</text>
+    <text x="38" y="138" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#2e5542">검증 기준</text>
+    <text x="38" y="174" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#2e5542">피해야 할 실수</text>
+    <line x1="38" y1="200" x2="262" y2="200" stroke="#a8d8bf"/>
+    <text x="38" y="229" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="17" font-weight="700" fill="#246b48">행동 기준으로 남긴다</text>
+  </g>
+
+  <g transform="translate(450 225)">
+    <rect width="300" height="250" rx="20" fill="#fff6df" stroke="#d4a745" stroke-width="2"/>
+    <text x="150" y="52" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="27" font-weight="800" fill="#835b0b">조심해서 저장</text>
+    <text x="38" y="102" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#604817">작업 맥락</text>
+    <text x="38" y="138" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#604817">도구 설정</text>
+    <text x="38" y="174" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#604817">시간에 민감한 기준</text>
+    <line x1="38" y1="200" x2="262" y2="200" stroke="#e8ca7c"/>
+    <text x="38" y="229" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="17" font-weight="700" fill="#835b0b">확인일과 한계를 붙인다</text>
+  </g>
+
+  <g transform="translate(795 225)">
+    <rect width="300" height="250" rx="20" fill="#fdeceb" stroke="#d98983" stroke-width="2"/>
+    <text x="150" y="52" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="27" font-weight="800" fill="#8b3833">저장하지 않을 것</text>
+    <text x="38" y="102" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#68413e">원문 대화</text>
+    <text x="38" y="138" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#68413e">개인·계정 정보</text>
+    <text x="38" y="174" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#68413e">비공개 업무 맥락</text>
+    <line x1="38" y1="200" x2="262" y2="200" stroke="#efb4b0"/>
+    <text x="38" y="229" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="17" font-weight="700" fill="#8b3833">삭제보다 애초에 제외한다</text>
+  </g>
+
+  <rect x="185" y="525" width="830" height="54" rx="16" fill="#f8fafc" stroke="#d5dbe3"/>
+  <text x="600" y="558" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="20" font-weight="700" fill="#334155">좋은 기억은 “사용자는 이런 사람”이 아니라 “이번 작업에서 이 기준을 확인하라”에 가깝다</text>
+</svg>
