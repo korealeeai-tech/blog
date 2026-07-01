@@ -45,13 +45,28 @@ Claude Code 문서도 비슷한 경계를 알려준다. `CLAUDE.md`와 auto memo
 
 나는 이 문장을 모든 절차를 항상 지시문에 넣지 말고, 필요한 작업에서 필요한 절차만 불러오는 구조가 낫다는 근거로 보았다.
 
+<figure>
+	<img src="/blog/blog-images/official-docs/openai-codex-skills-progressive-disclosure.png" alt="OpenAI Codex skills 공식문서에서 progressive disclosure로 context를 효율적으로 관리한다고 설명한 영역 캡처" />
+	<figcaption>OpenAI Codex skills 문서 캡처, 확인일 2026-07-01. 필요한 지침을 필요한 때 불러오는 방향의 근거이며, 모든 절차를 skill로 분리해야 한다는 뜻은 아니다.</figcaption>
+</figure>
+
 > [OpenAI Codex hooks 문서](https://developers.openai.com/codex/hooks): "Hooks are an extensibility framework for Codex."
 
 여기서는 지시문으로 부탁할 일과 자동 검증으로 옮길 일을 나누는 근거를 얻었다. 지시문은 판단 기준을 알려주고, hook이나 build 같은 검증은 반복 확인을 맡는 식이다.
 
+<figure>
+	<img src="/blog/blog-images/official-docs/openai-codex-hooks-extensibility.png" alt="OpenAI Codex hooks 공식문서에서 Hooks가 Codex 확장 프레임워크라고 설명한 영역 캡처" />
+	<figcaption>OpenAI Codex hooks 문서 캡처, 확인일 2026-07-01. 자동 검증을 연결할 수 있는 확장 지점의 근거이며, 이 글의 모든 운영 규칙을 hook으로 구현했다는 증거는 아니다.</figcaption>
+</figure>
+
 > [Claude Code memory 문서](https://code.claude.com/docs/en/memory): "Longer files consume more context and reduce adherence."
 
 이 문장은 지시문 다이어트의 핵심에 가깝다. 다만 이 글의 결론은 "무조건 짧게 쓰자"가 아니라, 항상 필요한 규칙과 필요할 때만 읽을 절차를 나누자는 쪽에 가깝다.
+
+<figure>
+	<img src="/blog/blog-images/official-docs/claude-memory-longer-files.png" alt="Claude Code memory 공식문서에서 긴 지시문 파일이 context를 더 쓰고 adherence를 낮출 수 있다고 설명한 영역 캡처" />
+	<figcaption>Claude Code memory 문서 캡처, 확인일 2026-07-01. 긴 지시문을 조심해야 한다는 근거이며, 특정 줄 수가 모든 도구에 그대로 적용된다는 뜻은 아니다.</figcaption>
+</figure>
 
 내가 여기서 얻은 기준은 이렇다. 지시문 파일은 모든 것을 넣는 창고가 아니라, 작업 시작 시 반드시 떠올려야 하는 기준만 담는 곳이어야 한다.
 

@@ -16,7 +16,7 @@ Use this default structure unless the topic clearly needs another shape: problem
 
 Avoid creating confusion with inaccurate statements. For dates, versions, prices, policies, product behavior, release status, and other changeable facts, state the writing date or checked version and cite the source or evidence used. Separate facts, interpretations, assumptions, and personal opinions. If something was not verified, say so or leave it out.
 
-When a post relies on official documentation to explain a feature, policy, or behavior, do not stop at a link and checked date. Include a short necessary excerpt from the original text, then separate the Korean interpretation, the judgment applied in the post, and any limits of the verification. Do not reproduce long passages from documentation.
+When a post relies on official documentation to explain a feature, policy, or behavior, do not stop at a link and checked date. Prefer a small cropped screenshot of the relevant official documentation area so readers can see the original source in context. If screenshotting is impractical or unsuitable for copyright, readability, accessibility, or safety reasons, include a short necessary excerpt from the original text instead. In both cases, separate the Korean interpretation, the judgment applied in the post, and any limits of the verification. Do not reproduce long passages from documentation.
 
 When writing about AI tools, do not overstate capability. Explain what AI helped with and what still required human review, source checking, or validation.
 
@@ -36,9 +36,11 @@ Do not include, summarize, anonymize, hint at, or derive content from:
 
 Public safety applies to the whole repository, including tracked source files, generated pages, metadata, assets, filenames, git history, workflow logs, and deployment artifacts.
 
-Every published post must include one safe representative image through `heroImage`. For architecture or concept explanations, actively use generated images, synthesized diagrams, or hand-made diagrams, but make clear in the caption or nearby text when the image is a concept diagram rather than implementation proof. When creating an explanatory image or diagram for a Korean post, write the text inside the image in Korean where practical, except for technical identifiers, code, commands, product names, or terms that should remain in their original form.
+Every published post must include one safe representative image through `heroImage`. For architecture or concept explanations, actively use generated images, synthesized diagrams, or hand-made diagrams, but make clear in the caption or nearby text when the image is a concept diagram rather than implementation proof. When creating an explanatory image or diagram for a Korean post, write the text inside the image in Korean where practical, except for technical identifiers, code, commands, product names, or terms that should remain in their original form. Official documentation screenshots preserve the original source language because their purpose is evidence, not explanation.
 
 When explaining an actual working flow, it is acceptable to include a cropped screenshot of a small code area or a redacted runtime screen if it materially improves understanding. Prefer clean public examples, public documentation, newly created local demo material, or safely redacted actual screens. Do not capture private work systems, private documents, private repositories, dashboards, issue trackers, emails, chat tools, account pages, internal URLs, browser tabs, usernames, device names, tokens, keys, logs, or any other identifiable context.
+
+Official documentation screenshots must be cropped to the minimum relevant content area. Do not include browser address bars, login state, account details, extensions, local paths, unrelated tabs, cookie banners, or page chrome that is not part of the evidence. Captions must state the source, checked date, what the screenshot shows, and what it does not prove.
 
 SecondBrain Graph screenshots may be used when they show the actual concept in operation, but product, company, customer, personal, internal path, task name, raw log, queue, schedule, account, and private node details must be hidden as much as possible.
 
