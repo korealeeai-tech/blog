@@ -1,0 +1,45 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Promotion Review Queue</title>
+  <desc id="desc">좋은 기억과 나쁜 기억을 승격 심사 기준으로 나누는 개념도</desc>
+  <rect width="1200" height="675" fill="#faf9f6"/>
+  <rect x="58" y="54" width="1084" height="567" rx="26" fill="#ffffff" stroke="#e2ded3" stroke-width="2"/>
+  <text x="92" y="112" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="34" font-weight="700" fill="#211f1c">좋은 기억과 나쁜 기억은 승격 전에 갈라야 한다</text>
+  <text x="94" y="154" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#6d6860">Promotion Review Queue는 후보를 바로 믿지 않고 통과 기준으로 확인하는 장치다</text>
+
+  <rect x="90" y="224" width="282" height="284" rx="22" fill="#f4f5f7" stroke="#ccd2dc" stroke-width="2"/>
+  <text x="231" y="270" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="26" font-weight="700" fill="#283142">기억 후보</text>
+  <text x="231" y="315" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#596273">새 피드백</text>
+  <text x="231" y="347" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#596273">반복 실수</text>
+  <text x="231" y="379" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#596273">작업 기준</text>
+  <text x="231" y="430" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#7a8391">후보는 아직 공식 기억이 아니다</text>
+
+  <rect x="459" y="198" width="282" height="336" rx="22" fill="#fff9ea" stroke="#e5bf67" stroke-width="2"/>
+  <text x="600" y="244" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="26" font-weight="700" fill="#503916">심사 기준</text>
+  <text x="494" y="294" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5f4b25">✓ 근거가 있는가</text>
+  <text x="494" y="334" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5f4b25">✓ 행동을 바꾸는가</text>
+  <text x="494" y="374" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5f4b25">✓ 현재 요청을 덮지 않는가</text>
+  <text x="494" y="414" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5f4b25">✓ 민감 정보가 없는가</text>
+  <text x="494" y="454" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5f4b25">✓ 갱신 가능하게 적었는가</text>
+  <text x="600" y="499" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#806a3b">통과 기준은 자동 확신이 아니라 보수적 확인이다</text>
+
+  <rect x="828" y="202" width="282" height="142" rx="22" fill="#eef9f1" stroke="#89c898" stroke-width="2"/>
+  <text x="969" y="250" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#1f4a2b">승격</text>
+  <text x="969" y="292" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#3f6548">다음 작업에서 쓸</text>
+  <text x="969" y="319" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#3f6548">검증 가능한 기준</text>
+
+  <rect x="828" y="392" width="282" height="142" rx="22" fill="#fff1f1" stroke="#e6a0a0" stroke-width="2"/>
+  <text x="969" y="440" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#612424">보류 또는 폐기</text>
+  <text x="969" y="482" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#754545">오래된 추측</text>
+  <text x="969" y="509" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#754545">과잉 일반화와 민감 단서</text>
+
+  <path d="M384 366 H443" stroke="#9a927f" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M755 306 H812" stroke="#6fa77b" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M755 432 H812" stroke="#c18686" stroke-width="4" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#837a6b"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="590" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#716b62">이 그림은 공개용 개념도이며 실제 개인 memory나 내부 review queue를 보여주지 않는다</text>
+</svg>

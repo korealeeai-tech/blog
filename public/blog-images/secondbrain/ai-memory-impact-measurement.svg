@@ -1,0 +1,56 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI memory 효과 측정 흐름</title>
+  <desc id="desc">AI memory 효과를 반복 설명 감소, 검증 강화, 위험 감소, 맥락 회수로 나누어 관찰하는 개념도</desc>
+  <rect width="1200" height="675" fill="#f7f8fb"/>
+  <rect x="58" y="54" width="1084" height="567" rx="26" fill="#ffffff" stroke="#d9dee8" stroke-width="2"/>
+  <text x="92" y="112" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="34" font-weight="700" fill="#162033">AI memory 효과는 감이 아니라 관찰 축으로 본다</text>
+  <text x="94" y="154" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#5c6678">기억이 많아졌는지가 아니라, 작업 결과가 어떻게 달라졌는지를 본다</text>
+
+  <g transform="translate(92 205)">
+    <rect width="222" height="230" rx="18" fill="#eef6ff" stroke="#8bc0f7" stroke-width="2"/>
+    <circle cx="52" cy="54" r="23" fill="#2f80ed"/>
+    <text x="52" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#ffffff">1</text>
+    <text x="32" y="105" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#17324d">반복 설명</text>
+    <text x="32" y="139" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#36526d">같은 기준을</text>
+    <text x="32" y="167" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#36526d">다시 말하는 횟수</text>
+    <text x="32" y="197" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#6f7d8d">줄면 효과 후보</text>
+  </g>
+
+  <g transform="translate(356 205)">
+    <rect width="222" height="230" rx="18" fill="#f1fbf4" stroke="#8bd59b" stroke-width="2"/>
+    <circle cx="52" cy="54" r="23" fill="#2e9f59"/>
+    <text x="52" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#ffffff">2</text>
+    <text x="32" y="105" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#173a27">검증 강화</text>
+    <text x="32" y="139" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#365b43">완료 전에</text>
+    <text x="32" y="167" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#365b43">증거를 보는가</text>
+    <text x="32" y="197" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#6f7d8d">통과/미확인 분리</text>
+  </g>
+
+  <g transform="translate(620 205)">
+    <rect width="222" height="230" rx="18" fill="#fff7ed" stroke="#f4b266" stroke-width="2"/>
+    <circle cx="52" cy="54" r="23" fill="#d7791f"/>
+    <text x="52" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#ffffff">3</text>
+    <text x="32" y="105" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#4b2a0b">위험 감소</text>
+    <text x="32" y="139" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#654419">경로 추측과</text>
+    <text x="32" y="167" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#654419">거짓 완료 방지</text>
+    <text x="32" y="197" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#6f7d8d">재발 기준 확인</text>
+  </g>
+
+  <g transform="translate(884 205)">
+    <rect width="222" height="230" rx="18" fill="#f6f2ff" stroke="#bca7f2" stroke-width="2"/>
+    <circle cx="52" cy="54" r="23" fill="#7357d5"/>
+    <text x="52" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#ffffff">4</text>
+    <text x="32" y="105" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#2d2057">맥락 회수</text>
+    <text x="32" y="139" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#4c3f74">작업 시작 전</text>
+    <text x="32" y="167" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="19" fill="#4c3f74">기준을 꺼내는가</text>
+    <text x="32" y="197" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#6f7d8d">현재 근거와 연결</text>
+  </g>
+
+  <path d="M178 485 H1022" stroke="#ccd4df" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="178" cy="485" r="9" fill="#2f80ed"/>
+  <circle cx="459" cy="485" r="9" fill="#2e9f59"/>
+  <circle cx="740" cy="485" r="9" fill="#d7791f"/>
+  <circle cx="1022" cy="485" r="9" fill="#7357d5"/>
+  <text x="600" y="548" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="23" font-weight="700" fill="#25324a">효과 주장은 관찰 기록과 현재 검증으로만 말한다</text>
+  <text x="600" y="584" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#687487">이 그림은 공개용 개념도이며 실제 개인 기록이나 내부 데이터를 포함하지 않는다</text>
+</svg>

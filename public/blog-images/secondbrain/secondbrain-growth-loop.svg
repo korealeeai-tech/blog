@@ -1,0 +1,54 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">SecondBrain 자동 성장 루프</title>
+  <desc id="desc">새 작업의 피드백이 후보, 검토, 승격, 보류를 거쳐 기준이 되는 흐름</desc>
+  <rect width="1200" height="675" fill="#f8faf7"/>
+  <rect x="58" y="54" width="1084" height="567" rx="26" fill="#ffffff" stroke="#dce4d8" stroke-width="2"/>
+  <text x="92" y="112" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="34" font-weight="700" fill="#172018">SecondBrain은 자동으로 믿지 않고 천천히 자란다</text>
+  <text x="94" y="154" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="20" fill="#657060">새 작업의 피드백은 바로 기억이 아니라 검토할 후보가 된다</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#87936f"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(96 230)">
+    <rect width="210" height="150" rx="18" fill="#eef7ea" stroke="#94c47d" stroke-width="2"/>
+    <text x="105" y="50" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#24401c">후보 수집</text>
+    <text x="105" y="88" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#42543c">새 피드백과</text>
+    <text x="105" y="116" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#42543c">반복 실수를 기록</text>
+  </g>
+  <path d="M320 305 H407" stroke="#87936f" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(424 230)">
+    <rect width="210" height="150" rx="18" fill="#fff8e8" stroke="#e2b45d" stroke-width="2"/>
+    <text x="105" y="50" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#4b3510">검토</text>
+    <text x="105" y="88" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#655333">근거와 적용 범위</text>
+    <text x="105" y="116" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#655333">민감성을 확인</text>
+  </g>
+  <path d="M648 305 H735" stroke="#87936f" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(752 230)">
+    <rect width="210" height="150" rx="18" fill="#edf5ff" stroke="#88bdf3" stroke-width="2"/>
+    <text x="105" y="50" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="25" font-weight="700" fill="#1e3650">승격</text>
+    <text x="105" y="88" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#3e5168">다음 작업의</text>
+    <text x="105" y="116" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#3e5168">행동 기준으로 반영</text>
+  </g>
+
+  <path d="M857 394 C857 478 240 478 201 394" fill="none" stroke="#87936f" stroke-width="4" marker-end="url(#arrow)"/>
+  <g transform="translate(472 447)">
+    <rect width="256" height="80" rx="16" fill="#f4f6f2" stroke="#cbd4c3" stroke-width="2"/>
+    <text x="128" y="33" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="21" font-weight="700" fill="#2f3a2d">다음 작업에서 재검증</text>
+    <text x="128" y="61" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="16" fill="#697363">현재 요청이 항상 우선</text>
+  </g>
+
+  <g transform="translate(970 230)">
+    <rect width="120" height="150" rx="18" fill="#fff0f0" stroke="#e69a9a" stroke-width="2"/>
+    <text x="60" y="51" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="24" font-weight="700" fill="#5a1e1e">보류</text>
+    <text x="60" y="91" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="17" fill="#714141">추측</text>
+    <text x="60" y="117" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="17" fill="#714141">민감정보</text>
+  </g>
+  <path d="M963 305 H951" stroke="#c99494" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <text x="600" y="590" text-anchor="middle" font-family="Noto Sans CJK KR, Pretendard, Arial, sans-serif" font-size="18" fill="#687064">이 그림은 공개용 개념도이며 실제 queue, schedule, 내부 로그를 포함하지 않는다</text>
+</svg>
