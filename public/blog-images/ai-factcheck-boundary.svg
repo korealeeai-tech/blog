@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">AI 사실확인 요청의 범위 나누기</title>
+  <desc id="desc">단순 확인, 가설 검증, 실행 요청을 나눠 과한 해석을 막는 개념도</desc>
+  <rect width="1200" height="630" fill="#eef3f7"/>
+  <rect x="76" y="72" width="1048" height="486" rx="28" fill="#ffffff" stroke="#22313f" stroke-width="3"/>
+  <text x="110" y="135" font-family="Arial, sans-serif" font-size="41" font-weight="700" fill="#22313f">“확인해줘”를 하나로 처리하지 않기</text>
+  <text x="110" y="178" font-family="Arial, sans-serif" font-size="23" fill="#596a78">AI가 요청을 과하게 해석하지 않도록 작업 범위를 먼저 가른다</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="118" y="245" width="280" height="178" rx="22" fill="#e5f0ff" stroke="#346aa8" stroke-width="2"/>
+    <circle cx="156" cy="288" r="18" fill="#346aa8"/>
+    <text x="183" y="298" font-size="29" font-weight="700" fill="#244b78">단순 확인</text>
+    <text x="150" y="342" font-size="22" fill="#35536b">파일, 상태, 출력처럼</text>
+    <text x="150" y="374" font-size="22" fill="#35536b">관찰 가능한 사실만 본다</text>
+    <rect x="460" y="245" width="280" height="178" rx="22" fill="#fff2db" stroke="#b66b1e" stroke-width="2"/>
+    <circle cx="498" cy="288" r="18" fill="#b66b1e"/>
+    <text x="525" y="298" font-size="29" font-weight="700" fill="#7c4915">가설 검증</text>
+    <text x="492" y="342" font-size="22" fill="#705331">주장, 근거, 반례,</text>
+    <text x="492" y="374" font-size="22" fill="#705331">보류 조건을 분리한다</text>
+    <rect x="802" y="245" width="280" height="178" rx="22" fill="#e8f4ea" stroke="#3d7e4e" stroke-width="2"/>
+    <circle cx="840" cy="288" r="18" fill="#3d7e4e"/>
+    <text x="867" y="298" font-size="29" font-weight="700" fill="#2b5d39">실행 요청</text>
+    <text x="834" y="342" font-size="22" fill="#3f5e46">확인 뒤 수정, 반영,</text>
+    <text x="834" y="374" font-size="22" fill="#3f5e46">배포까지 이어간다</text>
+  </g>
+  <path d="M250 474h700" stroke="#22313f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M938 457l18 17-18 17" fill="none" stroke="#22313f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="280" y="523" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#22313f">먼저 범위를 나누면, AI의 과잉 실행과 느슨한 확인을 같이 줄일 수 있다.</text>
+</svg>

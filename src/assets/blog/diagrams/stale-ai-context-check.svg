@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">오래된 AI 기억을 최신 증거로 확인하는 흐름</title>
+  <desc id="desc">오래된 기억을 바로 쓰지 않고 현재 요청, 최신 기록, 실제 증거와 대조하는 개념도</desc>
+  <rect width="1200" height="630" fill="#f5f1ea"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="#ffffff" stroke="#25313b" stroke-width="3"/>
+  <text x="105" y="135" font-family="Arial, sans-serif" font-size="41" font-weight="700" fill="#25313b">오래된 기억은 바로 쓰지 않는다</text>
+  <text x="105" y="178" font-family="Arial, sans-serif" font-size="23" fill="#5c6972">AI memory는 출발점이고, 완료 판단은 최신 증거로 한다</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="110" y="245" width="220" height="185" rx="22" fill="#f7dfdf" stroke="#a34545" stroke-width="2"/>
+    <text x="145" y="303" font-size="30" font-weight="700" fill="#7d3030">오래된 기억</text>
+    <text x="145" y="348" font-size="21" fill="#724646">이전 기준이나</text>
+    <text x="145" y="378" font-size="21" fill="#724646">마지막 상태</text>
+    <path d="M350 337h86" stroke="#25313b" stroke-width="4" stroke-linecap="round"/>
+    <path d="M424 320l18 17-18 17" fill="none" stroke="#25313b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="460" y="245" width="280" height="185" rx="22" fill="#e7f0fb" stroke="#456e9f" stroke-width="2"/>
+    <text x="500" y="303" font-size="30" font-weight="700" fill="#2f557d">최신 증거 대조</text>
+    <text x="500" y="348" font-size="21" fill="#425d78">현재 요청, 최근 기록,</text>
+    <text x="500" y="378" font-size="21" fill="#425d78">실제 파일과 상태 확인</text>
+    <path d="M760 337h86" stroke="#25313b" stroke-width="4" stroke-linecap="round"/>
+    <path d="M834 320l18 17-18 17" fill="none" stroke="#25313b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="870" y="245" width="220" height="185" rx="22" fill="#e7f4df" stroke="#5c873b" stroke-width="2"/>
+    <text x="914" y="303" font-size="30" font-weight="700" fill="#43682c">현재 판단</text>
+    <text x="914" y="348" font-size="21" fill="#4f6941">계속 쓸 것과</text>
+    <text x="914" y="378" font-size="21" fill="#4f6941">버릴 것을 분리</text>
+  </g>
+  <rect x="110" y="470" width="980" height="62" rx="18" fill="#25313b"/>
+  <text x="144" y="510" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff">기억이 틀릴 수 있다는 전제를 넣어야, AI가 예전 결론을 오늘의 사실처럼 말하지 않는다.</text>
+</svg>

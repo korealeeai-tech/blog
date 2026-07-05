@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">AI에게 의견 검증을 맡기는 흐름</title>
+  <desc id="desc">주장을 분해하고 근거와 반례를 확인한 뒤 보류 가능성을 남기는 흐름을 보여주는 개념도</desc>
+  <rect width="1200" height="630" fill="#f6f4ef"/>
+  <rect x="72" y="70" width="1056" height="490" rx="26" fill="#ffffff" stroke="#1d2b36" stroke-width="3"/>
+  <text x="105" y="135" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#1d2b36">동의보다 먼저 검증하기</text>
+  <text x="105" y="178" font-family="Arial, sans-serif" font-size="23" fill="#51606a">AI에게 내 생각을 맡길 때 필요한 순서</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="105" y="250" width="185" height="125" rx="18" fill="#e8f3f2" stroke="#23706f" stroke-width="2"/>
+    <text x="135" y="300" font-size="28" font-weight="700" fill="#174f4e">주장 분해</text>
+    <text x="135" y="338" font-size="20" fill="#315d5c">무엇을 참으로</text>
+    <text x="135" y="365" font-size="20" fill="#315d5c">보는지 나누기</text>
+    <path d="M307 313h65" stroke="#1d2b36" stroke-width="4" stroke-linecap="round"/>
+    <path d="M360 296l18 17-18 17" fill="none" stroke="#1d2b36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="390" y="250" width="185" height="125" rx="18" fill="#fff0d9" stroke="#ad6b1f" stroke-width="2"/>
+    <text x="420" y="300" font-size="28" font-weight="700" fill="#7b4a13">근거 확인</text>
+    <text x="420" y="338" font-size="20" fill="#77542b">내 주장에 맞는</text>
+    <text x="420" y="365" font-size="20" fill="#77542b">증거를 찾기</text>
+    <path d="M592 313h65" stroke="#1d2b36" stroke-width="4" stroke-linecap="round"/>
+    <path d="M645 296l18 17-18 17" fill="none" stroke="#1d2b36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="675" y="250" width="185" height="125" rx="18" fill="#f2e9ff" stroke="#6f51a8" stroke-width="2"/>
+    <text x="705" y="300" font-size="28" font-weight="700" fill="#563b86">반례 찾기</text>
+    <text x="705" y="338" font-size="20" fill="#64517d">틀릴 수 있는</text>
+    <text x="705" y="365" font-size="20" fill="#64517d">조건을 보기</text>
+    <path d="M877 313h65" stroke="#1d2b36" stroke-width="4" stroke-linecap="round"/>
+    <path d="M930 296l18 17-18 17" fill="none" stroke="#1d2b36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="960" y="250" width="120" height="125" rx="18" fill="#e9eef5" stroke="#40566f" stroke-width="2"/>
+    <text x="990" y="300" font-size="27" font-weight="700" fill="#2f4155">판정</text>
+    <text x="988" y="338" font-size="19" fill="#47596d">참/부분참</text>
+    <text x="996" y="365" font-size="19" fill="#47596d">보류</text>
+  </g>
+  <rect x="105" y="430" width="975" height="72" rx="18" fill="#1d2b36"/>
+  <text x="135" y="475" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff">좋은 검증 요청은 “맞지?”가 아니라 “이 주장이 어디서 틀릴 수 있나?”에 가깝다.</text>
+</svg>

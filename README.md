@@ -8,7 +8,7 @@ This repository is public. Do not include company organization details, user/cus
 
 Posts are written in Korean by default. Technical identifiers may remain in English when needed.
 
-Posts must read like a real person explaining a concrete experience or judgment. Avoid generic AI-like summaries, unsupported claims, and unnecessary strong statements. For changeable facts such as dates, versions, prices, policies, product behavior, and release status, state the checked date/version and separate verified facts from assumptions or opinions.
+Posts must read like a real person explaining a concrete experience or judgment. Avoid generic AI-like summaries, unsupported claims, and unnecessary strong statements. For changeable facts such as dates, versions, prices, policies, product behavior, and release status, include the checked date/version only when timing materially affects the claim, preferably near the source, caption, or final verification note rather than in the opening paragraph. Separate verified facts from assumptions or opinions.
 
 When citing official documentation for a feature, policy, or behavior, prefer a small cropped screenshot of the relevant official documentation area so readers can see the original source in context. If screenshotting is impractical or unsuitable, include a short necessary excerpt from the original text along with the source link and checked date instead. Then add the Korean interpretation and the limits of what was verified. Do not copy long documentation passages into posts.
 

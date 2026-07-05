@@ -12,7 +12,7 @@ SecondBrain을 만들 때 가장 위험한 순간은 "자동으로 성장한다"
 
 그래서 SecondBrain의 성장 루프는 단순한 저장 루프가 아니어야 한다. 후보를 모으고, 검토하고, 승격하거나 보류하고, 다음 작업에서 다시 검증하는 루프여야 한다.
 
-이 글은 공개 가능한 개념으로만 설명한다. 실제 개인 기록, 내부 경로, queue 세부값, schedule, 원문 로그, 업무 화면은 다루지 않는다. 2026-07-02 기준 OpenAI Codex와 Claude Code 공식 문서를 재확인했고, 기존 공식문서 캡처는 2026-07-01에 생성된 최소 영역 캡처를 사용한다.
+이 글은 공개 가능한 개념으로만 설명한다. 실제 개인 기록, 내부 경로, queue 세부값, schedule, 원문 로그, 업무 화면은 다루지 않는다. OpenAI Codex와 Claude Code 공식 문서를 참고하되, 실제 내부 기록이 아니라 공개 가능한 성장 루프 개념만 다룬다.
 
 <figure>
 	<img src="/blog/blog-images/secondbrain/secondbrain-growth-loop.svg" alt="SecondBrain이 후보 수집, 검토, 승격, 보류, 다음 작업 재검증을 거쳐 성장하는 개념도" />

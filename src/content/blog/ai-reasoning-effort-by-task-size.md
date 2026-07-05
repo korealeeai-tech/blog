@@ -12,7 +12,7 @@ AI에게 일을 맡기다 보면 한 번쯤은 이런 생각을 하게 된다. "
 
 그래서 요즘은 reasoning effort를 "성능을 높이는 스위치"로 보지 않는다. 작업의 실패 비용과 판단 난이도에 맞춰 조절하는 자원으로 본다.
 
-이 글은 2026-07-01 기준 OpenAI Codex 공식 문서를 확인하고, 내가 AI 작업을 나눌 때 쓰는 개인 운영 기준을 공개 가능한 범위로 정리한 것이다. 여기서 말하는 `quick`, `medium`, `deep` 같은 표현은 내 작업 분류 방식이지, 모든 도구에 그대로 적용되는 공식 등급표는 아니다.
+이 글은 OpenAI Codex 공식 문서에서 reasoning effort 설정이 존재한다는 점을 확인하고, 내가 AI 작업을 나눌 때 쓰는 개인 운영 기준을 공개 가능한 범위로 정리한 것이다. 여기서 말하는 `quick`, `medium`, `deep` 같은 표현은 내 작업 분류 방식이지, 모든 도구에 그대로 적용되는 공식 등급표는 아니다.
 
 <figure>
 	<img src="/blog/blog-images/reasoning-effort-lanes.svg" alt="빠른 작업, 보통 작업, 깊은 판단으로 reasoning effort를 나누는 개념도" />
