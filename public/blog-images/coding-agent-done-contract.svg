@@ -1,71 +1,102 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">AI 코딩 에이전트 완료 기준 개념도</title>
-  <desc id="desc">AI가 만든 결과를 변경, 검증 증거, 사람 검토, 인수인계 가능 상태로 나누어 완료를 판단하는 흐름</desc>
+  <desc id="desc">AI 코딩 에이전트의 완료를 변경, 검증, 검토, 인계 증거로 판단한다는 개념도</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f7fafc"/>
-      <stop offset="52%" stop-color="#edf7f3"/>
-      <stop offset="100%" stop-color="#fff8ec"/>
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6f1e7"/>
+      <stop offset="48%" stop-color="#eef4ef"/>
+      <stop offset="100%" stop-color="#e8eef8"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#1f2937" flood-opacity="0.14"/>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1726"/>
+      <stop offset="100%" stop-color="#16283f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#16a085"/>
+      <stop offset="55%" stop-color="#2d6cdf"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1f2937" flood-opacity="0.16"/>
     </filter>
-    <marker id="arrow" markerWidth="16" markerHeight="16" refX="12" refY="8" orient="auto">
-      <path d="M2,2 L14,8 L2,14 Z" fill="#46617a"/>
-    </marker>
+    <filter id="deepShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="26" stdDeviation="30" flood-color="#0f172a" flood-opacity="0.24"/>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#24364f" stroke-width="1" opacity="0.06"/>
+    </pattern>
   </defs>
 
-  <rect width="1200" height="675" fill="url(#bg)"/>
-  <circle cx="1040" cy="96" r="58" fill="#f7c948" opacity="0.25"/>
-  <circle cx="150" cy="560" r="86" fill="#5b8def" opacity="0.16"/>
+  <rect width="1200" height="675" fill="url(#page)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <path d="M-80 560C140 440 270 575 470 470C670 365 760 170 1000 170C1120 170 1210 224 1280 298V750H-80Z" fill="#dbeafe" opacity="0.46"/>
+  <circle cx="982" cy="116" r="74" fill="#f5c542" opacity="0.28"/>
+  <circle cx="1048" cy="180" r="28" fill="#16a085" opacity="0.18"/>
 
-  <text x="80" y="88" fill="#172033" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="42" font-weight="800">
-    AI 코딩 에이전트의 완료는 말이 아니라 증거다
-  </text>
-  <text x="82" y="128" fill="#516174" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">
-    결과물이 생긴 상태와 사람이 넘겨받아도 되는 상태를 분리해서 본다.
-  </text>
+  <g transform="translate(84 96)">
+    <rect x="0" y="0" width="82" height="30" rx="15" fill="#0f766e" opacity="0.13"/>
+    <text x="18" y="21" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="15" font-weight="800" fill="#0f766e">AI 작업 기준</text>
 
-  <g filter="url(#shadow)">
-    <rect x="82" y="205" width="205" height="142" rx="24" fill="#ffffff"/>
-    <rect x="343" y="205" width="205" height="142" rx="24" fill="#ffffff"/>
-    <rect x="604" y="205" width="205" height="142" rx="24" fill="#ffffff"/>
-    <rect x="865" y="205" width="205" height="142" rx="24" fill="#ffffff"/>
+    <text x="0" y="116" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="72" font-weight="900" fill="#111827">
+      완료는
+    </text>
+    <text x="0" y="198" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="72" font-weight="900" fill="#111827">
+      증거다
+    </text>
+    <rect x="4" y="220" width="308" height="10" rx="5" fill="url(#accent)"/>
+
+    <text x="0" y="284" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" fill="#334155">
+      결과물이 아니라
+    </text>
+    <text x="0" y="321" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" fill="#334155">
+      사람이 넘겨받을 수 있는 상태
+    </text>
+
+    <g transform="translate(0 392)">
+      <rect x="0" y="0" width="404" height="92" rx="22" fill="#ffffff" opacity="0.74" filter="url(#softShadow)"/>
+      <text x="28" y="38" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="800" fill="#0f172a">완료 보고의 최소 단위</text>
+      <text x="28" y="67" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" fill="#475569">변경 · 검증 · 미확인 · 리뷰 포인트</text>
+    </g>
   </g>
 
-  <g font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif">
-    <text x="122" y="257" fill="#0f766e" font-size="24" font-weight="800">1. 변경</text>
-    <text x="122" y="294" fill="#334155" font-size="18">요구한 코드나 문서가</text>
-    <text x="122" y="320" fill="#334155" font-size="18">실제로 바뀌었는가</text>
+  <g transform="translate(604 118)" filter="url(#deepShadow)">
+    <rect x="0" y="0" width="482" height="438" rx="34" fill="url(#ink)"/>
+    <rect x="28" y="28" width="426" height="382" rx="26" fill="#ffffff" opacity="0.06"/>
+    <rect x="52" y="58" width="136" height="32" rx="16" fill="#22c55e" opacity="0.16"/>
+    <text x="72" y="80" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="16" font-weight="800" fill="#86efac">READY TO REVIEW</text>
 
-    <text x="383" y="257" fill="#1d4ed8" font-size="24" font-weight="800">2. 검증</text>
-    <text x="383" y="294" fill="#334155" font-size="18">테스트, 빌드, 로그가</text>
-    <text x="383" y="320" fill="#334155" font-size="18">근거로 남았는가</text>
+    <text x="52" y="137" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="32" font-weight="900" fill="#f8fafc">
+      인수 가능한 결과
+    </text>
+    <text x="52" y="174" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" fill="#cbd5e1">
+      에이전트가 끝냈다는 말보다
+    </text>
+    <text x="52" y="202" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" fill="#cbd5e1">
+      사람이 확인할 증거가 먼저다
+    </text>
 
-    <text x="644" y="257" fill="#b45309" font-size="24" font-weight="800">3. 검토</text>
-    <text x="644" y="294" fill="#334155" font-size="18">사람이 위험과 한계를</text>
-    <text x="644" y="320" fill="#334155" font-size="18">판단할 수 있는가</text>
+    <g transform="translate(52 250)">
+      <rect x="0" y="0" width="376" height="54" rx="16" fill="#f8fafc"/>
+      <circle cx="28" cy="27" r="12" fill="#10b981"/>
+      <path d="M22 27l5 5 9-12" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="58" y="34" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="800" fill="#1e293b">변경이 실제로 존재한다</text>
+    </g>
 
-    <text x="905" y="257" fill="#be123c" font-size="24" font-weight="800">4. 인계</text>
-    <text x="905" y="294" fill="#334155" font-size="18">다음 사람이 이어서</text>
-    <text x="905" y="320" fill="#334155" font-size="18">확인할 수 있는가</text>
+    <g transform="translate(52 316)">
+      <rect x="0" y="0" width="376" height="54" rx="16" fill="#f8fafc"/>
+      <circle cx="28" cy="27" r="12" fill="#2563eb"/>
+      <path d="M22 27l5 5 9-12" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="58" y="34" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="800" fill="#1e293b">검증 증거가 남아 있다</text>
+    </g>
   </g>
 
-  <path d="M294 276 H332" stroke="#46617a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
-  <path d="M555 276 H593" stroke="#46617a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
-  <path d="M816 276 H854" stroke="#46617a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
-
-  <g filter="url(#shadow)">
-    <rect x="170" y="425" width="860" height="112" rx="28" fill="#172033"/>
+  <g transform="translate(746 470)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="280" height="70" rx="22" fill="#fff7ed"/>
+    <text x="28" y="30" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="800" fill="#9a3412">아직 완료가 아닌 것</text>
+    <text x="28" y="54" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="16" fill="#7c2d12">초안 · 계획 · 미검증 PR</text>
   </g>
-  <text x="220" y="474" fill="#ffffff" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="800">
-    완료 보고에 필요한 최소 문장
-  </text>
-  <text x="220" y="512" fill="#dbeafe" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21">
-    무엇을 바꿨고, 무엇으로 확인했고, 무엇은 아직 확인하지 못했는가
-  </text>
 
-  <g font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="16" fill="#64748b">
-    <text x="82" y="623">개념도: 실제 도구 화면이나 특정 프로젝트 구조가 아니라, 완료 판단 기준을 단순화한 그림이다.</text>
+  <g transform="translate(86 616)" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="15" fill="#64748b">
+    <text>개념도: 실제 도구 화면이 아니라, AI 코딩 에이전트 완료 기준을 설명하기 위한 공개용 이미지다.</text>
   </g>
 </svg>

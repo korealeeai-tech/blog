@@ -63,6 +63,7 @@ Before every commit or push:
 - Search source files for company names, product names, customer names, personal information, credentials, tokens, private repository names, internal issue IDs, server details, and local paths.
 - Inspect screenshots, images, attachments, and other non-text assets before adding them.
 - Build the site and scan the generated output before publishing.
+- Run `npm run validate:evidence`; external source quotes must have an adjacent official-docs screenshot figure unless a specific `evidence-screenshot-exception` comment explains why screenshotting is impractical or unsuitable.
 - Check that the post follows the writing rules: human voice, clear evidence boundary, no unnecessary incorrect statement, and no unsupported strong claims.
 - Stop immediately if any content could identify a company, organization, person, product, customer, repository, internal system, or private work context.
 
