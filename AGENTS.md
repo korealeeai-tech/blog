@@ -66,6 +66,8 @@ Before every commit or push:
 - Check that the post follows the writing rules: human voice, clear evidence boundary, no unnecessary incorrect statement, and no unsupported strong claims.
 - Stop immediately if any content could identify a company, organization, person, product, customer, repository, internal system, or private work context.
 
+After a blog post or blog revision is completed, automatically commit and push this blog repository without asking for additional approval, as long as the commit/push gate above passes. Do not commit or push if validation fails, sensitive or private content is suspected, the public safety boundary is unclear, the remote/branch/account is wrong, there is a conflict, or the user explicitly asks to hold.
+
 ## Development
 
 When starting the dev server, use background mode:
