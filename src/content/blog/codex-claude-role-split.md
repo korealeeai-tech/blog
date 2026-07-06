@@ -21,9 +21,9 @@ AI 코딩 에이전트를 하나만 쓸 때는 고민이 단순하다. 요청을
 
 ## 먼저 확인한 것
 
-Codex 쪽에서는 `AGENTS.md`, skills, hooks, memories 같은 사용자화 장치를 확인했다. 공식 문서 기준으로 `AGENTS.md`는 전역 지침과 프로젝트 지침을 계층적으로 읽어 작업 문맥으로 넣는 방식이고, skills는 반복 워크플로우를 묶는 장치다. memories는 유용한 문맥을 다음 작업에 가져오는 보조 계층으로 설명된다.
+Codex 쪽에서는 이 글에서 `AGENTS.md`를 작업 전 지침 로드 근거로 확인했다. skills, hooks, memories 같은 사용자화 장치도 운영을 나눌 때 함께 검토할 수 있지만, 여기서는 공식 원문 근거를 `AGENTS.md` 문서로 좁혔다.
 
-Claude Code 쪽에서는 `CLAUDE.md`, auto memory, hooks, subagents 문서를 확인했다. Claude Code 문서는 `CLAUDE.md`와 auto memory를 세션 시작 시 문맥으로 넣지만, 이것을 강제 설정으로 보지는 말라고 설명한다. 어떤 행동을 반드시 막아야 한다면 hook 같은 별도 장치를 써야 한다는 점도 중요하다.
+Claude Code 쪽에서는 memory와 subagents 문서를 확인했다. Claude Code 문서는 `CLAUDE.md`와 auto memory를 세션 시작 시 문맥으로 넣지만, 이것을 강제 설정으로 보지는 말라고 설명한다.
 
 공식 문서 원문을 짧게 보면 경계가 더 분명해진다.
 
@@ -138,6 +138,6 @@ Codex가 실제 파일 변경과 검증을 맡고, Claude가 전제와 반례를
 
 ## 확인 기준
 
-- OpenAI Codex 문서: [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md), [Agent Skills](https://developers.openai.com/codex/skills), [Hooks](https://developers.openai.com/codex/hooks), [Memories](https://developers.openai.com/codex/memories)
-- Claude Code 문서: [Overview](https://code.claude.com/docs/en/overview), [How Claude remembers your project](https://code.claude.com/docs/en/memory), [Hooks reference](https://code.claude.com/docs/en/hooks), [Create custom subagents](https://code.claude.com/docs/en/sub-agents)
+- OpenAI Codex 문서: [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
+- Claude Code 문서: [How Claude remembers your project](https://code.claude.com/docs/en/memory), [Create custom subagents](https://code.claude.com/docs/en/sub-agents)
 - 확인일: 2026-07-01

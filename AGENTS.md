@@ -64,6 +64,7 @@ Before every commit or push:
 - Inspect screenshots, images, attachments, and other non-text assets before adding them.
 - Build the site and scan the generated output before publishing.
 - Run `npm run validate:evidence`; external source quotes must have an adjacent official-docs screenshot figure unless a specific `evidence-screenshot-exception` comment explains why screenshotting is impractical or unsuitable.
+- `npm run validate:evidence` applies to every published post in `src/content/blog`, not only the post being edited. It must fail if a post is missing `heroImage`, if the image path is broken, or if an external link in `## 확인 기준` is not also present as a quoted source with an adjacent official-docs screenshot figure or an explicit `evidence-screenshot-exception`.
 - Check that the post follows the writing rules: human voice, clear evidence boundary, no unnecessary incorrect statement, and no unsupported strong claims.
 - Stop immediately if any content could identify a company, organization, person, product, customer, repository, internal system, or private work context.
 

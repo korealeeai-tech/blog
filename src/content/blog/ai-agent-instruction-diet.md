@@ -35,7 +35,7 @@ AI가 실수한다. 그러면 사람은 "다음부터는 이것도 조심해"라
 
 ## 공식 문서에서 확인한 경계
 
-Codex 문서에서는 `AGENTS.md`가 전역과 프로젝트 지침을 계층적으로 읽는 방식으로 설명된다. skills는 반복 워크플로우를 묶어 필요할 때 불러오는 장치이고, hooks는 특정 이벤트에 맞춰 스크립트나 처리를 연결하는 확장 지점이다. memories는 도움이 되는 문맥을 가져오는 보조 계층으로 볼 수 있다.
+Codex 문서에서 이 글의 기준으로 삼은 것은 skills와 hooks의 경계다. skills는 반복 워크플로우를 묶어 필요할 때 불러오는 장치이고, hooks는 특정 이벤트에 맞춰 스크립트나 처리를 연결하는 확장 지점이다.
 
 Claude Code 문서도 비슷한 경계를 알려준다. `CLAUDE.md`와 auto memory는 세션 시작 시 문맥으로 로드되지만, 강제 설정은 아니다. 문서에서는 구체적이고 간결한 지시가 더 일관되게 따르기 쉽고, 긴 지시문은 context를 더 쓰며 준수율을 떨어뜨릴 수 있다고 설명한다.
 
@@ -176,6 +176,6 @@ AI에게 모든 것을 말로 부탁하는 방식은 오래 버티기 어렵다.
 
 ## 확인 기준
 
-- OpenAI Codex 문서: [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md), [Agent Skills](https://developers.openai.com/codex/skills), [Hooks](https://developers.openai.com/codex/hooks), [Memories](https://developers.openai.com/codex/memories)
-- Claude Code 문서: [How Claude remembers your project](https://code.claude.com/docs/en/memory), [Hooks reference](https://code.claude.com/docs/en/hooks)
+- OpenAI Codex 문서: [Agent Skills](https://developers.openai.com/codex/skills), [Hooks](https://developers.openai.com/codex/hooks)
+- Claude Code 문서: [How Claude remembers your project](https://code.claude.com/docs/en/memory)
 - 확인일: 2026-07-01
