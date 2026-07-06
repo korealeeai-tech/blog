@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">AI 지시문과 자동 검증 게이트의 차이</title>
+  <desc id="desc">문서 지시는 작업 기준을 알려주지만 자동 검증 게이트는 누락을 실패로 바꾸는 구조를 보여주는 개념도</desc>
+  <rect width="1600" height="900" fill="#f7faf9"/>
+  <rect x="88" y="82" width="1424" height="736" rx="28" fill="#ffffff" stroke="#d6e1dd" stroke-width="2"/>
+
+  <text x="140" y="168" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="52" font-weight="800" fill="#17202a">규칙은 읽히는 것과 지켜지는 것이 다르다</text>
+  <text x="140" y="222" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="25" fill="#52616b">문서 지시는 방향을 만들고, 검증 게이트는 누락을 실패로 만든다</text>
+
+  <g transform="translate(140 300)">
+    <rect width="410" height="310" rx="18" fill="#eef4ff" stroke="#bfd1f5" stroke-width="2"/>
+    <text x="34" y="62" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="30" font-weight="800" fill="#1d3f72">문서 지시</text>
+    <text x="34" y="118" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#35475a">AI가 참고할 기준을 알려준다</text>
+    <line x1="34" y1="146" x2="376" y2="146" stroke="#c4d4ef" stroke-width="2"/>
+    <text x="48" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- 글쓰기 톤</text>
+    <text x="48" y="235" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- 공개 안전 경계</text>
+    <text x="48" y="278" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- 검증해야 할 항목</text>
+  </g>
+
+  <path d="M610 455H740" stroke="#7b8790" stroke-width="8" stroke-linecap="round"/>
+  <path d="M740 455l-32-24v48z" fill="#7b8790"/>
+
+  <g transform="translate(790 300)">
+    <rect width="410" height="310" rx="18" fill="#eaf7f2" stroke="#add9c5" stroke-width="2"/>
+    <text x="34" y="62" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="30" font-weight="800" fill="#16624f">검증 게이트</text>
+    <text x="34" y="118" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#36544b">누락을 통과가 아니라 실패로 만든다</text>
+    <line x1="34" y1="146" x2="376" y2="146" stroke="#b9ddcf" stroke-width="2"/>
+    <text x="48" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- build 실패</text>
+    <text x="48" y="235" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- 캡처 누락 실패</text>
+    <text x="48" y="278" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" fill="#1f2937">- 이미지 경로 실패</text>
+  </g>
+
+  <g transform="translate(1248 336)">
+    <rect width="180" height="238" rx="18" fill="#17202a"/>
+    <circle cx="90" cy="72" r="36" fill="#2dd4bf"/>
+    <path d="M72 73l13 13 27-32" fill="none" stroke="#17202a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="90" y="143" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="24" font-weight="800" fill="#ffffff">완료 보고</text>
+    <text x="90" y="185" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="19" fill="#cbd5df">근거가 남을 때만</text>
+  </g>
+
+  <rect x="140" y="674" width="1288" height="74" rx="18" fill="#fff8e6" stroke="#e8d29a" stroke-width="2"/>
+  <text x="184" y="721" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="25" font-weight="700" fill="#5b4521">핵심: AI에게 “지켜라”라고 쓰는 것보다, 안 지키면 통과하지 못하게 만드는 편이 더 안정적이다.</text>
+</svg>
