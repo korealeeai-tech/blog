@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">AI 결과물 리뷰의 첫 다섯 가지 확인점</title>
+  <desc id="desc">AI 결과물을 리뷰할 때 요청, diff, 증거, 공개 안전, 남은 위험 순서로 확인하는 흐름</desc>
+  <rect width="1600" height="900" fill="#f7faf9"/>
+  <rect x="92" y="76" width="1416" height="748" rx="30" fill="#ffffff" stroke="#d8e0dd" stroke-width="2"/>
+  <text x="144" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="52" font-weight="800" fill="#17202a">AI 결과물 리뷰는 순서가 중요하다</text>
+  <text x="144" y="212" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="25" fill="#52616b">그럴듯한 설명보다 요청, 변경, 증거, 공개 안전, 남은 위험을 먼저 본다</text>
+
+  <g transform="translate(150 302)">
+    <rect width="246" height="306" rx="20" fill="#f0f7ff" stroke="#b9d4f2" stroke-width="2"/>
+    <text x="32" y="54" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#2563eb">01</text>
+    <text x="32" y="103" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="28" font-weight="800" fill="#17202a">요청 일치</text>
+    <text x="32" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#334155">처음 요청한 문제를</text>
+    <text x="32" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#334155">정말 풀었는가</text>
+    <circle cx="46" cy="248" r="12" fill="#2563eb"/>
+  </g>
+
+  <g transform="translate(421 302)">
+    <rect width="246" height="306" rx="20" fill="#fff7ed" stroke="#e8c79f" stroke-width="2"/>
+    <text x="32" y="54" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#f97316">02</text>
+    <text x="32" y="103" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="28" font-weight="800" fill="#17202a">변경 범위</text>
+    <text x="32" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#3f3223">필요한 파일만</text>
+    <text x="32" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#3f3223">바뀌었는가</text>
+    <circle cx="46" cy="248" r="12" fill="#f97316"/>
+  </g>
+
+  <g transform="translate(692 302)">
+    <rect width="246" height="306" rx="20" fill="#ecfdf5" stroke="#a9d9c4" stroke-width="2"/>
+    <text x="32" y="54" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#059669">03</text>
+    <text x="32" y="103" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="28" font-weight="800" fill="#17202a">검증 증거</text>
+    <text x="32" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#243b32">실행한 확인이</text>
+    <text x="32" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#243b32">결과와 연결되는가</text>
+    <circle cx="46" cy="248" r="12" fill="#059669"/>
+  </g>
+
+  <g transform="translate(963 302)">
+    <rect width="246" height="306" rx="20" fill="#fff1f2" stroke="#efbec4" stroke-width="2"/>
+    <text x="32" y="54" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#e11d48">04</text>
+    <text x="32" y="103" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="28" font-weight="800" fill="#17202a">공개 안전</text>
+    <text x="32" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#3f2930">노출되면 안 되는</text>
+    <text x="32" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#3f2930">단서가 없는가</text>
+    <circle cx="46" cy="248" r="12" fill="#e11d48"/>
+  </g>
+
+  <g transform="translate(1234 302)">
+    <rect width="246" height="306" rx="20" fill="#f5f3ff" stroke="#c9c1f1" stroke-width="2"/>
+    <text x="32" y="54" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#7c3aed">05</text>
+    <text x="32" y="103" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="28" font-weight="800" fill="#17202a">남은 위험</text>
+    <text x="32" y="158" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#352f49">확인하지 못한</text>
+    <text x="32" y="192" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#352f49">부분이 보이는가</text>
+    <circle cx="46" cy="248" r="12" fill="#7c3aed"/>
+  </g>
+
+  <path d="M255 660H1345" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1345 660l-32-24v48z" fill="#94a3b8"/>
+  <rect x="260" y="700" width="1080" height="70" rx="18" fill="#17202a"/>
+  <text x="800" y="744" text-anchor="middle" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="25" font-weight="800" fill="#ffffff">리뷰는 설명을 믿는 일이 아니라 증거와 위험을 맞춰보는 일이다</text>
+</svg>
