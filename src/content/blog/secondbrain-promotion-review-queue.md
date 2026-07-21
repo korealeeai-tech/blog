@@ -1,192 +1,146 @@
 ---
-title: "좋은 기억과 나쁜 기억을 가르는 Promotion Review Queue"
-description: "AI memory 후보를 바로 믿지 않고 근거, 적용 범위, 민감성, 현재 요청과의 충돌 가능성으로 심사하는 Promotion Review Queue 개념을 정리합니다."
+title: "Memory 후보 한 건을 Promotion Review Queue에서 판정하는 법"
+description: "근거·범위·민감성·갱신 가능성을 확인해 후보를 추천하고, 작업별 적용 판단과 외부에서 인증·인가된 최종 승인 record를 분리합니다."
 pubDate: 2026-07-02T16:20:00+09:00
+updatedDate: 2026-07-21T18:00:00+09:00
 category: "secondbrain"
 heroImage: "../../assets/blog/secondbrain-promotion-review-queue.png"
 ---
 
-AI memory를 만들 때 가장 어려운 질문은 "무엇을 기억할까"가 아니다. 더 어려운 질문은 "무엇을 기억으로 승격하지 않을까"다.
+Promotion Review Queue의 핵심 단위는 queue 전체가 아니라 **후보 한 건의 판정 기록**이다. 어떤 근거로 범위를 정했고, 무엇 때문에 보류하거나 기각했는지 남지 않으면 queue는 승인 버튼이 달린 목록에 그친다.
 
-처음에는 모든 피드백이 중요해 보인다. 사용자가 어떤 표현을 좋아했는지, 어떤 검증을 요구했는지, 어떤 실수를 지적했는지 전부 다음 작업에 도움이 될 것처럼 느껴진다. 하지만 그대로 저장하면 memory는 빠르게 무거워지고, 때로는 위험해진다.
-
-좋은 기억은 다음 작업을 돕는다. 나쁜 기억은 현재 요청을 덮고, 오래된 추측을 사실처럼 만들고, 민감한 맥락을 다시 노출한다. 그래서 나는 memory 후보를 바로 공식 기억으로 올리지 않고 Promotion Review Queue 같은 심사 단계를 둬야 한다고 본다.
-
-이 글은 공개 가능한 개념으로만 설명한다. 실제 개인 기록, 내부 review queue, 원문 로그, 업무 화면, 계정, 제품 정보는 다루지 않는다. OpenAI Codex와 Claude Code 공식 문서를 참고하되, 실제 내부 심사 자료가 아니라 공개 가능한 심사 기준만 다룬다.
+이 글에서는 여섯 개의 합성 후보를 같은 규칙으로 심사한다. 결과는 `promote`, `hold`, `reject` 세 recommendation으로 나뉜다. 이 recommendation은 사람이 현재 요청과 후보 원문을 확인한 최종 결정이 아니라, 명시적 gate를 빠짐없이 적용했는지 보여주는 deterministic triage다.
 
 <figure>
 	<img src="/blog/blog-images/secondbrain/promotion-review-queue.svg" alt="기억 후보를 심사 기준으로 확인한 뒤 승격 또는 보류하는 Promotion Review Queue 개념도" />
-	<figcaption>이 그림은 실제 review queue 화면이 아니라, memory 후보를 승격하기 전에 확인할 기준을 보여주는 공개용 개념도다.</figcaption>
+	<figcaption>이 그림은 실제 review queue 화면이 아니라, 한 후보를 승격하기 전에 확인할 기준을 보여주는 공개용 개념도다.</figcaption>
 </figure>
 
-## 먼저 확인한 것
+## 유용한 context라는 설명은 심사 결과가 아니다
 
-OpenAI Codex memories 문서는 memory를 이전 작업의 유용한 context를 다음 작업으로 가져오는 장치로 설명한다.
+2026-07-01에 캡처한 OpenAI Codex memories 문서는 memory의 역할을 다음처럼 설명했다.
 
-> [OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "useful context"
-
-여기서 나는 "유용한"이라는 조건을 중요하게 본다. 모든 후보가 유용한 context는 아니다. 어떤 후보는 다음 작업에서 오히려 오해를 만든다.
+> [2026-07-01 당시 OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "useful context"
 
 <figure>
-	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="OpenAI Codex memories 공식문서에서 Codex가 유용한 context를 다음 작업으로 가져올 수 있다고 설명한 영역 캡처" />
-	<figcaption>OpenAI Codex memories 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. memory가 유용한 문맥을 이어줄 수 있다는 근거이며, 모든 후보를 memory로 승격해야 한다는 뜻은 아니다.</figcaption>
+	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="2026년 7월 1일 OpenAI Codex memories 문서에서 유용한 context를 설명한 영역 캡처" />
+	<figcaption>2026-07-01에 만든 역사적 캡처다. 2026-07-21에는 링크가 새 memories 문서로 이동하고 문구와 적용 대상이 달라졌다. 모든 후보가 유용하거나 안전하다는 근거로 사용하지 않는다.</figcaption>
 </figure>
 
-Claude Code memory 문서도 memory를 강제 설정이 아니라 context로 구분한다.
+Claude Code memory 문서도 memory를 강제 설정과 구분한다.
 
 > [Claude Code memory 문서](https://code.claude.com/docs/en/memory): "not enforced configuration"
 
-이 문장은 Promotion Review Queue의 이유를 잘 보여준다. memory가 강제 설정이 아니라면, 더더욱 좋은 context와 나쁜 context를 가려야 한다.
-
 <figure>
 	<img src="/blog/blog-images/official-docs/claude-memory-context-not-enforced.png" alt="Claude Code memory 공식문서에서 memory가 context이지 enforced configuration이 아니라고 설명한 영역 캡처" />
-	<figcaption>Claude Code memory 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. memory가 참고 문맥이라는 근거이며, 기억 후보가 자동으로 안전하거나 항상 적용된다는 뜻은 아니다.</figcaption>
+	<figcaption>Claude Code memory 문서 캡처, 캡처일 2026-07-01. memory가 참고 문맥이라는 근거이며, 기억 후보가 자동으로 안전하거나 항상 적용된다는 뜻은 아니다.</figcaption>
 </figure>
 
-## 좋은 기억은 행동을 바꾼다
+두 자료는 memory가 context 계층이라는 경계만 제공한다. 어떤 후보가 좋은 context인지, 누가 승인해야 하는지, 현재 요청과 충돌하면 어떻게 해야 하는지는 이 글의 review contract로 별도 정의한다.
 
-좋은 기억은 사용자를 설명하는 문장이 아니라, 다음 작업의 행동을 바꾸는 문장이다.
+## 후보 schema에 판단 근거를 넣는다
 
-예를 들어 이런 문장은 약하다.
+합성 fixture의 각 후보는 다음 필드를 가진다.
 
-```text
-사용자는 꼼꼼하다.
-```
+| 필드 | review 질문 | 값의 역할 |
+|---|---|---|
+| `evidence` | 명시 요청인가, 반복 관찰인가, 검증됐는가 | 근거 없는 인상을 보류한다. |
+| `scope` | 어떤 task에 적용하고 무엇을 제외하는가 | 넓은 사용자 성격 문장을 막는다. |
+| `sensitivity` | 개인·비밀·재식별 단서가 있는가 | 해당 저장소 밖으로 기각한다. |
+| `changeability` | 얼마나 쉽게 바뀌는가 | 높으면 무효화 사건이 필요하다. |
+| `actionValue` | 미래 작업 행동을 실제로 바꾸는가 | 아니면 저장 이유가 없어 기각한다. |
+| `currentRequestConflict` | 현재 명시 요청과 충돌하는가 | global recommendation과 별도로 현재 작업의 미적용 이유를 남긴다. |
+| `scopeReviewComplete` | 사람이 scope와 예외의 사전 검토를 끝냈는가 | 없으면 recommendation을 `hold`한다. 최종 승격 승인은 아니다. |
+| `autoScore` | 자동화가 계산한 우선순위 신호 | 정렬·검토 보조일 뿐 gate를 우회하지 못한다. |
 
-틀린 말은 아닐 수 있지만, 작업에 바로 쓰기 어렵다. 꼼꼼하다는 말은 너무 넓다. 어떤 작업에서는 긴 분석을 뜻할 수 있고, 어떤 작업에서는 짧더라도 검증 결과를 분리하라는 뜻일 수 있다.
+`autoScore`가 마지막에 있는 이유가 중요하다. 점수는 다른 필드의 누락을 메우지 않는다. 0.99여도 scope 사전 검토가 끝나지 않았으면 결과는 `hold`다. 반대로 현재 요청 충돌은 후보의 global 품질을 바꾸지 않는다. 후보는 `promote` recommendation을 받을 수 있지만 그 작업에는 적용되지 않는다.
 
-좋은 기억은 이렇게 바뀐다.
+## 판정 순서는 reject gate부터 시작한다
 
-```text
-완료 보고에는 수정한 파일, 실행한 검증, 검증하지 못한 항목을 분리한다.
-```
-
-이 문장은 다음 작업에서 AI의 행동을 바꾼다. 사람이 결과를 보고 지켜졌는지도 확인할 수 있다.
-
-Promotion Review Queue의 첫 번째 질문은 그래서 단순하다.
-
-```text
-이 후보는 다음 작업에서 실제 행동을 바꾸는가?
-```
-
-행동을 바꾸지 못하면 기억이 아니라 인상이다. 인상은 저장할수록 AI를 더 주관적으로 만들 수 있다.
-
-## 나쁜 기억은 사용자를 고정한다
-
-나쁜 기억은 대체로 사용자를 고정적으로 단정한다.
+이 예제의 규칙은 점수 합산이 아니라 순서가 있는 gate다.
 
 ```text
-사용자는 항상 긴 답변을 원한다.
-사용자는 빠른 결론보다 깊은 분석을 더 좋아한다.
-사용자는 이 도구를 기본으로 쓴다.
+1. personal·secret·identifying → reject
+2. actionValue가 false → reject
+3. 검증 근거·좁은 scope 확인
+4. changeability가 high면 invalidation event 확인
+5. scope pre-review 완료 확인
+6. 모두 통과할 때만 promote recommendation
+7. current request conflict로 현재 작업의 application disposition 계산
+8. 신뢰된 외부 경계가 사람 identity·provenance·권한을 확인한 승인 record를 만든 뒤, 별도 상태 머신이 필수 field shape를 확인하고 promoted 전이
 ```
 
-이런 문장은 어느 순간에는 맞았을 수 있다. 하지만 "항상"이라는 말이 붙는 순간 위험해진다. 현재 요청이 "짧게 답해줘"라면 과거의 긴 답변 선호는 뒤로 가야 한다. 도구도 바뀔 수 있고, 작업 성격도 달라질 수 있다.
+`reject`와 `hold`도 구분한다. 비밀이나 행동 가치 없는 후보는 이 memory store에 들어올 이유가 없어 기각한다. 근거 추가, scope 수정, 설정 변경 확인, 사람 검토로 상태가 달라질 수 있는 후보는 보류한다.
 
-좋은 기억은 예외를 품는다.
+이 구분은 “나중에 볼 것” 목록이 영구 쓰레기통이 되는 일을 줄인다. 보류 이유를 해소할 수 없다면 다음 review에서 명시적으로 기각할 수 있다.
 
-```text
-분석 요청에서는 근거와 한계를 분리해 설명한다.
-단, 사용자가 짧게 요청하면 짧게 답한다.
+## 공개 fixture와 reviewer를 실행한다
+
+합성 후보는 [memory-review-sample.json](/blog/blog-examples/memory-review-sample.json), reviewer는 [review-memory-candidates.mjs](/blog/blog-examples/review-memory-candidates.mjs)에 있다. 일반 모드는 임의의 유효한 비어 있지 않은 후보 배열을 받는다. 아래 `--self-test`만 공개 sample의 id와 예상 개수를 추가로 검사한다.
+
+```bash
+node public/blog-examples/review-memory-candidates.mjs --self-test public/blog-examples/memory-review-sample.json
 ```
 
-이렇게 적으면 memory가 현재 요청을 덮을 가능성이 줄어든다.
+Node.js 22 실행 결과를 요약하면 다음과 같다.
 
-Promotion Review Queue의 두 번째 질문은 이것이다.
+| candidate id | auto score | recommendation | 현재 작업 application disposition | 결정 이유 |
+|---|---:|---|---|---|
+| `status-check-summary` | 0.91 | `promote` | 미적용: `final_human_approval_required` | recommendation gate 통과, 최종 승격 승인 대기 |
+| `high-score-scope-unreviewed` | 0.99 | `hold` | 미적용: recommendation 미완료 | scope 사전 검토 미완료 |
+| `changing-renderer-default` | 0.87 | `hold` | 미적용: recommendation 미완료 | 변동성은 높은데 무효화 사건 없음 |
+| `current-request-conflict` | 0.96 | `promote` | 미적용: `current_request_conflict` | global gate는 통과했지만 현재 요청에는 적용 불가 |
+| `raw-access-credential` | 0.95 | `reject` | 미적용: recommendation 미완료 | secret은 이 저장소 밖의 정보 |
+| `decorative-preference` | 0.42 | `reject` | 미적용: recommendation 미완료 | 미래 행동을 바꾸지 않음 |
 
-```text
-이 후보는 현재 요청보다 앞서려고 하지 않는가?
+마지막 summary line은 다음과 같다.
+
+```json
+{"mode":"sample_self_test","summary":{"promote":2,"hold":2,"reject":2},"warning":"Automation only recommends; promotion requires an externally authenticated and authorized human approval record. The separate state-machine fixture validates record shape only, and current-task application is evaluated independently."}
 ```
 
-memory는 현재 요청을 더 잘 이해하기 위한 힌트이지, 현재 요청을 이기는 규칙이 아니다.
+스크립트는 두 모드 모두 필수 필드와 `autoScore` 범위를 검사한다. `--self-test`에서는 결과 개수, high-score scope 미검토 후보, secret 후보, current-conflict 후보의 recommendation과 `applicationDisposition`을 assertion으로 추가 확인한다. 일반 모드는 sample id나 개수를 가정하지 않으므로 다른 유효한 후보 목록에도 그대로 쓸 수 있다.
 
-## 오래된 추측은 승격하지 않는다
+## 높은 자동 점수가 승격에 실패하는 사례
 
-작업 중에는 추측이 생긴다. 사용자의 선호를 추정하고, 반복 패턴을 발견하고, 다음에는 이렇게 하면 좋겠다고 생각한다. 이 자체는 나쁘지 않다. 문제는 추측이 기억으로 승격될 때다.
+`high-score-scope-unreviewed`는 0.99로 여섯 후보 중 점수가 가장 높다. 근거도 두 개이고 민감 정보도 없으며 변동성도 낮다. 그래도 `scopeReviewComplete: false`라서 결과는 `hold`다.
 
-추측을 승격하려면 근거가 필요하다. 한 번의 상황에서 나온 말인지, 여러 번 반복된 기준인지, 사용자가 명시한 요청인지, AI가 스스로 해석한 것인지 구분해야 한다.
+이 후보의 문장은 “모든 planning request를 승인 checkpoint 없이 시작한다”다. 문장 자체가 행동을 바꾸기 때문에 자동화가 유용하다고 평가할 수 있다. 그러나 `모든`이라는 범위가 적절한지, 되돌리기 어려운 행동까지 포함하는지, 현재 사용자 의도와 맞는지는 점수만으로 알 수 없다.
 
-나는 후보를 볼 때 보통 이렇게 표시한다.
+점수가 높다는 것은 review 우선순위를 올릴 수 있다는 뜻이지, 더 넓은 권한을 준다는 뜻이 아니다. 이 negative case를 빼면 자동화가 “승격 권고 시스템”에서 “자동 승인 시스템”으로 미끄러지기 쉽다.
 
-```text
-근거: 사용자 명시 요청
-범위: 공개 블로그 글 작성
-한계: 코드 리뷰나 설계 검토에는 그대로 적용 여부 확인 필요
-```
+## 최근 후보도 근거가 부족하면 보류한다
 
-이렇게 적으면 기억이 과잉 일반화되는 것을 막을 수 있다. 반대로 근거와 범위가 없는 후보는 승격하지 않는 편이 안전하다.
+후보가 방금 생성됐다는 사실은 freshness만 말한다. `scope`, `evidence`, `invalidationEvents`가 충분하다는 뜻은 아니다.
 
-## 민감한 기억은 좋은 기억이 아니다
+`changing-renderer-default`는 검증된 명시 요청 한 건과 반복 관찰 한 건이 있다고 가정하지만, 설정이 자주 바뀌는 후보에 어떤 사건이 생기면 무효화할지가 없다. 이 상태로 승격하면 다음 설정 변경 뒤에도 과거 renderer를 기본값으로 적용할 수 있다. 그래서 scope 사전 검토가 끝났어도 `hold`다.
 
-어떤 후보는 매우 유용해 보이지만 승격하면 안 된다. 민감한 단서를 포함하기 때문이다.
+반대로 오래됐다는 이유만으로 자동 기각하지도 않는다. 변하지 않은 안전 기준은 현재 근거로 다시 확인한 뒤 유지할 수 있다. 그 수명 판정은 [stale context 점검](/blog/blog/stale-ai-context-check/)의 역할이다.
 
-예를 들어 특정 회사, 제품, 고객, 내부 경로, private repository, issue 번호, 업무 로그, 계정, 화면 캡처가 있어야 의미가 유지되는 후보는 위험하다. 아무리 다음 작업에 도움이 되어도 공개 repo나 일반 memory로 올리면 안 된다.
+## 현재 요청 충돌은 recommendation이 아니라 적용을 멈춘다
 
-좋은 기억은 원문 없이도 의미가 유지된다.
+`current-request-conflict`는 근거, scope, 무효화 사건, scope 사전 검토를 모두 갖고 있고 점수도 0.96이다. global 기준으로는 `promote` recommendation이지만, 현재 요청이 발행을 금지하므로 `applicationDisposition.applied`는 `false`, `notAppliedReason`은 `current_request_conflict`다.
 
-```text
-공개 글을 작성할 때는 본문, 이미지, 파일명, build output까지 민감정보를 검사한다.
-```
+이 판정은 후보 자체가 나쁘다는 뜻이 아니다. 현재 task에 적용할 수 없다는 뜻이다. lifecycle 품질과 runtime 적용 가능성을 같은 값으로 표현하면, 한 작업의 일시적 충돌이 유효한 global 기억을 `held`로 오염시킨다. 두 축을 분리하면 현재 요청을 우선하면서도 다른 작업에서 쓸 수 있는 기준은 유지할 수 있다.
 
-이 문장은 특정 사건을 설명하지 않아도 다음 작업에 도움이 된다. 반대로 특정 사건의 세부를 알아야만 이해되는 문장은 memory가 아니라 private log에 가깝다.
+## queue가 담당하지 않는 경계
 
-Promotion Review Queue의 세 번째 질문은 이것이다.
+이 글은 한 후보를 판정하는 과정에 집중한다. 후보를 애초에 저장해도 되는지의 개인정보·비밀 gate는 [memory 저장 경계](/blog/blog/ai-work-memory-save-boundary/)에서 다룬다. `candidate`, `review`, `promoted`, `held`, `reverify` 전체 전이는 [기억 상태 머신](/blog/blog/secondbrain-growth-loop/)의 책임이다.
 
-```text
-원문과 민감한 맥락을 제거해도 기준으로 남는가?
-```
+따라서 이 reviewer의 `promote`를 실제 저장소 변경 명령으로 연결하지 않았다. 출력은 recommendation, reason, 현재 작업 `applicationDisposition`이다. 실제 `review → promoted` 전이는 별도 상태 머신에서 검증된 근거와 정의된 scope에 더해 `actorType: "human"`, `actor`, `decision: "approve"`, `timestamp`를 가진 승인 record shape를 확인한다.
 
-남지 않으면 승격하지 않는다.
+다만 state-machine fixture는 그 field만 검사한다. 호출자가 `actorType: "human"`을 거짓으로 넣었는지 판별하거나 실제 사람 identity와 provenance를 인증할 수 없다. production에서는 신뢰된 외부 승인 경계가 actor를 인증하고 승인 권한을 확인한 뒤 record를 전달해야 한다.
 
-## 좋은 기억에는 갱신 가능성이 있다
+## 결론
 
-기억은 시간이 지나면 낡는다. 도구는 바뀌고, 작업 방식도 바뀐다. 그래서 좋은 기억은 갱신 가능하게 적어야 한다.
+Promotion Review Queue의 품질은 몇 건을 통과시켰는지가 아니라, 각 후보의 판정 이유가 재검토 가능한지로 본다. 민감성·행동 가치 reject gate를 먼저 적용하고, 근거·scope·갱신 가능성·scope 사전 검토를 확인하면 자동 점수가 다른 결정을 덮기 어렵다. 현재 요청의 적용 판단과 최종 사람 승인을 별도 단계로 분리해야 recommendation이 실제 권한처럼 오해되지 않는다.
 
-나쁜 예시는 이런 식이다.
+합성 fixture에서는 2건 승격 권고, 2건 보류, 2건 기각이 나왔다. 특히 0.99 후보는 scope 사전 검토 부재로 보류됐고, current-conflict 후보는 승격 권고와 현재 작업 미적용을 동시에 기록했다. 이 결과가 보여주는 것은 memory 품질이 아니라, 자동화의 권한을 recommendation으로 제한한 review rule의 동작이다.
 
-```text
-항상 이 검증 명령을 실행한다.
-```
+## 확인 범위와 한계
 
-좋은 예시는 조금 더 좁다.
-
-```text
-이 유형의 공개 글 발행에서는 build, diff check, live URL 확인을 수행한다.
-배포 방식이 바뀌면 검증 절차를 다시 본다.
-```
-
-이렇게 적으면 memory가 오래되어도 위험이 줄어든다. AI가 기억을 절대 규칙으로 받아들이기보다, 현재 환경에서 다시 확인할 기준으로 다루게 된다.
-
-## 내가 쓰는 Promotion Review 질문
-
-복잡한 시스템이 없어도 아래 질문만 있으면 memory 후보를 꽤 잘 걸러낼 수 있다.
-
-```text
-1. 근거가 있는가?
-2. 다음 작업의 행동을 바꾸는가?
-3. 현재 요청을 덮지 않도록 범위와 예외가 있는가?
-4. 원문 없이도 의미가 유지되는가?
-5. 개인, 조직, 제품, 고객, 내부 맥락을 유추할 단서가 없는가?
-6. 시간이 지나면 다시 확인해야 할 항목이 표시되어 있는가?
-7. 보류하는 편이 더 안전한가?
-```
-
-마지막 질문이 중요하다. 애매하면 승격하지 않는 편이 낫다. memory는 많이 쌓는다고 좋아지는 것이 아니기 때문이다.
-
-좋은 Promotion Review Queue는 기억을 통과시키기 위한 절차가 아니다. 기억을 떨어뜨리기 위한 절차이기도 하다. 그 덕분에 남은 기억이 더 믿을 만해진다.
-
-## 내가 남긴 기준
-
-좋은 기억은 근거가 있고, 행동을 바꾸고, 현재 요청을 덮지 않으며, 민감한 맥락 없이도 의미가 유지된다. 나쁜 기억은 오래된 추측, 과잉 일반화, 민감한 단서, 사용자를 고정적으로 단정하는 문장이다.
-
-SecondBrain을 안전하게 만들려면 후보를 많이 모으는 것보다 승격 기준을 엄격하게 두는 편이 중요하다. 기억 후보는 가능성일 뿐이다. Promotion Review Queue를 통과해야 다음 작업에서 써도 되는 기준이 된다.
-
-내 결론은 단순하다. AI가 더 잘 기억하게 만드는 것보다, 잘못 기억하지 않게 만드는 것이 먼저다.
-
-## 확인 기준
-
-- OpenAI Codex 문서: [Memories](https://developers.openai.com/codex/memories)
-- Claude Code 문서: [How Claude remembers your project](https://code.claude.com/docs/en/memory)
-- 링크 재확인일: 2026-07-02
-- 공식문서 캡처 생성일: 2026-07-01
-- 이 글은 실제 개인 memory review queue, 내부 로그, 업무 데이터, 제품 정보를 공개하지 않는다. 공개 가능한 심사 기준으로 일반화한 글이다.
+- 합성 JSON과 reviewer는 Node.js v22.12.0에서 일반 모드와 `--self-test`를 모두 실행했고, sample self-test에서 `promote: 2`, `hold: 2`, `reject: 2`를 확인했다.
+- fixture에는 실제 대화, 개인, 조직, 제품, 업무 데이터가 없다.
+- 자동 점수 계산 모델은 구현하지 않았다. `autoScore`는 gate 우회 실패를 보여주기 위한 합성 입력이다.
+- state-machine fixture는 승인 record의 필수 field shape만 확인한다. 실제 사람 identity, provenance, authorization은 외부 승인 경계의 책임이다.
+- OpenAI Codex memories 캡처는 2026-07-01 당시 화면이며, 2026-07-21 redirect 이후 현재 문구를 완전히 증명하지 않는다.

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "status-check-summary",
+    "statement": "For a simple status check, lead with the current result and its fresh proof.",
+    "evidence": [
+      { "kind": "explicit_request", "verified": true },
+      { "kind": "repeated_observation", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["status_check"],
+      "excludes": ["analysis", "design"]
+    },
+    "sensitivity": "none",
+    "changeability": "medium",
+    "invalidationEvents": ["response_default_replaced"],
+    "actionValue": true,
+    "currentRequestConflict": false,
+    "scopeReviewComplete": true,
+    "autoScore": 0.91
+  },
+  {
+    "id": "high-score-scope-unreviewed",
+    "statement": "Begin every planning request without an approval checkpoint.",
+    "evidence": [
+      { "kind": "explicit_request", "verified": true },
+      { "kind": "repeated_observation", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["planning"],
+      "excludes": []
+    },
+    "sensitivity": "none",
+    "changeability": "low",
+    "invalidationEvents": [],
+    "actionValue": true,
+    "currentRequestConflict": false,
+    "scopeReviewComplete": false,
+    "autoScore": 0.99
+  },
+  {
+    "id": "changing-renderer-default",
+    "statement": "Use the currently selected renderer for every image export.",
+    "evidence": [
+      { "kind": "explicit_request", "verified": true },
+      { "kind": "repeated_observation", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["image_export"],
+      "excludes": []
+    },
+    "sensitivity": "none",
+    "changeability": "high",
+    "invalidationEvents": [],
+    "actionValue": true,
+    "currentRequestConflict": false,
+    "scopeReviewComplete": true,
+    "autoScore": 0.87
+  },
+  {
+    "id": "current-request-conflict",
+    "statement": "Publish immediately after a successful build.",
+    "evidence": [
+      { "kind": "explicit_request", "verified": true },
+      { "kind": "repeated_observation", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["public_release"],
+      "excludes": ["draft_only"]
+    },
+    "sensitivity": "none",
+    "changeability": "medium",
+    "invalidationEvents": ["publish_default_revoked"],
+    "actionValue": true,
+    "currentRequestConflict": true,
+    "scopeReviewComplete": true,
+    "autoScore": 0.96
+  },
+  {
+    "id": "raw-access-credential",
+    "statement": "Store a raw access credential so it can be reused later.",
+    "evidence": [
+      { "kind": "explicit_request", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["authentication"],
+      "excludes": []
+    },
+    "sensitivity": "secret",
+    "changeability": "high",
+    "invalidationEvents": ["credential_rotated"],
+    "actionValue": true,
+    "currentRequestConflict": false,
+    "scopeReviewComplete": false,
+    "autoScore": 0.95
+  },
+  {
+    "id": "decorative-preference",
+    "statement": "Remember a decorative color mentioned once even though it changes no task action.",
+    "evidence": [
+      { "kind": "single_observation", "verified": true }
+    ],
+    "scope": {
+      "taskKinds": ["unspecified"],
+      "excludes": []
+    },
+    "sensitivity": "none",
+    "changeability": "medium",
+    "invalidationEvents": [],
+    "actionValue": false,
+    "currentRequestConflict": false,
+    "scopeReviewComplete": false,
+    "autoScore": 0.42
+  }
+]

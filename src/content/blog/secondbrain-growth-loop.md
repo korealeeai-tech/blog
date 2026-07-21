@@ -1,170 +1,141 @@
 ---
-title: "SecondBrain 자동 성장 루프: 기억은 어떻게 후보에서 기준이 되는가"
-description: "새 작업에서 나온 피드백을 바로 기억으로 믿지 않고 후보 수집, 검토, 승격, 보류로 나누어 SecondBrain을 안전하게 성장시키는 방식을 정리합니다."
+title: "SecondBrain 기억 상태 머신: 후보에서 기준이 되기까지"
+description: "memory candidate의 lifecycle과 작업별 application disposition을 분리하고, 승인 record shape·stale 재검증·요청 우선순위를 실행 예제로 설명합니다."
 pubDate: 2026-07-02T16:10:00+09:00
+updatedDate: 2026-07-21T18:00:00+09:00
 category: "secondbrain"
 heroImage: "../../assets/blog/secondbrain-growth-loop.png"
 ---
 
-SecondBrain을 만들 때 가장 위험한 순간은 "자동으로 성장한다"는 말을 너무 쉽게 믿을 때다. 새 작업에서 나온 피드백을 모두 저장하고, 다음 작업에서 바로 쓰면 AI가 빠르게 똑똑해질 것처럼 보인다.
+새 피드백을 수집하자마자 다음 작업의 기준으로 사용하면 `후보`와 `승격된 기억`의 차이가 사라진다. 반대로 검토가 끝난 뒤 아무 상태도 바꾸지 않으면, 오래된 기억이 계속 현재 기준처럼 남는다.
 
-나는 그 방식을 좋아하지 않는다. 자동 성장은 필요하지만, 자동 확신은 위험하다. 작업 중에 나온 문장은 순간의 맥락을 담고 있다. 그 문장이 다음 작업에서도 맞는 기준인지, 오래 유지해도 되는지, 민감한 내용을 포함하지 않는지 따로 봐야 한다.
+이 문제를 다루는 단위는 저장량이 아니라 **상태 전이**다. 후보는 검토를 거쳐야 승격되고, 근거가 부족하면 보류된다. 승격 뒤 실제 source가 오래되거나 무효화되면 `reverify`로 내려간다. 반면 현재 요청과의 충돌은 기억 자체를 무효화하지 않는다. lifecycle은 `promoted`로 유지하고, 그 작업의 application disposition만 `applied: false`로 기록한다.
 
-그래서 SecondBrain의 성장 루프는 단순한 저장 루프가 아니어야 한다. 후보를 모으고, 검토하고, 승격하거나 보류하고, 다음 작업에서 다시 검증하는 루프여야 한다.
-
-이 글은 공개 가능한 개념으로만 설명한다. 실제 개인 기록, 내부 경로, queue 세부값, schedule, 원문 로그, 업무 화면은 다루지 않는다. OpenAI Codex와 Claude Code 공식 문서를 참고하되, 실제 내부 기록이 아니라 공개 가능한 성장 루프 개념만 다룬다.
+아래 흐름과 실행 예제는 공개 설명용 합성 모델이다. 실제 memory 시스템의 내부 구현이나 자동 품질 측정 결과가 아니다.
 
 <figure>
 	<img src="/blog/blog-images/secondbrain/secondbrain-growth-loop.svg" alt="SecondBrain이 후보 수집, 검토, 승격, 보류, 다음 작업 재검증을 거쳐 성장하는 개념도" />
-	<figcaption>이 그림은 실제 queue나 schedule 화면이 아니라, SecondBrain 자동 성장 루프를 설명하기 위한 공개용 개념도다.</figcaption>
+	<figcaption>이 그림은 실제 queue나 schedule 화면이 아니라, 기억 상태 전이를 설명하기 위한 공개용 개념도다.</figcaption>
 </figure>
 
-## 먼저 확인한 것
+## context를 가져오는 것과 기준으로 승격하는 것은 다르다
 
-OpenAI Codex memories 문서는 memory가 이전 작업의 유용한 context를 다음 작업으로 가져올 수 있다고 설명한다.
+2026-07-01에 캡처한 OpenAI Codex memories 문서는 이전 작업의 context를 다음 작업으로 가져오는 기능을 다음처럼 설명했다.
 
-> [OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "useful context"
-
-나는 여기서 중요한 단어가 `useful`이라고 본다. 이전 작업에서 나온 모든 문맥이 아니라, 다음 작업에 실제로 유용한 문맥이어야 한다.
+> [2026-07-01 당시 OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "useful context"
 
 <figure>
-	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="OpenAI Codex memories 공식문서에서 Codex가 유용한 context를 다음 작업으로 가져올 수 있다고 설명한 영역 캡처" />
-	<figcaption>OpenAI Codex memories 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. memory가 문맥을 이어줄 수 있다는 근거이며, 모든 후보를 자동 승격해야 한다는 뜻은 아니다.</figcaption>
+	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="2026년 7월 1일 OpenAI Codex memories 문서에서 유용한 context를 설명한 영역 캡처" />
+	<figcaption>2026-07-01에 만든 역사적 캡처다. 2026-07-21에는 링크가 새 memories 문서로 이동하고 문구와 적용 대상이 달라졌다. 이 캡처는 현재 제품 계약 전체가 아니라, 당시 useful context라고 설명한 범위만 보여준다.</figcaption>
 </figure>
 
-Claude Code memory 문서는 memory를 context로 다루며, 강제 설정과 구분한다.
+Claude Code memory 문서는 memory를 강제 설정과 구분한다.
 
 > [Claude Code memory 문서](https://code.claude.com/docs/en/memory): "context, not enforced configuration"
 
-이 경계는 성장 루프에서도 중요하다. 승격된 기억도 현재 작업의 사실 검증을 대신하지 않는다. 좋은 성장 루프는 기억을 확신으로 바꾸지 않고, 다음 작업에서 확인할 기준으로 바꾼다.
-
 <figure>
 	<img src="/blog/blog-images/official-docs/claude-memory-context-not-enforced.png" alt="Claude Code memory 공식문서에서 memory가 context이지 enforced configuration이 아니라고 설명한 영역 캡처" />
-	<figcaption>Claude Code memory 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. memory가 참고 문맥이라는 근거이며, 승격된 기억이 모든 상황에서 자동으로 강제된다는 뜻은 아니다.</figcaption>
+	<figcaption>Claude Code memory 문서 캡처, 캡처일 2026-07-01. memory가 참고 문맥이라는 근거이며, 승격된 기억이 모든 상황에서 자동으로 강제된다는 뜻은 아니다.</figcaption>
 </figure>
 
-## 1단계: 후보로만 잡는다
+공식 기능이 context를 이어줄 수 있다는 설명만으로 어떤 후보가 안전한 기준이 되는지는 알 수 없다. 그 판단을 추적 가능하게 만드는 것이 아래 상태 머신의 역할이다.
 
-작업 중에 나온 피드백은 바로 공식 기억이 되면 안 된다. 먼저 후보로만 잡는 편이 안전하다.
+## 다섯 상태의 책임을 겹치지 않는다
 
-예를 들어 사용자가 "이번에는 짧게 말해줘"라고 했다고 하자. 이 문장을 그대로 "사용자는 항상 짧은 답변을 원한다"로 저장하면 위험하다. 현재 작업의 요구일 뿐, 모든 작업의 선호가 아닐 수 있기 때문이다.
+| 상태 | 의미 | 허용되는 다음 행동 |
+|---|---|---|
+| `candidate` | 작업 중 발견했지만 아직 사실·범위가 검토되지 않은 문장 | `submit_for_review` |
+| `review` | 근거, 범위, 민감성, 갱신 가능성을 사람이 확인하는 중 | `approve` 또는 `hold` |
+| `promoted` | 적용 범위와 예외가 고정되어 retrieval 후보가 된 기준 | source stale·무효화 신호가 오면 `reverify`; 현재 요청 충돌이면 상태를 유지하고 그 작업에서만 미적용 |
+| `held` | 근거 부족, 범위 불명확, 승인 대기 등으로 적용할 수 없음 | 새 근거를 붙여 `review`로 복귀 |
+| `reverify` | 과거에는 승격됐지만 현재 적용 전에 다시 확인해야 함 | 현재 근거로 `promoted` 복귀 또는 `held` |
 
-후보로 잡을 때는 이렇게 적는 편이 낫다.
-
-```text
-후보: 사용자는 단순 상태 질문에는 짧은 답변을 선호할 수 있다.
-확인 필요: 분석/설계/검증 요청에서도 같은 기준인지 확인하지 않았다.
-```
-
-후보에는 불확실성이 들어가야 한다. 확정하지 않았다는 표시가 있어야 다음 단계에서 검토할 수 있다.
-
-## 2단계: 근거와 적용 범위를 본다
-
-후보를 검토할 때 가장 먼저 보는 것은 근거다.
-
-이 기준이 한 번의 대화에서 나온 것인지, 여러 작업에서 반복된 것인지, 명시적인 사용자 요청인지, AI가 분위기로 추정한 것인지 나눠야 한다. 명시 요청과 추정은 무게가 다르다.
-
-그다음은 적용 범위다.
+전이만 적으면 다음과 같다.
 
 ```text
-모든 답변에 적용되는가?
-분석 요청에만 적용되는가?
-공개 블로그 작업에만 적용되는가?
-시간이 지나면 바뀔 수 있는가?
-현재 도구나 repo 구조에 의존하는가?
+candidate --submit_for_review--> review
+review    --approve-----------> promoted
+review    --hold--------------> held
+held      --add_evidence------> review
+promoted  --stale_signal------> reverify
+reverify  --reconfirm---------> promoted
+reverify  --hold--------------> held
 ```
 
-적용 범위를 좁게 잡을수록 memory는 안전해진다. 넓은 문장일수록 AI가 현재 요청을 덮을 위험이 커진다.
+`candidate → promoted` 직접 전이는 없다. 최신 후보라는 이유도, 자동 점수가 높다는 이유도 review를 건너뛸 수 없다. `current_request_conflict`도 이 표의 event가 아니다. 그것은 특정 작업에서 적용할지를 나타내는 별도 축이다.
 
-## 3단계: 민감한 단서를 제거한다
+## 전이보다 먼저 지켜야 할 불변조건
 
-SecondBrain은 개인화될수록 민감해진다. 그래서 후보를 승격하기 전에 공개되면 안 되는 단서를 제거해야 한다.
+상태 이름만 있어서는 안전하지 않다. 전이가 허용되려면 최소 네 조건이 항상 유지돼야 한다.
 
-나는 이런 것은 기억 후보에서 제거하거나 일반화한다.
+1. `approve`에는 검증된 근거, 좁게 정의된 scope, `actorType: "human"`, `actor`, `decision: "approve"`, `timestamp`를 가진 승인 record가 모두 필요하다. 이 fixture는 그 record가 신뢰된 외부 승인 경계에서 왔다고 가정한다.
+2. `promoted`는 “항상 적용”이 아니라 “현재 작업에서 꺼내 볼 수 있음”을 뜻한다.
+3. source stale·무효화 신호만 lifecycle을 `reverify`로 바꾼다. 현재 요청 충돌은 lifecycle을 바꾸지 않고 `applicationDisposition`에 `applied: false`와 이유를 남긴다.
+4. 초기 상태는 별도 `initial` record로 남기고, 성공한 모든 전이는 `{from,event,to,reason}` 형태로 history에 남긴다. 불법 전이는 가짜 history를 만들지 않고 실패 reason을 반환한다.
 
-- 개인 이름, 계정, 이메일, 연락처
-- 내부 경로, private repository, issue 번호
-- 회사, 제품, 고객, 조직을 유추할 수 있는 맥락
-- 로그, token, key, cookie, session 정보
-- 실제 화면 캡처, 원문 대화, 작업 파일 내용
-- 특정 날짜의 업무 상황을 떠올리게 하는 세부 정보
+개인정보나 비밀을 어떤 저장 경로로 보낼지는 이 상태 머신 앞단의 문제다. 그 내용은 [memory 저장 경계](/blog/blog/ai-work-memory-save-boundary/)에서 다룬다. `review` 상태의 한 후보를 실제로 어떻게 판정하는지는 [Promotion Review Queue](/blog/blog/secondbrain-promotion-review-queue/)로 분리한다.
 
-여기서 핵심은 "잘 익명화하자"가 아니다. 익명화해도 구조가 단서를 남길 수 있다. 다음 작업에 필요한 기준만 남기고 나머지는 버리는 편이 낫다.
+## 실행 가능한 최소 상태 머신
 
-예를 들어 원문 사건은 버리고 이렇게 바꿀 수 있다.
+동작을 확인할 수 있도록 외부 dependency가 없는 [memory-growth-state-machine.mjs](/blog/blog-examples/memory-growth-state-machine.mjs)를 만들었다.
 
-```text
-완료 보고 전에는 실행한 검증과 실행하지 못한 검증을 분리한다.
+```bash
+node public/blog-examples/memory-growth-state-machine.mjs
 ```
 
-이 문장은 민감한 맥락 없이도 다음 작업에 도움이 된다.
+Node.js 22에서 실행하면 여섯 시나리오와 한계 note가 JSON Lines로 나온다. 아래 네 줄은 승인 record shape와 작업별 미적용이 서로 다른 축이고, fixture가 실제 사람 신원을 인증하지 않는다는 경계를 보여준다.
 
-## 4단계: 승격하거나 보류한다
+```json
+{"scenario":"normal_promotion","ok":true,"initial":{"state":"candidate","reason":"candidate_created"},"final_state":"promoted","approval":{"actorType":"human","actor":"synthetic-reviewer","decision":"approve","timestamp":"2026-07-21T09:00:00Z"},"history":[{"from":"candidate","event":"submit_for_review","to":"review","reason":"candidate submitted for review"},{"from":"review","event":"approve","to":"promoted","reason":"verified evidence and scope passed review"}]}
+{"scenario":"automation_actor_type","ok":false,"initial":{"state":"candidate","reason":"candidate_created"},"final_state":"review","history":[{"from":"candidate","event":"submit_for_review","to":"review","reason":"candidate submitted for review"}],"reason":"promotion requires an approval record with actorType=human, actor, decision=approve, and timestamp"}
+{"scenario":"current_request_conflict","ok":true,"initial":{"state":"candidate","reason":"candidate_created"},"final_state":"promoted","approval":{"actorType":"human","actor":"synthetic-reviewer","decision":"approve","timestamp":"2026-07-21T09:00:00Z"},"applicationDisposition":{"applied":false,"notAppliedReason":"current_request_conflict"},"history":[{"from":"candidate","event":"submit_for_review","to":"review","reason":"candidate submitted for review"},{"from":"review","event":"approve","to":"promoted","reason":"verified evidence and scope passed review"}]}
+{"note":"Synthetic transitions and approval-record shape checks only; this fixture assumes a trusted external approval boundary and does not authenticate human identity, provenance, or authorization."}
+```
 
-모든 후보가 기억이 되는 것은 아니다. 어떤 후보는 승격하고, 어떤 후보는 보류해야 한다.
+스크립트 안의 assertion은 초기 상태가 transition history 밖의 `initial` record로 남는지, 모든 history entry가 `from`, `event`, `to`, `reason`을 갖는지, 이전 `to`와 다음 `from`이 이어지는지 확인한다. 불법 전이, 승인 record 누락, `actorType: "automation"`인 record가 shape gate에서 상태를 바꾸지 않고 거부되는지도 검증한다.
 
-승격할 만한 후보는 보통 이런 조건을 가진다.
+## 정상 승격: 근거와 scope가 함께 있어야 한다
 
-- 반복적으로 확인된 기준이다.
-- 다음 작업의 행동을 구체적으로 바꾼다.
-- 원문 없이도 의미가 유지된다.
-- 현재 요청을 덮지 않도록 예외가 적혀 있다.
-- 민감 정보나 식별 가능한 맥락이 없다.
+`normal_promotion`은 `candidate → review → promoted`만 통과한다. `approve` event에는 `evidenceVerified: true`, `scopeDefined: true`뿐 아니라 `actorType: "human"`, `actor`, `decision: "approve"`, 유효한 `timestamp`가 있는 승인 record가 필요하다. 하나라도 빠지거나 literal `actorType`이 `automation`이면 상태는 `review`에 머물고 오류 이유를 반환한다.
 
-보류해야 할 후보는 다르다.
+여기서 통과했다는 것은 record field shape가 맞는다는 뜻뿐이다. 호출자가 `actorType: "human"`을 거짓으로 넣어도 이 deterministic fixture는 알아낼 수 없다. 실제 구현은 상태 머신에 record를 전달하기 전에 신뢰된 외부 승인 경계에서 actor identity와 provenance를 인증하고, 해당 actor의 승인 권한을 검증해야 한다.
 
-- 한 번의 상황에서 나온 말이다.
-- 사용자를 고정적으로 단정한다.
-- 오래된 도구 설정이나 현재와 다른 환경에 의존한다.
-- 내부 맥락을 빼면 의미가 사라진다.
-- 확인되지 않은 추측을 사실처럼 적고 있다.
+여기서 “근거가 최신이다”는 승격의 충분조건이 아니다. 최근 한 번 관찰한 문장도 적용 범위가 불분명하면 다음 작업 전체로 일반화할 수 없다. 최신성은 근거의 한 속성일 뿐, scope 검토를 대체하지 않는다.
 
-보류는 실패가 아니다. 오히려 SecondBrain을 안전하게 만드는 핵심 장치다. 기억을 덜 저장하는 것이 더 좋은 판단으로 이어질 때가 많다.
+## 불법 전이 거부: 자동 확신을 상태로 막는다
 
-## 5단계: 다음 작업에서 다시 검증한다
+`illegal_transition`은 검토 전 후보에 바로 `approve`를 보낸다. 결과는 `ok: false`이고 상태는 `candidate` 그대로다.
 
-승격된 기억도 끝이 아니다. 다음 작업에서 다시 검증해야 한다.
+이 실패는 예외가 아니라 설계 목표다. 호출자가 “점수가 충분하니 바로 승격하자”고 해도 상태 머신이 허용하지 않는다. 승격을 빠르게 만드는 것보다 review를 우회하지 못하게 하는 편이 중요하다.
 
-예를 들어 "공개 글은 build와 live page를 확인한다"는 기준이 승격됐다고 하자. 다음 블로그 작업에서 그 기준이 실제로 실행됐는지 봐야 한다. 실행하지 않았다면 기억은 있었지만 작동하지 않은 것이다.
+## stale 재검증: 오래됐다는 이유만으로 삭제하지 않는다
 
-또 현재 요청이 그 기준과 충돌할 수도 있다. 사용자가 "초안만 써줘, 발행하지 마"라고 했다면 live page 확인은 아직 필요하지 않다. memory가 현재 요청을 이기면 안 된다.
+`stale_reverification`은 이미 승격된 기준에 source stale 신호를 넣는다. 항목은 삭제되지 않고 `reverify`로 이동한다. 현재 근거를 다시 확인해야만 `promoted`로 돌아온다. 근거가 실제로 반박됐거나 더는 유효하지 않으면 명시적 reason과 함께 `held`로 보낸다.
 
-그래서 성장 루프의 마지막은 항상 현재 작업이다. 기억은 다음 작업에서 다시 시험된다. 그 결과가 다시 후보가 되고, 다시 검토된다.
+이 흐름은 “오래되면 모두 폐기”와 다르다. 변하지 않은 안전 원칙은 오래돼도 다시 확인한 뒤 유지할 수 있다. 반대로 방금 승격했어도 구성 변경 사건이 발생했다면 즉시 재검증해야 한다.
 
-## 자동화가 할 일과 사람이 볼 일
+## 현재 요청 충돌: 승격된 기억도 적용하지 않는다
 
-자동화는 후보를 모으는 데 도움이 된다. 반복되는 표현, 검증 실패, 자주 등장하는 작업 기준을 찾아낼 수 있다. 하지만 후보를 공식 기억으로 승격하는 판단은 보수적이어야 한다.
+`current_request_conflict`에서는 과거에 승격된 `default-publish-action`이 현재 요청과 충돌한다고 가정한다. 이 기억의 근거와 scope는 여전히 유효하므로 lifecycle은 `promoted`에 머문다. 대신 별도 `applicationDisposition`에 `applied: false`, `notAppliedReason: "current_request_conflict"`가 남는다. 이 평가 때문에 transition history가 추가되지 않는 것도 assertion으로 확인한다.
 
-자동화가 잘하는 일은 이런 것이다.
+이 반례가 없으면 `promoted`를 “신뢰할 수 있으니 적용”으로 오해하기 쉽다. 승격은 후보 자체의 품질을 검토했다는 뜻일 뿐이다. 지금 요청의 명시적 금지나 좁은 범위를 이길 권한은 주지 않는다.
 
-- 후보를 놓치지 않게 모은다.
-- 중복 후보를 묶는다.
-- 오래된 후보를 표시한다.
-- 민감 패턴을 1차로 탐지한다.
-- 다음 검토 대상을 정리한다.
+## 이 예제가 증명하지 않는 것
 
-사람 또는 엄격한 검토 루프가 봐야 하는 일은 다르다.
+이 스크립트는 deterministic transition table을 실행한다. 실제 모델이 후보를 얼마나 잘 추출하는지, review가 정확한지, memory가 작업 성능을 높이는지는 측정하지 않는다. 승인 record의 실제 actor가 사람인지, record가 변조되지 않았는지, actor가 승인 권한을 가졌는지도 인증하지 않는다. 시나리오가 통과한다는 것은 코드가 명시한 상태·record shape·적용 계약을 지켰다는 뜻뿐이다.
 
-- 이 기준이 과잉 일반화인지 판단한다.
-- 현재 요청을 덮을 위험이 있는지 본다.
-- 공개하면 안 되는 맥락이 남았는지 확인한다.
-- 실제로 다음 작업 행동을 바꾸는지 본다.
-- 보류할 후보를 과감히 버린다.
+실제 시스템에 적용하려면 상태 저장의 원자성, 동시 review 충돌, history 보존, reviewer 권한, recovery 정책을 별도로 설계해야 한다. 이 예제는 그 구현을 가장한 것이 아니라, 상태와 불변조건을 대화 가능한 크기로 줄인 fixture다.
 
-좋은 SecondBrain은 자동으로 많이 저장하는 시스템이 아니다. 자동으로 후보를 모으고, 느리게 승격하는 시스템에 가깝다.
+## 결론
 
-## 내가 남긴 기준
+candidate가 기준이 되는 과정에는 적어도 `review`, `promoted` 또는 `held`, 그리고 `reverify`가 필요하다. 이 구분 덕분에 근거 없는 최신 후보와 필수 field가 없는 승인 record를 거부하고, 실제 stale 신호가 온 기억만 재검증할 수 있다. 현재 요청 충돌은 lifecycle을 오염시키지 않으면서 그 작업의 적용만 멈춘다.
 
-SecondBrain 자동 성장 루프는 빠르게 똑똑해지는 구조가 아니라, 천천히 안전해지는 구조여야 한다.
+안전한 성장 루프는 많이 승격하는 루프가 아니다. 불법 전이를 거부하고, 왜 보류됐는지 남기며, 과거의 승격을 현재 작업에서 다시 시험할 수 있는 루프다.
 
-새 작업에서 나온 피드백은 후보로 잡는다. 후보는 근거, 적용 범위, 민감성, 현재 요청과의 충돌 가능성을 본다. 통과한 것만 승격하고, 불확실하거나 위험한 것은 보류한다. 그리고 승격된 기억도 다음 작업에서 다시 검증한다.
+## 확인 범위와 한계
 
-내가 원하는 SecondBrain은 모든 것을 기억하는 장치가 아니다. 필요한 기준을 안전하게 고르고, 틀릴 수 있는 기억은 계속 의심하는 장치다. 자동 성장은 이 의심을 없애는 것이 아니라, 의심할 대상을 더 잘 정리하는 방향이어야 한다.
-
-## 확인 기준
-
-- OpenAI Codex 문서: [Memories](https://developers.openai.com/codex/memories)
-- Claude Code 문서: [How Claude remembers your project](https://code.claude.com/docs/en/memory)
-- 링크 재확인일: 2026-07-02
-- 공식문서 캡처 생성일: 2026-07-01
-- 이 글은 실제 개인 memory queue, schedule, 내부 로그, 업무 데이터를 공개하지 않는다. 공개 가능한 성장 루프 개념으로 일반화한 글이다.
+- 예제는 Node.js v22.12.0에서 정상 승격, 불법 전이·승인 record 누락·literal automation actor type 거부, stale 재검증, 현재 요청 충돌의 작업별 미적용을 실행했다.
+- 승인 record는 신뢰된 외부 경계에서 인증·인가됐다고 가정한다. fixture 자체는 실제 사람 identity, provenance, authorization을 검증하지 않는다.
+- OpenAI Codex memories 캡처는 2026-07-01 당시 화면이며, 2026-07-21 redirect 이후 현재 문구의 완전한 증거가 아니다.
+- Claude Code 문서 캡처 생성일은 2026-07-01이다.
+- 실제 memory 품질, 모델 행동, 자동 승격 정확도는 측정하지 않았다.
