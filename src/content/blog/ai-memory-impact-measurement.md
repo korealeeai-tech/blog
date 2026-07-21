@@ -1,162 +1,191 @@
 ---
 title: "AI memory가 실제로 도움이 됐는지 측정하는 법"
-description: "AI memory의 효과를 감으로 말하지 않고 반복 설명 감소, 검증 강화, 위험 감소, 맥락 회수 같은 관찰 축으로 나누어 보는 방법을 정리합니다."
+description: "같은 task의 memory off/on 조건을 짝지어 반복 설명, 필수 검증, 위험 재발, 맥락 회수, 잘못된 override를 함께 측정하는 방법을 합성 데이터와 실행 코드로 설명합니다."
 pubDate: 2026-07-02T16:00:00+09:00
+updatedDate: 2026-07-21T16:42:37+09:00
 category: "secondbrain"
 heroImage: "../../assets/blog/ai-memory-impact-measurement.png"
 ---
 
-AI memory를 만들고 나면 쉽게 하고 싶은 말이 있다. "이제 AI가 나를 더 잘 이해한다"는 말이다. 틀린 말은 아닐 수 있다. 하지만 그대로는 너무 넓다.
+AI memory를 켠 뒤 “이제 AI가 나를 더 잘 이해한다”고 말하기는 쉽다. 하지만 이 문장은 무엇이 좋아졌는지, memory가 없었을 때와 무엇이 달랐는지, 부작용은 없었는지 알려주지 않는다.
 
-정말 좋아졌는지 알려면 무엇이 좋아졌는지 봐야 한다. 같은 설명을 덜 반복하게 됐는지, 완료 전에 검증을 더 잘 하게 됐는지, 예전 실수를 덜 반복하는지, 작업 시작 전에 필요한 기준을 더 빨리 꺼내는지 따로 봐야 한다.
+측정하려면 질문을 더 작게 만들어야 한다. 같은 기준을 덜 반복했는가, 필수 검증을 더 수행했는가, 이미 알려진 위험이 덜 재발했는가, 시작 전에 필요한 맥락을 더 적은 단계로 회수했는가를 각각 본다. 그리고 memory가 현재 요청을 잘못 덮은 횟수도 같이 세야 한다.
 
-나는 SecondBrain 같은 AI 작업 기억을 평가할 때 "기억이 많아졌는가"를 보지 않는다. 기억이 실제 작업 행동을 바꿨는지를 본다. 기억은 저장량이 아니라 작업 품질로 평가해야 한다.
-
-이 글은 공개 가능한 개념으로만 설명한다. 실제 개인 기록, 내부 경로, 업무 로그, 제품 정보, 계정, 원문 대화는 다루지 않는다. OpenAI Codex 공식 문서를 참고하되, 실제 내부 dashboard가 아니라 공개 가능한 관찰 기준만 다룬다.
+이 글은 이 다섯 지표를 **같은 task의 `memory_off`와 `memory_on` 조건으로 짝지어 비교하는 방법**을 설명한다. 공개 데이터는 측정법을 재현하기 위해 만든 합성 fixture다. 실제 사용자 대화나 업무 로그가 아니며, 아래 결과로 특정 memory 제품의 효과를 주장하지 않는다.
 
 <figure>
-	<img src="/blog/blog-images/secondbrain/ai-memory-impact-measurement.svg" alt="AI memory 효과를 반복 설명, 검증 강화, 위험 감소, 맥락 회수로 나누어 관찰하는 개념도" />
-	<figcaption>이 그림은 실제 dashboard나 개인 기록이 아니라, AI memory 효과를 관찰하기 위한 공개용 개념도다.</figcaption>
+	<img src="/blog/blog-images/secondbrain/ai-memory-impact-measurement.svg" alt="AI memory 효과를 반복 설명, 검증 강화, 위험 감소, 맥락 회수와 override 오류로 나누어 관찰하는 개념도" />
+	<figcaption>측정 축을 분리하면 한 지표의 개선이 다른 부작용을 가리는 일을 줄일 수 있다. 이 그림은 실제 dashboard가 아닌 공개용 개념도다.</figcaption>
 </figure>
 
-## 먼저 확인한 것
+## 공식 기능 설명과 효과 주장을 분리한다
 
-OpenAI Codex memories 문서는 memory를 이전 작업의 유용한 context를 다음 작업으로 가져오는 장치로 설명한다.
+OpenAI Codex memories 문서는 memory가 이전 작업의 유용한 context를 다음 작업으로 가져올 수 있다고 설명한다.
 
 > [OpenAI Codex memories 문서](https://developers.openai.com/codex/memories): "carry useful context"
 
-나는 이 문장을 memory가 답을 보장한다는 뜻으로 읽지 않는다. 다음 작업에 도움이 되는 context를 가져올 수 있다는 뜻이지, 그 context가 실제로 도움이 됐는지는 따로 봐야 한다.
-
 <figure>
-	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="OpenAI Codex memories 공식문서에서 Codex가 유용한 context를 다음 작업으로 가져올 수 있다고 설명한 영역 캡처" />
-	<figcaption>OpenAI Codex memories 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. memory가 문맥을 이어주는 장치라는 근거이며, memory 효과가 자동으로 측정된다는 뜻은 아니다.</figcaption>
+	<img src="/blog/blog-images/official-docs/openai-codex-memories-context.png" alt="OpenAI Codex memories 공식문서에서 유용한 context를 다음 작업으로 가져올 수 있다고 설명한 영역" />
+	<figcaption>OpenAI Codex memories 문서 캡처, 재확인일 2026-07-21. memory가 문맥을 이어줄 수 있다는 근거이며, 작업 품질이 자동으로 좋아진다는 증거는 아니다.</figcaption>
 </figure>
 
-OpenAI Codex의 iterative repair loops 문서도 참고했다. 이 문서는 baseline eval 실행, 실패 모드 식별, 집중 변경, 재실행, 점수 기록처럼 반복 개선을 측정 가능한 흐름으로 만들라고 설명한다.
+OpenAI Codex의 iterative repair loops 문서는 baseline eval, 실패 모드 식별, focused change, 재실행과 점수 기록을 연결한다.
 
 > [OpenAI Codex iterative repair loops 문서](https://developers.openai.com/codex/use-cases/iterate-on-difficult-problems): "Run the evals"
 
-이 글에서는 그 원칙을 AI memory에 작게 적용한다. 공식 eval 시스템을 그대로 구현한다는 뜻은 아니다. memory가 작업 결과에 준 영향을 관찰 가능한 축으로 나누자는 뜻이다.
-
 <figure>
-	<img src="/blog/blog-images/official-docs/openai-codex-iteration-loop-evals.png" alt="OpenAI Codex 문서에서 eval 실행, 실패 모드 식별, focused change, 재실행, 점수 기록 루프를 설명한 영역 캡처" />
-	<figcaption>OpenAI Codex iterative repair loops 문서 캡처, 캡처일 2026-07-01, 링크 재확인 2026-07-02. 반복 개선은 측정 가능한 루프로 다뤄야 한다는 근거이며, 이 글의 관찰 축이 공식 평가 지표라는 뜻은 아니다.</figcaption>
+	<img src="/blog/blog-images/official-docs/openai-codex-iteration-loop-evals.png" alt="OpenAI Codex 문서에서 eval 실행, 실패 모드 식별, focused change와 재실행 흐름을 설명한 영역" />
+	<figcaption>OpenAI Codex iterative repair loops 문서 캡처, 재확인일 2026-07-21. 반복 개선을 baseline과 재평가로 다룬다는 근거이며, 아래 다섯 지표가 OpenAI 공식 memory 평가 지표라는 뜻은 아니다.</figcaption>
 </figure>
 
-## 첫 번째 축: 반복 설명이 줄었는가
+첫 문서는 기능의 가능 범위를, 두 번째 문서는 개선을 검증하는 일반적인 loop를 설명한다. 둘 다 “memory를 켜면 검증률이 몇 퍼센트 오른다”는 수치를 제공하지 않는다. 그 효과는 자신의 task와 rubric으로 따로 측정해야 한다.
 
-memory가 가장 먼저 줄여야 하는 것은 반복 설명이다.
+## 먼저 측정 단위를 task pair로 고정한다
 
-예를 들어 사용자가 매번 "검증한 것과 검증하지 못한 것을 분리해서 말해달라"고 설명하고 있다면, memory는 그 기준을 작업 시작 전에 꺼내야 한다. 다음 작업에서 AI가 먼저 그 형식으로 보고한다면 memory가 행동을 바꾼 것이다.
+전후 기간의 전체 작업을 단순 비교하면 memory 외의 변화가 너무 많이 섞인다. 작업 난이도, 모델 버전, prompt, tool 권한, 담당자가 달라질 수 있기 때문이다.
 
-여기서 조심할 점이 있다. 반복 설명이 줄었다고 해서 무조건 성공은 아니다. AI가 기억을 과하게 적용해서 현재 요청을 덮어버릴 수도 있다. 그래서 나는 "사용자가 설명하지 않아도 기준을 맞췄는가"와 "현재 요청을 잘못 덮지 않았는가"를 같이 본다.
-
-좋은 신호는 이런 것이다.
-
-- 사용자가 매번 말하던 검증 기준이 작업 시작 전에 반영된다.
-- 답변 형식이나 보고 방식이 이전 피드백과 맞아진다.
-- 같은 안전 경계를 반복해서 설명하지 않아도 된다.
-- 그래도 현재 요청이 우선으로 처리된다.
-
-반대로 나쁜 신호도 있다. AI가 "예전에 이렇게 했으니 이번에도 그럴 것이다"라고 단정하면 memory는 도움이 아니라 방해가 된다.
-
-## 두 번째 축: 검증이 강해졌는가
-
-AI memory가 실제로 도움이 되려면 검증 행동이 달라져야 한다.
-
-예를 들어 공개 글을 발행하는 작업이라면 기억이 이런 행동으로 이어져야 한다.
+가능하면 같은 task를 두 조건으로 짝짓는다.
 
 ```text
-source만 보지 말고 build output과 live page까지 확인한다.
-공식문서를 인용하면 원문 캡처나 짧은 원문, 해석, 한계를 함께 둔다.
-이미지 파일명과 alt text도 공개 표면으로 검사한다.
+pair id: T01
+고정: task 입력, 성공 기준, 필수 검증 목록, 알려진 위험
+조건 A: memory_off
+조건 B: memory_on
+관찰: 반복 설명, 검증 수행, 위험 재발, 회수 단계, override 오류
 ```
 
-이 기준이 memory에 있더라도, 실제 작업에서 build를 돌리지 않거나 live page를 확인하지 않으면 효과가 없다. memory의 가치는 "좋은 문장이 저장되어 있는가"가 아니라 "그 문장이 실제 검증을 유도했는가"에 있다.
+완전히 같은 생성 결과를 기대할 수는 없다. AI 결과에는 변동성이 있고, 한 번 본 task를 다시 실행하면 학습 효과도 섞일 수 있다. 순서를 무작위화하거나 서로 비슷한 task set을 교차 배치하고, 가능하면 여러 번 반복해야 한다.
 
-그래서 측정할 때는 완료 보고 문장보다 실행 증거를 본다.
+이 글의 8쌍은 통계적 효과 추정용 표본이 아니다. 계산식과 실패 조건을 검토하기 위한 최소 fixture다.
 
-- 어떤 검증을 실행했는가
-- 어떤 검증은 실행하지 못했는가
-- 실패가 있었으면 무엇을 고쳤는가
-- 최종 결과가 실제로 바뀌었는가
+## 다섯 지표를 계산 가능하게 정의한다
 
-AI가 검증을 더 자주 말하는 것만으로는 부족하다. 검증을 실제로 수행하고, 실패하면 그 결과로 다음 행동을 바꿔야 한다.
+### 1. 반복 설명 수
 
-## 세 번째 축: 반복 위험이 줄었는가
+사용자가 작업 중 다시 말해야 했던 기존 기준의 횟수를 센다. 같은 말을 길게 했는지가 아니라, memory가 있었다면 작업 시작 전에 회수했어야 할 기준이 몇 번 다시 입력됐는지 본다.
 
-memory는 좋은 선호만 저장하는 곳이 아니다. 반복 사고를 막는 기준도 저장해야 한다.
+### 2. 필수 검증 수행률
 
-내가 특히 중요하게 보는 위험은 이런 것들이다.
-
-- 확인하지 않은 파일 경로나 식별자를 추측하는 일
-- 테스트하지 않은 결과를 완료라고 말하는 일
-- 오래된 상태 기록을 최신처럼 쓰는 일
-- 공개하면 안 되는 내용을 요약 형태로 다시 노출하는 일
-- 공식 문서를 확인하지 않고 제품 동작을 단정하는 일
-
-이런 위험은 한 번 적어두는 것으로 끝나지 않는다. 다음 작업에서 실제로 줄었는지 봐야 한다.
-
-예를 들어 과거에 경로를 추측해서 문제가 생겼다면, 좋은 memory는 다음 작업에서 `rg`, 파일 확인, 실제 실행 결과로 시작하게 만든다. "추측하지 않는다"라는 문장이 저장되어 있어도, AI가 여전히 추측으로 답하면 효과가 없는 것이다.
-
-위험 감소는 감정적으로 평가하면 안 된다. "이번에는 조심했다"보다 "이번에는 어떤 확인을 먼저 했는가"가 더 중요하다.
-
-## 네 번째 축: 작업 전 맥락 회수가 빨라졌는가
-
-좋은 memory는 작업 시작을 빠르게 만든다. 여기서 빠르다는 말은 무작정 빨리 답한다는 뜻이 아니다. 필요한 기준을 먼저 꺼내고, 확인할 것을 빨리 정한다는 뜻이다.
-
-예를 들어 글쓰기 작업이라면 작업 시작 전에 이런 기준을 회수해야 한다.
+task 전에 필수 검증 목록을 고정한다.
 
 ```text
-자연스러운 한국어 문체로 쓴다.
-공식문서 인용은 원문 캡처를 우선한다.
-설명용 이미지는 되도록 한글로 만든다.
-민감한 회사, 제품, 고객, 개인, 내부 경로는 공개하지 않는다.
+필수 검증 수행률 = 수행한 필수 검증 수 / 요구한 필수 검증 수 × 100
 ```
 
-이 brief가 작업 전에 떠오르면 시작이 안정된다. 반대로 작업이 끝난 뒤에야 "아, 이미지 규칙도 있었지"라고 떠올리면 memory가 늦게 작동한 것이다.
+검증을 많이 실행하는 것이 목표는 아니다. task의 핵심 위험과 연결된 검증을 실제로 수행했는지 본다.
 
-맥락 회수는 현재 근거와 연결될 때만 의미가 있다. 오래된 기준을 그대로 믿는 것이 아니라, 현재 repo의 규칙과 실제 파일 상태를 다시 확인해야 한다.
+### 3. 알려진 위험 재발률
 
-## 업무효과 dashboard를 만들 때 조심할 점
-
-AI memory 효과를 dashboard로 보여주고 싶을 수 있다. 나도 그 방향이 유용하다고 본다. 다만 dashboard는 proof가 아니라 관찰 요약이어야 한다.
-
-예를 들어 "반복 설명 감소 40%" 같은 숫자를 만들고 싶다면, 먼저 무엇을 반복 설명으로 볼지 정해야 한다. 사용자의 한 문장을 줄였다고 해서 업무효과가 40% 좋아졌다고 말할 수는 없다. 숫자가 설득력을 가지려면 기준과 한계가 같이 있어야 한다.
-
-나는 dashboard를 만들 때 이런 경계를 둔다.
-
-- 수치는 결론이 아니라 관찰 신호다.
-- source proof와 추정 값을 분리한다.
-- 자동 집계가 틀릴 수 있는 항목은 확인 필요로 남긴다.
-- 개인 기록이나 내부 맥락은 공개용 화면에 올리지 않는다.
-- 효과가 없었던 작업도 숨기지 않는다.
-
-memory가 효과를 냈다는 주장은 매력적이다. 그래서 더 조심해야 한다. 좋은 dashboard는 memory를 자랑하는 화면이 아니라, 어디에서 도움이 됐고 어디에서는 확인이 필요한지 보여주는 화면이어야 한다.
-
-## 내가 쓰는 작은 측정표
-
-복잡한 시스템이 없어도 작은 표로 시작할 수 있다.
+과거에 확인돼 memory 후보가 된 위험이 있는 task만 분모에 넣는다.
 
 ```text
-작업 전 회수한 기준:
-실제로 바뀐 행동:
-실행한 검증:
-줄어든 반복 설명:
-막은 위험:
-확인하지 못한 효과:
-다음에 고칠 점:
+위험 재발률 = 다시 발생한 알려진 위험 수 / 알려진 위험이 있던 task 수 × 100
 ```
 
-이 정도만 남겨도 "memory가 좋았다"는 말을 조금 더 구체적으로 바꿀 수 있다. 특히 마지막 두 줄이 중요하다. 확인하지 못한 효과와 다음에 고칠 점을 적어야 memory가 과신으로 흐르지 않는다.
+새로운 종류의 실패는 이 지표에 넣지 않는다. 기존 위험 재발과 전체 오류율을 섞으면 memory가 무엇을 막았는지 알 수 없다.
 
-AI memory는 사람을 더 많이 저장하기 위한 장치가 아니다. 다음 작업을 더 안전하게 시작하고, 더 정확하게 검증하게 만드는 장치다. 그래서 효과 측정도 같은 방향이어야 한다.
+### 4. 맥락 회수 단계 중앙값
 
-내 결론은 이렇다. AI memory의 성공은 저장된 항목 수가 아니라, 반복 설명을 줄이고, 검증을 강화하고, 위험을 줄이고, 작업 전 맥락 회수를 안정화했는지로 봐야 한다.
+관련 규칙과 현재 근거를 찾기까지 실행한 조회·질문 단계를 센다. 평균 대신 중앙값을 쓰면 한 번의 매우 긴 탐색이 전체 결과를 과도하게 끌어올리는 영향을 줄일 수 있다.
+
+단계 수가 적다고 항상 좋지는 않다. 필요한 확인을 생략해서 빨라진 것이라면 필수 검증 수행률과 함께 나빠진다.
+
+### 5. 잘못된 override 수
+
+memory가 현재 명시 요청보다 우선해 잘못된 행동을 만든 횟수다. 예를 들어 사용자가 “초안만 작성하고 발행하지 말라”고 했는데 과거의 자동 발행 기준을 적용했다면 override 오류다.
+
+이 지표를 빼면 반복 설명과 회수 속도만 좋아진 memory가 현재 요청을 침범하는 부작용을 숨길 수 있다.
+
+## 공개 fixture를 직접 실행한다
+
+합성 원자료는 [memory-impact-sample.json](/blog/blog-examples/memory-impact-sample.json), 계산기는 [measure-memory-impact.mjs](/blog/blog-examples/measure-memory-impact.mjs)에 있다.
+
+```bash
+node public/blog-examples/measure-memory-impact.mjs
+```
+
+Node.js 22에서 확인한 결과는 다음과 같다.
+
+```json
+{
+  "memory_off": {
+    "tasks": 8,
+    "repeated_instructions": 8,
+    "required_check_rate": 58.3,
+    "risk_recurrence_rate": 50,
+    "median_recovery_steps": 4,
+    "override_errors": 0
+  },
+  "memory_on": {
+    "tasks": 8,
+    "repeated_instructions": 2,
+    "required_check_rate": 87.5,
+    "risk_recurrence_rate": 16.7,
+    "median_recovery_steps": 2,
+    "override_errors": 1
+  }
+}
+```
+
+계산기는 각 task id에 두 조건이 모두 없으면 실패한다. 횟수·단계 필드는 0 이상의 정수, 위험·override 필드는 boolean이어야 한다. `performed_checks`가 `required_checks`보다 크거나, 알려진 위험이 없는데 재발했다고 표시한 row도 거부한다. 숫자가 그럴듯해 보여도 pair와 field contract가 깨졌다면 결과를 만들지 않는 편이 낫다.
+
+분모가 없는 비율은 0%가 아니다. 한 조건의 `required_checks` 합계가 0이거나 알려진 위험 task가 하나도 없으면 해당 rate와 rate delta를 `null`로 출력한다. 이는 “문제가 없었다”가 아니라 “이 dataset에서는 그 비율을 정의할 수 없다”는 뜻이며, 비교 결론에서 제외해야 한다.
+
+## 결과를 한 문장으로 뭉치지 않는다
+
+합성 fixture에서는 memory를 켠 조건에서 반복 설명이 8회에서 2회로 줄었다. 필수 검증 수행률은 58.3%에서 87.5%로 29.2%p 높아졌고, 알려진 위험 재발률은 50.0%에서 16.7%로 33.3%p 낮아졌다. 맥락 회수 단계 중앙값은 4에서 2로 줄었다.
+
+이 네 수치만 보면 memory가 전반적으로 좋아 보인다. 하지만 override 오류가 0건에서 1건으로 늘었다. T07에서는 지속 기준이 현재 요청을 잘못 덮었다는 합성 사례를 넣었다.
+
+따라서 이 fixture의 올바른 결론은 “memory가 효과적이다”가 아니다.
+
+```text
+합성 조건에서는 반복 설명·검증·위험 재발·회수 단계가 개선되는 모양이 나타났다.
+동시에 현재 요청 override라는 부작용도 나타났다.
+실제 효과와 순효용은 실제 task를 반복 측정하기 전에는 알 수 없다.
+```
+
+negative result를 포함하지 않았다면 같은 데이터로 과도하게 낙관적인 dashboard를 만들었을 것이다.
+
+## 세 가지 평가 방식을 비교한다
+
+| 방식 | 장점 | 약점 | 적합한 시작점 |
+|---|---|---|---|
+| 작업 후 체크리스트 | 가장 간단하고 바로 시작 가능 | baseline과 비교가 없고 회상 편향이 큼 | 지표 후보를 찾는 초기 단계 |
+| 기간별 dashboard | 장기 추세와 운영 이상을 보기 쉬움 | task 구성·모델·규칙 변화가 섞임 | 안정된 수집 정의가 있을 때 |
+| paired task evaluation | 조건 차이를 좁혀 비교 가능 | 비용이 크고 반복 실행·순서 효과 관리 필요 | 효과 주장을 검증할 때 |
+
+처음부터 큰 dashboard를 만들 필요는 없다. 체크리스트로 어떤 행동이 변하는지 찾고, 중요한 주장만 paired evaluation으로 올린 뒤, 정의가 안정되면 추세 dashboard를 만드는 순서가 현실적이다.
+
+반대로 dashboard의 숫자부터 정하면 “반복 설명 40% 감소”처럼 분모와 표본이 없는 지표가 생기기 쉽다. 숫자를 만들기 전에 어떤 task를 왜 세는지 고정해야 한다.
+
+## 실제 측정에서 통제하기 어려운 것
+
+memory 외에 결과를 바꾸는 변수가 많다.
+
+- 모델 또는 reasoning 설정이 달라졌다.
+- 두 번째 실행이 첫 번째 task를 이미 본 상태다.
+- 필수 검증 목록을 결과를 본 뒤 바꿨다.
+- 쉬운 task만 memory_on에 배치했다.
+- 사용자가 개입한 횟수와 개입 이유를 일관되게 기록하지 않았다.
+- memory가 아니라 새 tool이나 더 나은 prompt가 결과를 바꿨다.
+- 평가자가 조건을 알고 있어 주관 판정이 기울었다.
+
+표본이 작을 때는 효과 크기를 일반화하지 않는다. 몇 쌍의 task로는 “이 환경에서 이런 실패가 관찰됐다”까지가 안전하다. 제품 전체나 모든 사용자에게 같은 결과가 난다고 말할 수 없다.
+
+또한 개인정보와 원문 대화를 그대로 dataset에 넣지 않는다. 필요한 것은 사건의 구체적인 원문이 아니라 `필수 검증 3개 중 2개 수행`, `현재 요청 override 1건`처럼 행동으로 일반화한 관찰값이다.
+
+## 결론
+
+AI memory의 효과는 저장 항목 수가 아니라 작업 행동의 변화로 본다. 다만 행동이 바뀌었다는 관찰과 memory가 그 변화를 일으켰다는 인과 주장은 다르다.
+
+같은 task를 두 조건으로 짝짓고, 반복 설명·필수 검증·알려진 위험 재발·맥락 회수·override 오류를 함께 보면 최소한 좋은 지표 하나가 부작용을 가리는 문제는 줄일 수 있다.
+
+이 글의 합성 결과에서는 네 축이 좋아지고 한 축이 나빠졌다. 실제 환경에서도 이 균형을 보지 않으면 memory는 편리해졌다는 인상만 남기고, 현재 요청을 침범하는 실패는 놓칠 수 있다. 측정의 목적은 memory를 자랑하는 것이 아니라 **어디에서 도움이 됐고 어디에서 멈춰야 하는지 결정하는 것**이다.
 
 ## 확인 기준
 
-- OpenAI Codex 문서: [Memories](https://developers.openai.com/codex/memories), [Build iterative repair loops](https://developers.openai.com/codex/use-cases/iterate-on-difficult-problems)
-- 링크 재확인일: 2026-07-02
-- 공식문서 캡처 생성일: 2026-07-01
-- 이 글은 실제 개인 memory, 내부 dashboard, 업무 로그, 제품 정보를 공개하지 않는다. 공개 가능한 운영 기준으로 일반화한 글이다.
+- OpenAI Codex 공식 문서: [Memories](https://developers.openai.com/codex/memories), [Build iterative repair loops](https://developers.openai.com/codex/use-cases/iterate-on-difficult-problems)
+- 공식 페이지와 기존 캡처 재확인일: 2026-07-21
+- 합성 JSON과 계산기는 Node.js v22.12.0에서 실행했고, 완전한 8쌍은 통과했으며 한 조건을 제거한 fixture는 pairing 오류로 실패했다.
+- 이 글은 실제 memory 제품의 정확도·생산성·인과 효과를 측정하지 않았다. 표의 수치는 측정 설계와 해석 경계를 재현하기 위한 합성 결과다.

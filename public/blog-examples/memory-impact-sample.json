@@ -1,0 +1,18 @@
+[
+  { "task_id": "T01", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 1, "known_risk": true,  "risk_recurred": true,  "recovery_steps": 6, "override_error": false },
+  { "task_id": "T01", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 3, "known_risk": true,  "risk_recurred": false, "recovery_steps": 2, "override_error": false },
+  { "task_id": "T02", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": false, "recovery_steps": 5, "override_error": false },
+  { "task_id": "T02", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 3, "known_risk": true,  "risk_recurred": false, "recovery_steps": 1, "override_error": false },
+  { "task_id": "T03", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": true,  "recovery_steps": 4, "override_error": false },
+  { "task_id": "T03", "condition": "memory_on",  "repeated_instruction": 1, "required_checks": 3, "performed_checks": 3, "known_risk": true,  "risk_recurred": false, "recovery_steps": 2, "override_error": false },
+  { "task_id": "T04", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 1, "known_risk": true,  "risk_recurred": false, "recovery_steps": 4, "override_error": false },
+  { "task_id": "T04", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": false, "recovery_steps": 4, "override_error": false },
+  { "task_id": "T05", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": true,  "recovery_steps": 5, "override_error": false },
+  { "task_id": "T05", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 3, "known_risk": true,  "risk_recurred": true,  "recovery_steps": 2, "override_error": false },
+  { "task_id": "T06", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": false, "recovery_steps": 4, "override_error": false },
+  { "task_id": "T06", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 2, "known_risk": true,  "risk_recurred": false, "recovery_steps": 1, "override_error": false },
+  { "task_id": "T07", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": false, "risk_recurred": false, "recovery_steps": 3, "override_error": false },
+  { "task_id": "T07", "condition": "memory_on",  "repeated_instruction": 1, "required_checks": 3, "performed_checks": 3, "known_risk": false, "risk_recurred": false, "recovery_steps": 3, "override_error": true  },
+  { "task_id": "T08", "condition": "memory_off", "repeated_instruction": 1, "required_checks": 3, "performed_checks": 2, "known_risk": false, "risk_recurred": false, "recovery_steps": 2, "override_error": false },
+  { "task_id": "T08", "condition": "memory_on",  "repeated_instruction": 0, "required_checks": 3, "performed_checks": 2, "known_risk": false, "risk_recurred": false, "recovery_steps": 2, "override_error": false }
+]

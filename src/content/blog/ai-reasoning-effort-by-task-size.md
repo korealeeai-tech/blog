@@ -1,114 +1,136 @@
 ---
-title: "AI 작업에서 reasoning effort를 매번 높이면 안 되는 이유"
-description: "AI에게 항상 깊게 생각하라고 시키는 대신, 작업 난이도와 실패 비용에 맞춰 reasoning effort를 나누는 기준을 정리합니다."
+title: "AI reasoning effort를 작업 위험에 맞춰 나누는 방법"
+description: "reasoning effort를 항상 높이거나 낮추지 않고 실패 비용, 모호성, 상호의존성, 검증 공백으로 routing한 뒤 실제 task eval로 보정하는 방법을 설명합니다."
 pubDate: 2026-07-01T10:40:00+09:00
+updatedDate: 2026-07-21T16:42:37+09:00
 category: "ai-workflow"
 heroImage: "../../assets/blog/reasoning-effort-lanes.png"
 ---
 
-AI에게 일을 맡기다 보면 한 번쯤은 이런 생각을 하게 된다. "그냥 항상 가장 깊게 생각하게 하면 더 좋은 결과가 나오지 않을까?"
+reasoning effort를 고를 때 흔히 두 극단으로 간다. “깊게 생각하면 더 좋을 테니 항상 최대로 둔다”거나, “빠른 응답이 중요하니 기본값을 건드리지 않는다”는 방식이다.
 
-나도 처음에는 그렇게 생각했다. 단순한 문구 수정에도 길게 검토하게 하고, 작은 조회에도 여러 단계를 거치게 했다. 결과가 항상 나빠진 것은 아니지만, 점점 이상한 비용이 생겼다. 작은 일에도 시간이 오래 걸리고, 대답은 길어지고, 정작 중요한 작업에서 무엇을 더 꼼꼼히 봐야 하는지 구분이 흐려졌다.
+둘 다 단순하지만 작업의 위험을 보지 않는다. 오탈자 수정과 운영 데이터 삭제 계획은 짧은 요청이라는 점만 같을 뿐, 틀렸을 때의 비용과 확인해야 할 경계가 전혀 다르다. 반대로 긴 문서를 정해진 형식으로 요약하는 일은 입력이 길어도 판단 난이도가 높지 않을 수 있다.
 
-그래서 요즘은 reasoning effort를 "성능을 높이는 스위치"로 보지 않는다. 작업의 실패 비용과 판단 난이도에 맞춰 조절하는 자원으로 본다.
-
-이 글은 OpenAI Codex 공식 문서에서 reasoning effort 설정이 존재한다는 점을 확인하고, 내가 AI 작업을 나눌 때 쓰는 개인 운영 기준을 공개 가능한 범위로 정리한 것이다. 여기서 말하는 `quick`, `medium`, `deep` 같은 표현은 내 작업 분류 방식이지, 모든 도구에 그대로 적용되는 공식 등급표는 아니다.
+이 글의 질문은 “어떤 effort가 가장 성능이 좋은가”가 아니다. **어떤 작업에 더 많은 추론 자원을 배정할지 사전에 어떻게 구분할 것인가**다. 모델 품질은 결국 대표 task를 직접 평가해야 하며, 아래 합성 simulation은 routing 규칙만 검토한다.
 
 <figure>
 	<img src="/blog/blog-images/reasoning-effort-lanes.svg" alt="빠른 작업, 보통 작업, 깊은 판단으로 reasoning effort를 나누는 개념도" />
-	<figcaption>이 그림은 실제 모델 내부 동작이 아니라, 작업 난이도별로 사고량을 나누기 위한 운영 개념도다.</figcaption>
+	<figcaption>이 그림은 실제 모델 내부 동작이나 benchmark 결과가 아니라, 작업 위험에 따라 reasoning 자원을 배분하는 개념도다.</figcaption>
 </figure>
 
-## 먼저 확인한 것
+## 공식 문서가 말하는 범위
 
-OpenAI Codex 설정 문서에는 `model_reasoning_effort` 항목이 있고, 값으로 `minimal`, `low`, `medium`, `high`, `xhigh`가 제시되어 있다. 이 문서만으로 "항상 높은 값이 좋다"고 말할 수는 없다. 문서가 보여주는 것은 조절 가능한 설정이 있다는 사실이지, 모든 작업에서 높은 reasoning이 최선이라는 결론이 아니다.
+OpenAI Codex 설정 문서는 `model_reasoning_effort`를 조절 가능한 설정으로 제공한다.
 
-> [OpenAI Codex config reference](https://developers.openai.com/codex/config-reference): `model_reasoning_effort` 값은 `minimal | low | medium | high | xhigh`로 제시된다.
-
-나는 이 항목을 작업 난이도에 따라 사고량을 조절할 수 있다는 근거로만 본다. 실제 품질은 모델, 작업, 입력 문맥, 검증 방식에 따라 달라질 수 있다.
+> [OpenAI Codex config reference](https://developers.openai.com/codex/config-reference): `model_reasoning_effort` 값으로 `minimal | low | medium | high | xhigh`를 제시한다.
 
 <figure>
-	<img src="/blog/blog-images/official-docs/openai-codex-model-reasoning-effort-config.png" alt="OpenAI Codex config reference에서 model_reasoning_effort 설정값을 보여주는 영역 캡처" />
-	<figcaption>OpenAI Codex config reference 캡처, 확인일 2026-07-01. reasoning effort를 설정할 수 있다는 근거이며, 높은 값이 모든 작업에서 더 낫다는 증거는 아니다.</figcaption>
+	<img src="/blog/blog-images/official-docs/openai-codex-model-reasoning-effort-config.png" alt="OpenAI Codex config reference에서 model_reasoning_effort 설정값을 보여주는 영역" />
+	<figcaption>OpenAI Codex config reference 캡처, 재확인일 2026-07-21. effort를 설정할 수 있다는 근거이며, 높은 값이 모든 작업에서 더 낫다는 증거는 아니다.</figcaption>
 </figure>
 
-## 깊게 생각하는 것이 항상 좋은 것은 아니다
+현재 OpenAI model guidance는 대표 task에서 설정을 비교하라고 권한다.
 
-AI가 더 오래 생각하면 놓치는 부분이 줄어들 수 있다. 설계 비교, 위험 분석, 여러 파일이 얽힌 수정처럼 판단이 많은 작업에서는 도움이 된다.
+> [OpenAI model guidance](https://developers.openai.com/api/docs/guides/latest-model): "compare configurations on representative tasks"
 
-하지만 모든 작업이 그런 것은 아니다. 오탈자 수정, 짧은 문장 다듬기, 단순 조회, 파일 하나의 작은 변경은 깊은 추론보다 빠른 확인이 더 중요할 때가 많다. 이때 긴 reasoning을 기본값으로 두면 작업은 느려지고, 답변은 과하게 무거워진다.
+<!-- evidence-screenshot-exception: 현재 모델별 권고는 자주 갱신되는 동적 문서라 짧은 원문과 링크로 남기고, 고정 캡처는 Codex 설정값 표에 한정했다. -->
 
-더 큰 문제는 사람의 주의가 흐려진다는 점이다. AI가 긴 설명을 내놓으면 그 자체가 꼼꼼한 검토처럼 보인다. 하지만 긴 설명은 검증이 아니다. 실제 파일이 바뀌었는지, 빌드가 통과했는지, 공개하면 안 되는 내용이 섞이지 않았는지는 별도로 확인해야 한다.
+이 두 근거로 말할 수 있는 것은 effort를 선택할 수 있고, 실제 workload에서 비교해야 한다는 점까지다. 특정 모델에서 `high`가 `medium`보다 얼마나 정확한지, 지연과 token이 얼마나 늘어나는지는 이 글에서 측정하지 않았다.
 
-그래서 나는 reasoning effort를 올리는 것보다 먼저 묻는다.
+## routing 전에 네 가지 위험을 본다
 
-- 이 작업에서 틀리면 비용이 큰가?
-- 근거 확인이 필요한가?
-- 여러 선택지 중 하나를 골라야 하는가?
-- 변경 범위가 넓은가?
-- 결과를 되돌리기 어려운가?
+나는 작업을 네 축으로 0–2점씩 본다.
 
-이 질문에 많이 걸릴수록 더 깊게 생각하게 한다. 반대로 대부분 아니면 가볍게 처리하고 검증만 붙인다.
+| 축 | 0점 | 1점 | 2점 |
+|---|---|---|---|
+| 실패 비용 | 즉시 되돌릴 수 있음 | 재작업이 필요함 | 공개·보안·데이터 손실 가능 |
+| 모호성 | 입력과 출력이 명확함 | 해석 선택지가 있음 | 목표·원인·정답 조건이 불명확 |
+| 상호의존성 | 한 문장·한 값 | 한 파일·한 모듈 | 여러 저장소·시스템·사람 경계 |
+| 검증 공백 | 자동 판정 가능 | 일부 사람 판단 | 결과 확인이 늦거나 불완전 |
 
-## 내가 쓰는 세 단계
+합계가 0–2면 `low`, 3–5면 `medium`, 6–8이면 `high`로 보내는 단순 규칙을 만들 수 있다. 점수 자체가 진리가 아니라, “왜 이 작업을 무겁게 다루는가”를 검토 가능하게 만드는 장치다.
 
-내가 실제로 나누는 방식은 단순하다.
+예를 들어 오탈자 한 글자 수정은 짧고 자동 확인이 쉬워 낮은 lane으로 간다. 운영 데이터 삭제 계획은 요청 문장이 짧아도 실패 비용과 검증 공백이 커서 높은 lane으로 간다. 분량만으로 effort를 고르면 이 둘을 구분하지 못한다.
 
-빠른 작업은 낮은 effort로 처리한다. 예를 들어 문구 보정, 제목 후보 정리, 작은 명령 결과 확인, 이미 정해진 형식에 맞춘 수정이 여기에 들어간다. 이 작업의 핵심은 긴 분석이 아니라 요청을 정확히 반영했는지 확인하는 것이다.
+## 세 routing 전략을 같은 10개 task에 적용해봤다
 
-보통 작업은 기본 effort로 둔다. 블로그 글 작성, 작은 코드 변경, 문서 정리, 공식 문서 확인이 필요한 작업이 여기에 해당한다. 이 단계에서는 AI가 바로 결론을 내리기보다 확인한 사실과 해석을 분리해야 한다.
+공개 합성 task 10개에 다음 세 정책을 적용했다.
 
-깊은 작업은 높은 effort를 쓴다. 설계 비교, 사고 재발 방지, 여러 모듈이 얽힌 변경, 공개 발행 전 위험 검토, 되돌리기 어려운 작업이 여기에 들어간다. 이때는 답을 빨리 받는 것보다 약한 가정과 반례를 찾는 것이 더 중요하다.
+1. `always_high`: 모든 작업을 `high`로 보낸다.
+2. `always_low`: 모든 작업을 `low`로 보낸다.
+3. `risk_based`: 네 축 합계로 `low`·`medium`·`high`를 나눈다.
 
-여기서 중요한 점은 "깊은 작업"을 많이 만드는 것이 좋은 운영이 아니라는 것이다. 대부분의 작업을 작게 쪼개면 기본 effort로도 충분히 처리할 수 있다.
+예제는 [reasoning-effort-routing.mjs](/blog/blog-examples/reasoning-effort-routing.mjs)에서 확인할 수 있다. Node.js 22에서 다음처럼 실행한다.
 
-## effort보다 먼저 키워야 하는 것
+```bash
+node public/blog-examples/reasoning-effort-routing.mjs
+```
 
-reasoning effort를 올리는 것보다 먼저 키워야 하는 것이 있다. 검증 기준이다.
+요약 출력은 다음과 같다.
 
-AI가 깊게 생각해도 빌드가 실패하면 실패다. 긴 계획을 세워도 공식 문서와 맞지 않으면 위험하다. 공개 글을 자연스럽게 써도 민감한 파일명이나 이미지가 섞이면 발행하면 안 된다.
+```json
+{
+  "always_high": { "low": 0, "medium": 0, "high": 10 },
+  "always_low": { "low": 10, "medium": 0, "high": 0 },
+  "risk_based": { "low": 3, "medium": 4, "high": 3 }
+}
+```
 
-그래서 나는 큰 작업일수록 다음을 먼저 정한다.
+이 결과는 `risk_based`가 더 정확하다는 증거가 아니다. script가 어떤 작업을 어느 lane에 배정하는지만 보여준다. `always_high`는 중요한 작업을 낮게 보내지 않는 대신 10개 모두를 무겁게 처리한다. `always_low`는 단순하지만 보안 검토와 삭제 계획까지 같은 lane에 둔다. `risk_based`는 자원을 구분하지만 점수 기준이 잘못되면 그럴듯하게 오분류한다.
 
-- 성공 기준: 무엇이 되면 끝인가
-- 제외 기준: 이번 작업에서 하지 않을 것은 무엇인가
-- 확인 근거: 공식 문서, 코드, 빌드, live page 중 무엇을 볼 것인가
-- 중단 조건: 무엇이 발견되면 멈출 것인가
+따라서 simulation에서 얻는 결론은 하나다. **routing 정책의 차이는 실행 전에 눈으로 검토할 수 있지만, 실제 품질 차이는 아직 모른다.**
 
-이 기준 없이 effort만 높이면 AI는 더 길게 추측할 수 있다. 반대로 기준이 분명하면 medium effort에서도 꽤 안정적으로 움직인다.
+## 왜 항상 높음과 항상 낮음이 각각 실패하는가
 
-## 작은 일에 높은 effort를 쓰면 생기는 문제
+`always_high`가 유리한 조건도 있다. task 수가 적고, 실패 비용이 크며, latency와 사용량보다 누락 감소가 중요한 경우다. 이때 단순한 보수 정책은 routing 기준 자체를 잘못 만드는 위험을 줄인다.
 
-작은 작업에서 항상 높은 effort를 쓰면 세 가지 문제가 생긴다.
+하지만 반복되는 작은 작업까지 모두 같은 lane으로 보내면 어떤 작업에서 추가 추론이 실제로 필요했는지 알기 어렵다. 높은 effort로 통과한 결과가 낮은 effort에서도 같았을 수 있지만 비교하지 않았기 때문이다.
 
-첫째, 응답 시간이 늘어난다. 단순한 수정도 매번 큰 작업처럼 다루면 흐름이 느려진다.
+`always_low`는 자동 판정 가능한 변환이나 대량의 단순 작업에서 유리할 수 있다. 성공 기준이 명확하고 실패를 즉시 잡는 test가 있다면 낮은 effort와 강한 gate의 조합이 합리적이다.
 
-둘째, 설명이 과해진다. 사람은 결과를 빨리 확인하고 싶은데, AI는 배경과 가능성을 길게 늘어놓을 수 있다.
+반대로 모호한 설계나 되돌리기 어려운 변경을 낮은 lane으로 고정하면, 답은 빨리 나와도 비교·반례·중단 조건이 빠질 가능성을 별도로 관리해야 한다. 낮은 effort가 실패를 일으킨다고 이 글이 측정한 것은 아니지만, 위험한 task에 추가 검토를 배정하지 않는 정책이라는 사실은 명확하다.
 
-셋째, 중요한 작업과 덜 중요한 작업의 차이가 사라진다. 모든 작업이 같은 무게가 되면 정말 위험한 변경에서 더 강한 검토를 요구하기 어렵다.
+## routing 뒤에는 실제 eval이 필요하다
 
-그래서 나는 작은 일은 작게 끝내는 것도 능력이라고 본다. 다만 작게 끝내더라도 최소 검증은 남겨야 한다. 빠른 작업이라고 해서 확인을 생략하는 것은 아니다.
+점수표를 만들었다고 effort 선택이 끝나는 것은 아니다. 다음처럼 대표 task 하나를 두 인접 설정에서 비교해야 한다.
 
-## 반대로 깊게 생각해야 하는 작업
+```text
+대표 task:
+고정할 것: model, prompt, 입력 파일, tool 권한, 성공 기준
+비교할 것: effort A / effort B
+관찰할 것: 필수 조건 충족, 오류 수, 누락 수, 수정 횟수, 응답 시간, token 사용량
+판정: 품질 이득이 latency·사용량 증가를 감당하는가
+반복: 변동성이 큰 결과는 여러 번 실행
+```
 
-높은 effort가 필요한 작업도 분명히 있다.
+중요한 것은 결과를 본 뒤 rubric을 바꾸지 않는 것이다. 예를 들어 “필수 요구사항 5개 중 5개 충족, 금지 변경 0개, test 통과”를 먼저 정하고 두 설정을 같은 조건에서 실행한다.
 
-예를 들어 공개 블로그에 글을 올리는 일은 단순한 글쓰기처럼 보이지만 실제로는 공개 안전, 이미지, 출처, 빌드, 배포 결과가 모두 얽힌다. 이럴 때는 단순히 초안을 잘 쓰는 것보다 위험한 표현과 누락된 검증을 찾는 것이 중요하다.
+차이가 없다면 낮은 effort가 그 task에는 충분할 수 있다. 높은 effort에서만 누락이 줄고 그 누락의 비용이 크다면 높일 이유가 생긴다. 결과 변동이 크다면 한 번의 승패로 기본값을 바꾸지 않는다.
 
-설계 작업도 마찬가지다. 선택지가 여러 개이고 나중에 되돌리기 어렵다면, AI에게 빠른 결론을 요구하면 안 된다. 이때는 후보를 비교하고, 버릴 기준을 정하고, 모르는 것을 모른다고 표시해야 한다.
+## 점수표가 놓치는 반례
 
-즉 높은 effort는 "더 멋진 답변"을 위한 것이 아니라 "실수 비용이 큰 작업에서 판단을 천천히 하기 위한 것"에 가깝다.
+위 네 축도 완전하지 않다.
 
-## 내가 남긴 기준
+- 익숙한 작업처럼 보여도 최신 정책 확인이 핵심이면 검증 공백이 커진다.
+- 여러 파일을 읽는 작업이어도 정해진 추출만 하면 높은 reasoning이 필요하지 않을 수 있다.
+- 짧은 요청이어도 삭제·외부 공개가 포함되면 실패 비용이 급격히 커진다.
+- 자동 test가 많아도 test가 잘못된 요구사항을 검사하면 안전하지 않다.
+- 높은 effort가 더 긴 설명만 만들고 실제 오류를 줄이지 못할 수 있다.
 
-reasoning effort는 높을수록 좋은 성능 버튼이 아니다. 작업의 크기, 실패 비용, 근거 필요성, 되돌리기 어려움에 맞춰 조절해야 하는 운영 자원이다.
+그래서 routing 점수는 자동 승인기가 아니라 1차 분류기다. 경계 점수, 파괴적 작업, 외부 write는 사람이 한 번 더 본다. 그리고 품질 이득을 측정하지 못했다면 “더 깊게 생각했으니 더 좋다”고 결론내리지 않는다.
 
-작은 일은 낮게, 보통 일은 기본으로, 위험한 판단은 깊게 본다. 대신 어떤 단계에서도 검증을 생략하지 않는다. 낮은 effort는 검증 없는 빠른 답변이 아니라, 작은 작업을 작은 절차로 끝내기 위한 선택이다.
+## 결론
 
-내가 얻은 결론은 이렇다. AI에게 항상 깊게 생각하라고 시키는 것보다, 언제 깊게 생각해야 하는지 정해두는 편이 더 안정적이다.
+reasoning effort는 높을수록 좋은 성능 버튼도, 비용 때문에 무조건 낮춰야 할 값도 아니다. 실패 비용, 모호성, 상호의존성, 검증 공백에 따라 **추론 자원을 어디에 배정할지** 정하는 운영 변수다.
+
+세 정책 simulation은 risk-based routing이 10개 task를 `3 low / 4 medium / 3 high`로 나눈다는 사실만 보여줬다. 실제 모델 품질 우열은 보여주지 않았다. 그다음 단계는 대표 task와 사전 rubric을 고정하고 인접 effort를 직접 비교하는 것이다.
+
+내가 남기는 기준도 그래서 두 단계다. 먼저 위험으로 routing하고, 그다음 실제 eval로 보정한다. 점수표가 품질 측정을 대신하게 두지 않는다.
 
 ## 확인 기준
 
-- OpenAI Codex 문서: [Config reference](https://developers.openai.com/codex/config-reference)
-- 확인일: 2026-07-01
-- 이 글의 `quick`, `medium`, `deep` 분류는 개인 운영 기준이며, 특정 모델의 공식 성능 등급이나 품질 보장을 뜻하지 않는다.
+- OpenAI Codex 공식 문서: [Configuration reference](https://developers.openai.com/codex/config-reference)
+- OpenAI 공식 model guidance: [Model guidance](https://developers.openai.com/api/docs/guides/latest-model)
+- 공식 페이지와 기존 설정 캡처 재확인일: 2026-07-21
+- 합성 routing example은 Node.js v22.12.0에서 실행해 `3 low / 4 medium / 3 high` 출력을 확인했다.
+- 이 글은 실제 모델 정확도, latency, token cost를 측정하지 않았다. scoring 기준과 task fixture가 바뀌면 routing 결과도 달라진다.
