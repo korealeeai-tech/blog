@@ -2,7 +2,7 @@
 title: "AI 코딩 에이전트를 믿기 전에 먼저 정해야 하는 운영 규칙"
 description: "AGENTS.md 같은 instruction file로 AI 작업의 경계, 검증 기준, 공개 repo 안전 규칙을 관리하는 방법을 정리합니다."
 pubDate: 2026-06-23T17:05:00+09:00
-updatedDate: 2026-07-01T08:25:00+09:00
+updatedDate: 2026-07-21T16:03:18+09:00
 category: "ai-workflow"
 heroImage: "../../assets/blog/agents-operating-rules.png"
 ---
@@ -75,11 +75,6 @@ public repo는 조심해야 할 표면이 많다. 글 본문만 공개되는 것
 운영 규칙은 한 번에 완성되지 않는다. 실제로 글을 쓰고, 이미지를 넣고, 배포하고, 검증하다 보면 부족한 기준이 보인다.
 
 그때 규칙을 말로만 기억하지 않고 파일에 반영해야 한다. 그러면 나중에 AI가 같은 실수를 반복할 가능성이 줄어든다. 또한 변경 내용이 diff로 남기 때문에, 어떤 기준을 왜 추가했는지 되돌아볼 수 있다.
-
-<figure>
-	<img src="/blog/blog-images/rules-change-commit-diff.png" alt="공개 GitHub commit diff에서 블로그 이미지 운영 규칙이 변경된 화면" />
-	<figcaption>운영 규칙도 코드처럼 diff로 남겨야 다음 작업의 기본값이 된다.</figcaption>
-</figure>
 
 ## 너무 많은 규칙은 다시 나눈다
 

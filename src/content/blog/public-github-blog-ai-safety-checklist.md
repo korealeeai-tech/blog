@@ -2,7 +2,7 @@
 title: "AI가 public GitHub 블로그에 글을 올리기 전 확인할 것들"
 description: "AI가 공개 GitHub 블로그에 글과 이미지를 올릴 때 확인해야 하는 안전장치를 정리합니다."
 pubDate: 2026-06-23T16:30:00+09:00
-updatedDate: 2026-07-01T08:25:00+09:00
+updatedDate: 2026-07-21T16:03:18+09:00
 category: "ai-workflow"
 heroImage: "../../assets/blog/public-blog-content-boundary.png"
 ---
@@ -31,11 +31,6 @@ AI가 블로그 글을 쓰는 일은 생각보다 쉽다. Markdown 파일을 만
 본문에서 지운 내용이 파일명이나 이미지에 남아 있으면 의미가 없다. 글에는 안전한 표현만 남겼더라도 commit message에 private한 단어가 들어가면 그것도 공개 기록이다.
 
 그래서 public repo에서는 "글을 검토한다"가 아니라 "변경 전체를 검토한다"가 맞다.
-
-<figure>
-	<img src="/blog/blog-images/public-repo-diff-review.png" alt="공개 GitHub commit 화면에서 변경 파일 목록과 commit message를 확인하는 예시" />
-	<figcaption>글 본문만 보는 대신 commit 단위로 어떤 파일이 추가되고 바뀌었는지 같이 확인한다.</figcaption>
-</figure>
 
 ## AI가 쓴 글은 diff로 먼저 본다
 
