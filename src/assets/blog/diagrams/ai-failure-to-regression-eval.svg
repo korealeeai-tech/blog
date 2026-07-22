@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">AI 작업 실패를 회귀 eval로 바꾸는 흐름</title>
+  <desc id="desc">실패 관찰에서 최소 재현, 작업 계약, 양방향 사례, grader, 회귀 suite로 이어지는 흐름과 false green, false reject를 구분하는 개념도</desc>
+  <rect width="1200" height="630" fill="#f5f7fa"/>
+  <rect x="42" y="36" width="1116" height="558" rx="28" fill="#ffffff" stroke="#d7dee7" stroke-width="2"/>
+
+  <text x="78" y="94" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="38" font-weight="800" fill="#18212b">실패를 회귀 방지 자산으로 바꾸기</text>
+  <text x="78" y="132" font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" fill="#52616b">한 번의 수정이 아니라, 같은 실패를 다시 판정할 수 있는 구조를 남긴다</text>
+
+  <g font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif">
+    <rect x="68" y="174" width="154" height="88" rx="16" fill="#fff1f2" stroke="#e9a9b1" stroke-width="2"/>
+    <text x="145" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#9f1239">1</text>
+    <text x="145" y="238" text-anchor="middle" font-size="22" font-weight="800" fill="#72142e">실패 관찰</text>
+
+    <path d="M230 218h35" stroke="#637282" stroke-width="3" stroke-linecap="round"/>
+    <path d="M255 207l12 11-12 11" fill="none" stroke="#637282" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="273" y="174" width="154" height="88" rx="16" fill="#fff7ed" stroke="#e7bd8d" stroke-width="2"/>
+    <text x="350" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#9a3412">2</text>
+    <text x="350" y="238" text-anchor="middle" font-size="22" font-weight="800" fill="#7c2d12">최소 재현</text>
+
+    <path d="M435 218h35" stroke="#637282" stroke-width="3" stroke-linecap="round"/>
+    <path d="M460 207l12 11-12 11" fill="none" stroke="#637282" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="478" y="174" width="154" height="88" rx="16" fill="#eef6ff" stroke="#a9c9ed" stroke-width="2"/>
+    <text x="555" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#1d4ed8">3</text>
+    <text x="555" y="238" text-anchor="middle" font-size="22" font-weight="800" fill="#1e3a8a">작업 계약</text>
+
+    <path d="M640 218h35" stroke="#637282" stroke-width="3" stroke-linecap="round"/>
+    <path d="M665 207l12 11-12 11" fill="none" stroke="#637282" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="683" y="174" width="154" height="88" rx="16" fill="#f3edff" stroke="#c7b5ec" stroke-width="2"/>
+    <text x="760" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#6d28d9">4</text>
+    <text x="760" y="238" text-anchor="middle" font-size="21" font-weight="800" fill="#4c1d95">양방향 사례</text>
+
+    <path d="M845 218h35" stroke="#637282" stroke-width="3" stroke-linecap="round"/>
+    <path d="M870 207l12 11-12 11" fill="none" stroke="#637282" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="888" y="174" width="112" height="88" rx="16" fill="#ecfdf5" stroke="#95d5ba" stroke-width="2"/>
+    <text x="944" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#047857">5</text>
+    <text x="944" y="238" text-anchor="middle" font-size="22" font-weight="800" fill="#14532d">grader</text>
+
+    <path d="M1008 218h28" stroke="#637282" stroke-width="3" stroke-linecap="round"/>
+    <path d="M1026 207l12 11-12 11" fill="none" stroke="#637282" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="1044" y="174" width="88" height="88" rx="16" fill="#18212b"/>
+    <text x="1088" y="209" text-anchor="middle" font-size="17" font-weight="700" fill="#b9c5cf">6</text>
+    <text x="1088" y="237" text-anchor="middle" font-size="19" font-weight="800" fill="#ffffff">회귀</text>
+    <text x="1088" y="257" text-anchor="middle" font-size="14" fill="#dce4ea">suite</text>
+
+    <text x="78" y="319" font-size="20" font-weight="800" fill="#293541">같은 출력도 판정 방식에 따라 다른 오류를 만든다</text>
+
+    <rect x="78" y="346" width="302" height="126" rx="18" fill="#fff1f2" stroke="#e9a9b1" stroke-width="2"/>
+    <circle cx="112" cy="379" r="15" fill="#e11d48"/>
+    <text x="139" y="386" font-size="21" font-weight="800" fill="#881337">false green</text>
+    <text x="102" y="421" font-size="18" fill="#5d2935">“retryLimit: 3”만 찾아서 통과</text>
+    <text x="102" y="450" font-size="17" fill="#8a4a58">보호 필드가 바뀌어도 놓친다</text>
+
+    <rect x="449" y="346" width="302" height="126" rx="18" fill="#f1f3f5" stroke="#b9c2cb" stroke-width="2"/>
+    <circle cx="483" cy="379" r="15" fill="#64748b"/>
+    <text x="510" y="386" font-size="21" font-weight="800" fill="#334155">false reject</text>
+    <text x="473" y="421" font-size="18" fill="#475569">JSON 전체 문자열을 그대로 비교</text>
+    <text x="473" y="450" font-size="17" fill="#657384">키 순서만 달라도 실패시킨다</text>
+
+    <rect x="820" y="346" width="312" height="126" rx="18" fill="#ecfdf5" stroke="#86cdae" stroke-width="2"/>
+    <circle cx="854" cy="379" r="15" fill="#059669"/>
+    <text x="881" y="386" font-size="21" font-weight="800" fill="#14532d">semantic assertion</text>
+    <text x="844" y="421" font-size="18" fill="#285b45">변경·보호·금지·증거를 분리</text>
+    <text x="844" y="450" font-size="17" fill="#49745f">의미가 같으면 표현 차이는 허용</text>
+
+    <rect x="78" y="508" width="1054" height="58" rx="17" fill="#18212b"/>
+    <text x="605" y="545" text-anchor="middle" font-size="22" font-weight="800" fill="#ffffff">좋은 회귀 eval은 “고쳤다”가 아니라 “다시 틀리면 잡힌다”를 증명한다</text>
+    <text x="1120" y="584" text-anchor="end" font-size="15" fill="#7c8995">합성 개념도</text>
+  </g>
+</svg>
