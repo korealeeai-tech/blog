@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">회귀 테스트의 결함 검출력을 mutation testing으로 측정하는 흐름</title>
+  <desc id="desc">하나의 정상 구현에서 만든 여덟 개 mutant를 약한 suite, 보강 suite, 진단 suite에 차례로 실행해 2개, 7개, 8개를 검출하는 합성 개념도</desc>
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="42" y="34" width="1116" height="562" rx="28" fill="#ffffff" stroke="#d8e0ea" stroke-width="2"/>
+
+  <g font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif">
+    <text x="78" y="92" font-size="36" font-weight="800" fill="#18212b">테스트 통과에서 결함 검출력으로</text>
+    <text x="78" y="130" font-size="20" fill="#52616b">같은 8개 mutant를 넣고 어떤 잘못된 변경이 살아남는지 본다</text>
+
+    <rect x="78" y="166" width="204" height="112" rx="18" fill="#eef6ff" stroke="#a9c9ed" stroke-width="2"/>
+    <text x="180" y="202" text-anchor="middle" font-size="16" font-weight="700" fill="#1d4ed8">정상 구현</text>
+    <text x="180" y="232" text-anchor="middle" font-size="23" font-weight="800" fill="#1e3a8a">release gate</text>
+    <text x="180" y="258" text-anchor="middle" font-size="15" fill="#48668c">세 suite 모두 baseline 통과</text>
+
+    <path d="M294 222h54" stroke="#66778a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M338 210l13 12-13 12" fill="none" stroke="#66778a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="362" y="158" width="760" height="128" rx="20" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="390" y="190" font-size="17" font-weight="800" fill="#334155">결과를 보기 전에 고정한 8개 mutant</text>
+
+    <g font-size="15" fill="#334155">
+      <rect x="390" y="207" width="164" height="28" rx="8" fill="#fff1f2"/><text x="402" y="227">조건 검사 제거 × 2</text>
+      <rect x="566" y="207" width="164" height="28" rx="8" fill="#fff7ed"/><text x="578" y="227">입력 경계 완화 × 2</text>
+      <rect x="742" y="207" width="164" height="28" rx="8" fill="#f3edff"/><text x="754" y="227">경계·타입 오류 × 2</text>
+      <rect x="918" y="207" width="176" height="28" rx="8" fill="#eef6ff"/><text x="930" y="227">승인·reason 오류 × 2</text>
+    </g>
+
+    <text x="390" y="263" font-size="15" fill="#6b7280">각 mutant가 켜진 상태에서 같은 test suite를 다시 실행</text>
+
+    <text x="78" y="334" font-size="20" font-weight="800" fill="#293541">suite를 보강할 때 달라진 실제 결과</text>
+
+    <rect x="78" y="360" width="300" height="146" rx="18" fill="#fff5f5" stroke="#e9a9b1" stroke-width="2"/>
+    <text x="102" y="394" font-size="17" font-weight="800" fill="#9f1239">weak · test 2개</text>
+    <text x="102" y="437" font-size="31" font-weight="900" fill="#881337">2 / 8 killed</text>
+    <text x="102" y="468" font-size="17" fill="#7f3143">6개 survivor · score 25%</text>
+    <circle cx="338" cy="393" r="15" fill="#e11d48"/>
+    <text x="338" y="399" text-anchor="middle" font-size="15" font-weight="900" fill="#ffffff">6</text>
+
+    <path d="M390 433h28" stroke="#66778a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M408 422l12 11-12 11" fill="none" stroke="#66778a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="430" y="360" width="330" height="146" rx="18" fill="#fffaf0" stroke="#e8c37c" stroke-width="2"/>
+    <text x="454" y="394" font-size="17" font-weight="800" fill="#9a5a06">strengthened · test 7개</text>
+    <text x="454" y="437" font-size="31" font-weight="900" fill="#7c4a03">7 / 8 killed</text>
+    <text x="454" y="468" font-size="17" fill="#805f28">reason 누적 오류 1개 survive</text>
+    <circle cx="720" cy="393" r="15" fill="#d97706"/>
+    <text x="720" y="399" text-anchor="middle" font-size="15" font-weight="900" fill="#ffffff">1</text>
+
+    <path d="M772 433h28" stroke="#66778a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M790 422l12 11-12 11" fill="none" stroke="#66778a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="812" y="360" width="310" height="146" rx="18" fill="#ecfdf5" stroke="#8fd1b1" stroke-width="2"/>
+    <text x="836" y="394" font-size="17" font-weight="800" fill="#047857">diagnostic · test 8개</text>
+    <text x="836" y="437" font-size="31" font-weight="900" fill="#14532d">8 / 8 killed</text>
+    <text x="836" y="468" font-size="17" fill="#386d55">survivor 0 · score 100%</text>
+    <circle cx="1082" cy="393" r="15" fill="#059669"/>
+    <path d="M1075 393l5 5 10-12" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <path d="M594 510v20" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+    <path d="M583 521l11 11 11-11" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="346" y="534" width="496" height="38" rx="12" fill="#fff7ed" stroke="#e8c37c"/>
+    <text x="594" y="559" text-anchor="middle" font-size="16" font-weight="700" fill="#7c4a03">survivor → 복합 실패에서 모든 reason을 확인하는 test 추가</text>
+
+    <text x="1122" y="572" text-anchor="end" font-size="14" fill="#7c8995">공개용 합성 개념도</text>
+    <text x="78" y="570" font-size="14" fill="#7c8995">100%는 이 8개 mutant에 한정된 결과다.</text>
+  </g>
+</svg>
