@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">1M 컨텍스트에서 자동 압축이 실제로 돈 지점과 대가 요약</title>
+  <desc id="desc">세션 로그에 남은 자동 압축 300건을 다시 집계했다. 압축은 설정한 임계보다 약 3만 토큰 앞에서 돌았고, 압축 직후 첫 요청은 약 80K에서 다시 시작했으며, 압축 한 번에 중앙값 112초가 걸렸다. 임계를 낮출수록 처리하는 컨텍스트는 줄지만 압축은 잦아진다. 한 사람의 로그에서 본 값이다.</desc>
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="42" y="34" width="1116" height="562" rx="28" fill="#ffffff" stroke="#d8e0ea" stroke-width="2"/>
+
+  <g font-family="Pretendard, Apple SD Gothic Neo, Noto Sans CJK KR, Arial, sans-serif">
+    <text x="78" y="94" font-size="36" font-weight="800" fill="#18212b">1M 컨텍스트에서 자동 압축은 언제 도는가</text>
+    <text x="78" y="130" font-size="19" fill="#52616b">내 세션 로그에 남은 자동 압축 300건을 다시 집계했다</text>
+
+    <!-- 언제 -->
+    <rect x="78" y="166" width="332" height="236" rx="18" fill="#eef6ff"/>
+    <text x="102" y="204" font-size="17" font-weight="700" fill="#1d4ed8">언제</text>
+    <text x="102" y="246" font-size="27" font-weight="800" fill="#1e293b">설정값보다</text>
+    <text x="102" y="280" font-size="27" font-weight="800" fill="#1e293b">약 3만 토큰 앞</text>
+    <text x="102" y="322" font-size="16" fill="#475569">250K → 218K · 400K → 369K</text>
+    <text x="102" y="348" font-size="16" fill="#475569">500K → 469K (압축 직전 중앙값)</text>
+    <text x="102" y="378" font-size="16" fill="#475569">기본 약 967K · 오래 비우면 idle 압축</text>
+
+    <!-- 얼마나 -->
+    <rect x="434" y="166" width="332" height="236" rx="18" fill="#f0fdf4"/>
+    <text x="458" y="204" font-size="17" font-weight="700" fill="#15803d">얼마나 줄었나</text>
+    <text x="458" y="246" font-size="27" font-weight="800" fill="#1e293b">약 80K에서</text>
+    <text x="458" y="280" font-size="27" font-weight="800" fill="#1e293b">다시 자란다</text>
+    <text x="458" y="322" font-size="16" fill="#475569">압축 기록의 요약 크기는 약 15K</text>
+    <text x="458" y="348" font-size="16" fill="#475569">다음 요청엔 시스템 프롬프트 · 도구 ·</text>
+    <text x="458" y="374" font-size="16" fill="#475569">지시문이 다시 실린다</text>
+
+    <!-- 대가 -->
+    <rect x="790" y="166" width="332" height="236" rx="18" fill="#fff7ed"/>
+    <text x="814" y="204" font-size="17" font-weight="700" fill="#c2410c">대가</text>
+    <text x="814" y="246" font-size="27" font-weight="800" fill="#1e293b">한 번에 약 2분</text>
+    <text x="814" y="280" font-size="27" font-weight="800" fill="#1e293b">그리고 요약 손실</text>
+    <text x="814" y="322" font-size="16" fill="#475569">소요 시간 중앙 112초 · p90 184초</text>
+    <text x="814" y="348" font-size="16" fill="#475569">앞쪽의 자세한 지시는</text>
+    <text x="814" y="374" font-size="16" fill="#475569">요약에서 빠질 수 있다 (공식 문서)</text>
+
+    <!-- 임계별 근사 -->
+    <rect x="78" y="424" width="1044" height="104" rx="18" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="102" y="462" font-size="18" font-weight="800" fill="#1e293b">임계를 낮추면: 처리하는 컨텍스트는 줄고 압축은 잦아진다 (근사)</text>
+    <text x="102" y="500" font-size="17" fill="#334155">기본값 대비 처리량 · 압축 횟수 —  약 967K 100% · 47회   |   500K 64% · 187회   |   400K 53% · 294회   |   250K 38% · 712회</text>
+
+    <text x="78" y="568" font-size="15" fill="#64748b">한 사람의 7주치 로그(Claude Code 2.1.234~2.1.290)에서 본 값이다. 압축 뒤 바닥과 소요 시간은 환경과 모델에 따라 다르다.</text>
+  </g>
+</svg>
