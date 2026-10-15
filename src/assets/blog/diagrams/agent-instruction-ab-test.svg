@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">규칙 한 절을 넣고 뺀 CLAUDE.md로 같은 과제를 실행한 결과 요약</title>
+  <desc id="desc">검증 재촉, 확정 전 수정 금지, 보고 형식 강제, 절차 강제 네 규칙을 각각 넣은 경우와 뺀 경우로 두 번씩 실행했다. 검증 재촉과 보고 형식은 결과물을 바꾸지 않고 보고와 재확인 절차를 바꿨고, 확정 전 수정 금지와 절차 강제는 두 번 모두 구현 대신 질문으로 끝났다. 합성 fixture에서 한 모델로 관찰한 방향이다.</desc>
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="42" y="34" width="1116" height="562" rx="28" fill="#ffffff" stroke="#d8e0ea" stroke-width="2"/>
+
+  <g font-family="Pretendard, Apple SD Gothic Neo, Arial, sans-serif">
+    <text x="78" y="92" font-size="36" font-weight="800" fill="#18212b">규칙 한 절을 넣고 빼서 돌려 봤다</text>
+    <text x="78" y="128" font-size="19" fill="#52616b">같은 과제 · 같은 코드 · CLAUDE.md의 규칙 한 절만 다르게, 조건마다 2회</text>
+
+    <text x="96" y="176" font-size="15" font-weight="700" fill="#64748b">규칙</text>
+    <text x="502" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#64748b">규칙 없음</text>
+    <text x="776" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#64748b">규칙 있음</text>
+    <text x="1021" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#64748b">달라진 것</text>
+
+    <!-- A 검증 재촉 -->
+    <rect x="78" y="190" width="1044" height="80" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="96" y="224" font-size="20" font-weight="800" fill="#1e293b">A · 검증 재촉</text>
+    <text x="96" y="252" font-size="15" fill="#64748b">반드시 검증, 마지막에 한 번 더</text>
+    <rect x="378" y="204" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="502" y="236" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">수정 2/2 · 테스트 2/2</text>
+    <rect x="652" y="204" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="776" y="236" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">수정 2/2 · 테스트 2/2</text>
+    <text x="1021" y="236" text-anchor="middle" font-size="18" font-weight="700" fill="#334155">보고 · 재확인</text>
+
+    <!-- B 확정 전 수정 금지 -->
+    <rect x="78" y="280" width="1044" height="80" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="96" y="314" font-size="20" font-weight="800" fill="#1e293b">B · 확정 전 수정 금지</text>
+    <text x="96" y="342" font-size="15" fill="#64748b">모호하면 질문으로 확정</text>
+    <rect x="378" y="294" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="502" y="326" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">수정 2/2</text>
+    <rect x="652" y="294" width="248" height="52" rx="12" fill="#fff4e5" stroke="#f5b971" stroke-width="2"/>
+    <text x="776" y="326" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3412">질문으로 끝 2/2 · 수정 0</text>
+    <text x="1021" y="326" text-anchor="middle" font-size="18" font-weight="800" fill="#c2410c">구현 → 질문</text>
+
+    <!-- C 보고 형식 강제 -->
+    <rect x="78" y="370" width="1044" height="80" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="96" y="404" font-size="20" font-weight="800" fill="#1e293b">C · 보고 형식 강제</text>
+    <text x="96" y="432" font-size="15" fill="#64748b">4줄 보고 + 규칙 문서 인용</text>
+    <rect x="378" y="384" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="502" y="416" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">4줄 보고 2/2</text>
+    <rect x="652" y="384" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="776" y="416" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">4줄 보고 2/2 + 파일명</text>
+    <text x="1021" y="416" text-anchor="middle" font-size="18" font-weight="700" fill="#334155">파일명 인용</text>
+
+    <!-- D 절차 강제 -->
+    <rect x="78" y="460" width="1044" height="80" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="96" y="494" font-size="20" font-weight="800" fill="#1e293b">D · 1% 절차 강제</text>
+    <text x="96" y="522" font-size="15" fill="#64748b">구현 전 설계 질문 필수</text>
+    <rect x="378" y="474" width="248" height="52" rx="12" fill="#eef6ff"/>
+    <text x="502" y="506" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">수정 2/2</text>
+    <rect x="652" y="474" width="248" height="52" rx="12" fill="#fff4e5" stroke="#f5b971" stroke-width="2"/>
+    <text x="776" y="506" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3412">선택지 질문 2/2 · 수정 0</text>
+    <text x="1021" y="506" text-anchor="middle" font-size="18" font-weight="800" fill="#c2410c">구현 → 질문</text>
+
+    <text x="78" y="574" font-size="15" fill="#64748b">합성 코드에서 한 모델(Claude Fable 5.1, 2026-09-03)로 관찰한 방향이다. 조건마다 2회라 효과 크기를 뜻하지 않는다.</text>
+  </g>
+</svg>

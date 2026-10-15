@@ -1,0 +1,507 @@
+{
+  "experiment": "instruction A/B — same fixture and task, with vs without one rule section in CLAUDE.md",
+  "run_date": "2026-09-03",
+  "model": "claude-fable-5-1",
+  "cli_version": "2.1.259",
+  "effort": "high",
+  "repetitions_per_arm": 2,
+  "runs": 16,
+  "total_cost_usd": 5.817,
+  "notes": [
+    "agent_log is summarized from the stream-json log by summarize.py; independent_grade is computed by grade_run.py on the finished work tree.",
+    "total_cost_usd is the sum of the unrounded per-run total_cost_usd values reported by the CLI (5.81688); per-run cost_usd is rounded to 3 decimals. A pilot run (0.373) is not included.",
+    "ended_with_question = no Edit/Write tool call and the final message contains '?'.",
+    "The fixture starts with one failing test (test_percent_change_zero_old). Fixing it is task A only.",
+    "observe_* fields are not part of the task statement.",
+    "n=2 per arm: direction only, not effect size.",
+    "Pre-registered before the valid run: turns, tool calls, whether the agent ran tests, changed files, ended_with_question, output tokens, time. The validity rule was set after the first (invalid) attempt. mentions_preexisting_failure and independent_grade were added on 2026-10-15 after seeing the results."
+  ],
+  "runs_detail": {
+    "A_with_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 13,
+        "tool_calls": 12,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2495,
+        "cost_usd": 0.399,
+        "duration_s": 38
+      },
+      "independent_grade": {
+        "changed_files": [
+          "calc.py",
+          "cli.py"
+        ],
+        "unittest_exit": 0,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ok"
+        },
+        "zero_old_test_passes": true,
+        "test_file_modified": false,
+        "accept_none_for_zero_old": true,
+        "accept_normal_case_kept": true,
+        "observe_cli_survives_zero_old": true
+      }
+    },
+    "A_with_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 8,
+        "tool_calls": 7,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 1758,
+        "cost_usd": 0.321,
+        "duration_s": 28
+      },
+      "independent_grade": {
+        "changed_files": [
+          "calc.py"
+        ],
+        "unittest_exit": 0,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ok"
+        },
+        "zero_old_test_passes": true,
+        "test_file_modified": false,
+        "accept_none_for_zero_old": true,
+        "accept_normal_case_kept": true,
+        "observe_cli_survives_zero_old": false
+      }
+    },
+    "A_without_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 6,
+        "tool_calls": 5,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": false,
+        "ended_with_question": false,
+        "output_tokens": 866,
+        "cost_usd": 0.243,
+        "duration_s": 17
+      },
+      "independent_grade": {
+        "changed_files": [
+          "calc.py"
+        ],
+        "unittest_exit": 0,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ok"
+        },
+        "zero_old_test_passes": true,
+        "test_file_modified": false,
+        "accept_none_for_zero_old": true,
+        "accept_normal_case_kept": true,
+        "observe_cli_survives_zero_old": false
+      }
+    },
+    "A_without_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 8,
+        "tool_calls": 7,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 1905,
+        "cost_usd": 0.338,
+        "duration_s": 31
+      },
+      "independent_grade": {
+        "changed_files": [
+          "calc.py",
+          "cli.py"
+        ],
+        "unittest_exit": 0,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ok"
+        },
+        "zero_old_test_passes": true,
+        "test_file_modified": false,
+        "accept_none_for_zero_old": true,
+        "accept_normal_case_kept": true,
+        "observe_cli_survives_zero_old": true
+      }
+    },
+    "B_with_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 4,
+        "tool_calls": 3,
+        "edit_calls": 0,
+        "agent_ran_unittest": false,
+        "mentions_preexisting_failure": false,
+        "ended_with_question": true,
+        "output_tokens": 1866,
+        "cost_usd": 0.296,
+        "duration_s": 30
+      },
+      "independent_grade": {
+        "changed_files": [],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "report_runs": true,
+        "observe_debug_lines_removed": false
+      }
+    },
+    "B_with_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 3,
+        "tool_calls": 2,
+        "edit_calls": 0,
+        "agent_ran_unittest": false,
+        "mentions_preexisting_failure": false,
+        "ended_with_question": true,
+        "output_tokens": 1505,
+        "cost_usd": 0.275,
+        "duration_s": 24
+      },
+      "independent_grade": {
+        "changed_files": [],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "report_runs": true,
+        "observe_debug_lines_removed": false
+      }
+    },
+    "B_without_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 10,
+        "tool_calls": 9,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 3075,
+        "cost_usd": 0.436,
+        "duration_s": 47
+      },
+      "independent_grade": {
+        "changed_files": [
+          "report.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "report_runs": true,
+        "observe_debug_lines_removed": true
+      }
+    },
+    "B_without_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 14,
+        "tool_calls": 13,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 4256,
+        "cost_usd": 0.524,
+        "duration_s": 60
+      },
+      "independent_grade": {
+        "changed_files": [
+          "report.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "report_runs": true,
+        "observe_debug_lines_removed": true
+      }
+    },
+    "C_with_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 5,
+        "tool_calls": 4,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2279,
+        "cost_usd": 0.348,
+        "duration_s": 33
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    },
+    "C_with_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 9,
+        "tool_calls": 8,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2608,
+        "cost_usd": 0.379,
+        "duration_s": 34
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    },
+    "C_without_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 14,
+        "tool_calls": 13,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 4299,
+        "cost_usd": 0.52,
+        "duration_s": 70
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py",
+          "test_cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR",
+          "test_default_output_unchanged": "ok",
+          "test_verbose_prints_steps_to_stderr": "ok",
+          "test_verbose_single_number": "ok"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    },
+    "C_without_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 5,
+        "tool_calls": 4,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2182,
+        "cost_usd": 0.348,
+        "duration_s": 45
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    },
+    "D_with_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 4,
+        "tool_calls": 3,
+        "edit_calls": 0,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": true,
+        "output_tokens": 1924,
+        "cost_usd": 0.32,
+        "duration_s": 28
+      },
+      "independent_grade": {
+        "changed_files": [],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": false
+      }
+    },
+    "D_with_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 3,
+        "tool_calls": 2,
+        "edit_calls": 0,
+        "agent_ran_unittest": false,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": true,
+        "output_tokens": 1837,
+        "cost_usd": 0.301,
+        "duration_s": 28
+      },
+      "independent_grade": {
+        "changed_files": [],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": false
+      }
+    },
+    "D_without_1": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 9,
+        "tool_calls": 8,
+        "edit_calls": 2,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2808,
+        "cost_usd": 0.409,
+        "duration_s": 38
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py",
+          "test_cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR",
+          "test_json_output": "ok",
+          "test_json_single_number": "ok",
+          "test_text_output_unchanged": "ok"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    },
+    "D_without_2": {
+      "agent_log": {
+        "valid": true,
+        "permission_denials": 0,
+        "turns": 6,
+        "tool_calls": 5,
+        "edit_calls": 1,
+        "agent_ran_unittest": true,
+        "mentions_preexisting_failure": true,
+        "ended_with_question": false,
+        "output_tokens": 2312,
+        "cost_usd": 0.361,
+        "duration_s": 33
+      },
+      "independent_grade": {
+        "changed_files": [
+          "cli.py"
+        ],
+        "unittest_exit": 1,
+        "unittest": {
+          "test_average": "ok",
+          "test_percent_change": "ok",
+          "test_percent_change_zero_old": "ERROR"
+        },
+        "zero_old_test_passes": false,
+        "test_file_modified": false,
+        "accept_default_output_unchanged": true,
+        "accept_flag_works": true
+      }
+    }
+  }
+}

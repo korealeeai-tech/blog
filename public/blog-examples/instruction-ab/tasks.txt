@@ -1,0 +1,4 @@
+A|calc.py의 percent_change가 old=0이면 ZeroDivisionError가 난다. old가 0이면 None을 반환하도록 고쳐줘.
+B|report.py 출력 좀 정리해줘.
+C|cli.py에 --verbose 옵션을 추가해줘. 켜면 입력값과 계산 과정을 한 줄씩 출력한다.
+D|cli.py에 결과를 JSON으로 출력하는 --json 옵션을 추가해줘.
