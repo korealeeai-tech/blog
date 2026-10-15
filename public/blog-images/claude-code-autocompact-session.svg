@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
   <title id="title">한 세션의 요청별 컨텍스트: 실측과 기본값 근사</title>
-  <desc id="desc">autoCompactWindow 500K로 연 세션 하나의 요청 584건. 실측 컨텍스트는 약 467K에 닿을 때마다 압축돼 약 80K로 내려갔다(압축 4회). 같은 기록에서 압축이 줄인 양을 되돌려 기본값(약 967K)으로 다시 자르면 압축은 1회이고 컨텍스트가 훨씬 높게 머문다. 근사선은 대화가 똑같이 흘렀다고 가정한 계산이다.</desc>
+  <desc id="desc">autoCompactWindow 500K로 연 세션 하나의 요청 584건. 실측 컨텍스트는 약 467K에 닿을 때마다 압축돼 약 90K로 내려갔다(압축 4회). 같은 기록에서 압축이 줄인 양을 되돌려 기본값(약 967K)으로 다시 자르면 압축은 1회이고 컨텍스트가 훨씬 높게 머문다. 근사선은 대화가 똑같이 흘렀다고 가정한 계산이다.</desc>
   <rect width="1200" height="600" fill="#ffffff"/>
   <g font-family="Pretendard, Apple SD Gothic Neo, Noto Sans CJK KR, Arial, sans-serif">
     <text x="110" y="52" font-size="26" font-weight="800" fill="#18212b">한 세션의 요청별 컨텍스트</text>

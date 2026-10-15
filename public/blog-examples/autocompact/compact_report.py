@@ -4,7 +4,7 @@
 사용법:
   python3 compact_report.py                       # 기본: ~/.claude/projects
   python3 compact_report.py <projects_dir> [--since YYYY-MM-DD] [--until YYYY-MM-DDTHH:MM] [--sweep 250000,400000,500000,1000000] [--offset 33000]
-  (--since · --until은 UTC. 지금 쓰는 세션도 로그가 계속 늘어나므로, 같은 숫자를 다시 내려면 --until로 끝을 고정한다)
+  (--since · --until은 오프셋이 없으면 UTC로 읽는다. 지금 쓰는 세션도 로그가 계속 늘어나므로, 같은 숫자를 다시 내려면 --until로 끝을 고정한다)
 
 읽는 것: <projects_dir>/*/*.jsonl (메인 세션 로그. 하위 폴더의 서브에이전트 로그는 읽지 않는다)
 출력하는 것: 기간 · 요청 수 · 요청당 컨텍스트 분포 · 압축 이벤트 분포 · 임계별 시뮬레이션.
@@ -34,6 +34,18 @@ IDLE_NOTE = "Compacted while idle"
 
 def parse_time(stamp):
     return datetime.fromisoformat(stamp.replace("Z", "+00:00")).astimezone(timezone.utc)
+
+
+def parse_bound(text):
+    # 오프셋 없이 주면 UTC로 읽고, +09:00처럼 오프셋을 주면 그 시각을 UTC로 바꾼다
+    when = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    return when.replace(tzinfo=timezone.utc) if when.tzinfo is None else when.astimezone(timezone.utc)
+
+
+def parse_tokens(text):
+    # 500000과 500k를 모두 받는다 (환경 변수와 달리 여기서는 k를 1000배로 읽는다)
+    text = text.strip().lower()
+    return int(float(text[:-1]) * 1000) if text.endswith("k") else int(text)
 
 
 def read_session(path, since, until=None):
@@ -66,7 +78,8 @@ def read_session(path, since, until=None):
                 continue
             msg = rec.get("message") or {}
             usage = msg.get("usage")
-            if rec.get("type") != "assistant" or not usage:
+            # 서브에이전트 기록이 메인 로그에 섞여 있는 경우를 대비해 메인 대화 줄만 센다
+            if rec.get("type") != "assistant" or not usage or rec.get("isSidechain"):
                 continue
             lines_with_usage += 1
             # 한 응답이 내용 블록마다 따로 한 줄씩 기록되고, 각 줄이 같은 usage를 반복한다.
@@ -132,20 +145,20 @@ def main(argv):
     sweep = [250_000, 400_000, 500_000, 1_000_000]
     if "--since" in args:
         i = args.index("--since")
-        since = datetime.fromisoformat(args[i + 1]).replace(tzinfo=timezone.utc)
+        since = parse_bound(args[i + 1])
         del args[i:i + 2]
     if "--until" in args:
         i = args.index("--until")
-        until = datetime.fromisoformat(args[i + 1]).replace(tzinfo=timezone.utc)
+        until = parse_bound(args[i + 1])
         del args[i:i + 2]
     offset = DEFAULT_OFFSET
     if "--offset" in args:
         i = args.index("--offset")
-        offset = int(args[i + 1])
+        offset = parse_tokens(args[i + 1])
         del args[i:i + 2]
     if "--sweep" in args:
         i = args.index("--sweep")
-        sweep = [int(x) for x in args[i + 1].split(",")]
+        sweep = [parse_tokens(x) for x in args[i + 1].split(",")]
         del args[i:i + 2]
     root = args[0] if args else os.path.expanduser("~/.claude/projects")
     paths = sorted(glob.glob(os.path.join(root, "*", "*.jsonl")))
@@ -216,7 +229,7 @@ def main(argv):
         print(f"압축 직후 첫 요청의 실제 컨텍스트: 중앙 {k(post)} (postTokens보다 큰 만큼이 압축 뒤 다시 실리는 몫)")
     else:
         post = statistics.median(req[0]["ctx"] for req, _ in sessions) + DEFAULT_SUMMARY
-        print(f"압축 기록 없음 → 세션 첫 요청 중앙값 + 요약 {k(DEFAULT_SUMMARY)} = {k(post)}를 압축 직후 크기로 가정")
+        print(f"크기 기준 압축 기록 없음 → 세션 첫 요청 중앙값 + 요약 {k(DEFAULT_SUMMARY)} = {k(post)}를 압축 직후 크기로 가정")
     print(f"\n시뮬레이션 (근사, 압축 직후 {k(post)}에서 다시 자람 · 압축은 임계보다 {k(offset)} 낮은 지점에서 돈다고 가정)")
     print(f"{'임계':>8} {'요청 컨텍스트 합':>14} {'압축 횟수':>8} {'압축 호출이 읽는 양':>16} {'합계 대비':>8}")
     rows = []
@@ -230,7 +243,7 @@ def main(argv):
             total, comps, reads = total + t, comps + c, reads + r
         rows.append((window, total, comps, reads))
     if not rows:
-        print("계산할 임계가 없다. --sweep에 더 큰 값을 준다")
+        print("계산할 임계가 없다. --sweep에 더 큰 값을 주거나 --offset을 줄인다")
         return 1
     base = max(rows, key=lambda r: r[0])
     for window, total, comps, reads in rows:
